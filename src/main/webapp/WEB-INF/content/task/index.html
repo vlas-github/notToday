@@ -1,0 +1,143 @@
+<div class="header" ng-include src="'content/templates/top.html'"></div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <ul class="nav nav-pills" role="tablist">
+            <li class="active">
+                <a href="">
+                    Task count<span class="badge">{{todoAll}}</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    Completed<span class="badge">{{todoComplete}}</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    Deleted<span class="badge">{{todoDeleted}}</span>
+                </a>
+            </li>
+            <li>
+                <button class="btn btn-default" ng-click="showModal()">
+                    Add new task
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            <div class="input-group col-xs-12">
+                <div class="input-group">
+                    <div class="input-group-addon">Fast task:</div>
+                    <input type="text" ng-keyup="$event.keyCode == 13 ? addTodo() : null" ng-model="task.title" class="form-control" placeholder="Input todo title">
+                    <span class="input-group-btn">
+                        <button type="submit" ng-click="addTodo()" class="btn btn-primary">add</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div ng-if="todoAll > 0" class="list-group">
+            <h4>New tasks:</h4>
+            <a class="list-group-item" ng-click="completeTodo(todo)" ng-repeat="todo in getTodos()">
+                <div>
+                    <div class="text-hide">{{todo.uuid}}</div>
+                    <strong>{{todo.text}}</strong>
+                    <br/>
+                    {{todo.description}}
+                </div>
+            </a>
+        </div>
+        <div ng-if="todoComplete > 0" class="list-group">
+            <h5>Complete tasks:</h5>
+            <a class="list-group-item list-group-item-warning" ng-click="deleteTodo(todo)" ng-repeat="todo in getCompletedTodos()">
+                <div>
+                    <div class="text-hide">{{todo.uuid}}</div>
+                    <strong>{{todo.text}}</strong>
+                    <br/>
+                    {{todo.description}}
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div modal="addTaskModal" class="modal hide fade in" aria-hidden="false" aria-labelledby="modal-label" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add new task</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            <strong>Todo *</strong>
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="task.title" class="form-control" placeholder="Input todo title">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            <strong>Description</strong>
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="task.description" class="form-control" placeholder="Input todo description">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            <strong>Date</strong>
+                        </label>
+                        <div class="col-sm-10">
+                            <!--todo input date-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            <strong>Time</strong>
+                        </label>
+                        <div class="col-sm-10">
+                            <!--todo input time-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            <strong>Repeat</strong>
+                        </label>
+                        <div class="col-sm-10">
+                            <select select2 select2-disabled="false" select2-text="Repeat" class="filter-select" data-placeholder="&nbsp;">
+                                <option></option>
+                                <option ng-repeat="repeat in repeats">
+                                    {{repeat.localizationCode}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                        </label>
+                        <div class="col-sm-10">
+                            <label>
+                                <input type="checkbox"> Completed
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" ng-click="addTodo()" data-dismiss="modal">
+                    Save
+                </button>
+                <button type="button" class="btn btn-primary" ng-click="addTodo()">
+                    Save and continue
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
