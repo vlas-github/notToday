@@ -44,7 +44,7 @@
                     <strong>{{t.title}}</strong>
                     <i class="glyphicon glyphicon-remove pull-right" style="cursor: pointer" ng-click="deleteTask(t, true)"></i>
                     <span class="pull-right">&nbsp;&nbsp;</span>
-                    <i class="glyphicon glyphicon-edit pull-right" style="cursor: pointer" ng-click="editTask(t)></i>
+                    <i class="glyphicon glyphicon-edit pull-right" style="cursor: pointer" ng-click="showEditTaskModal(t)"></i>
                     <span class="pull-right">&nbsp;&nbsp;</span>
                     <i class="glyphicon glyphicon-ok pull-right" style="cursor: pointer" ng-click="completeTask(t)"></i>
                     <br/>
@@ -58,7 +58,7 @@
                 <div>
                     <div class="text-hide">{{t.uuid}}</div>
                     <strong>{{t.title}}</strong>
-                    <i class="glyphicon glyphicon-edit pull-right" style="cursor: pointer" ng-click="editTask(t)></i>
+                    <i class="glyphicon glyphicon-edit pull-right" style="cursor: pointer" ng-click="showEditTaskModal(t)"></i>
                     <span class="pull-right">&nbsp;&nbsp;</span>
                     <i class="glyphicon glyphicon-ok pull-right" style="cursor: pointer" ng-click="deleteTask(t)"></i>
                     <br/>
@@ -72,7 +72,7 @@
                 <div>
                     <div class="text-hide">{{t.uuid}}</div>
                     <strong>{{t.title}}</strong>
-                    <i class="glyphicon glyphicon-edit pull-right" style="cursor: pointer" ng-click="editTask(t)"></i>
+                    <i class="glyphicon glyphicon-edit pull-right" style="cursor: pointer" ng-click="showEditTaskModal(t)"></i>
                     <br/>
                     {{t.description}}
                 </div>
@@ -150,10 +150,10 @@
             <button type="button" class="btn btn-default" data-dismiss="modal">
                 Close
             </button>
-            <button type="button" class="btn btn-primary" ng-click="addTodo()" data-dismiss="modal">
+            <button type="button" class="btn btn-primary" ng-click="addTask()" data-dismiss="modal">
                 Save
             </button>
-            <button type="button" class="btn btn-primary" ng-click="addTodo()">
+            <button type="button" class="btn btn-primary" ng-click="addTask()">
                 Save and continue
             </button>
         </div>
@@ -163,7 +163,7 @@
 </div>
 
 
-<div modal="addTaskModal" class="modal fade" aria-hidden="false" aria-labelledby="modal-label" role="dialog">
+<div modal="editTaskModal" class="modal fade" aria-hidden="false" aria-labelledby="modal-label" role="dialog">
 <div class="modal-dialog">
 <div class="modal-content">
     <form name="editTaskForm" class="form-horizontal">
@@ -232,7 +232,7 @@
             <button type="button" class="btn btn-default" data-dismiss="modal">
                 Close
             </button>
-            <button type="button" class="btn btn-primary" ng-click="editTodo()" data-dismiss="modal">
+            <button type="button" class="btn btn-primary" ng-click="editTask()" data-dismiss="modal">
                 Save
             </button>
         </div>
