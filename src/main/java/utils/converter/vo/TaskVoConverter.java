@@ -23,6 +23,7 @@ public class TaskVoConverter implements Converter<Task, TaskVo> {
 
     @Override
     public TaskVo convertSourceToTarget(Task from, TaskVo to) {
+        to.setId(from.getId());
         to.setUser(userVoConverter.convertSourceToTarget(from.getUser(), new UserVo()));
         to.setCompleted(from.isCompleted());
         to.setDateIsSet(from.getDateIsSet());
@@ -40,7 +41,9 @@ public class TaskVoConverter implements Converter<Task, TaskVo> {
 
     @Override
     public Task convertTargetToSource(TaskVo from, Task to) {
-        to.setUser(userVoConverter.convertTargetToSource(from.getUser(), new User()));
+        if (from.getUser() != null) {
+            to.setUser(userVoConverter.convertTargetToSource(from.getUser(), new User()));
+        }
         to.setCompleted(from.isCompleted());
         to.setDateIsSet(from.getDateIsSet());
         to.setDeleted(from.isDeleted());

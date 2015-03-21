@@ -2,25 +2,25 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <ul class="nav nav-pills" role="tablist">
-            <li class="active">
-                <a href="">
-                    Task count<span class="badge">{{todoAll}}</span>
+            <li ng-class="{active: showNewTask}">
+                <a href="" ng-click="showNew()">
+                    Task count<span class="badge">{{newTasks.length}}</span>
                 </a>
             </li>
-            <li>
-                <a href="">
-                    Completed<span class="badge">{{todoComplete}}</span>
+            <li ng-class="{active: showCompletedTask}">
+                <a href="" ng-click="showCompleted()">
+                    Completed<span class="badge">{{completedTasks.length}}</span>
                 </a>
             </li>
-            <li>
-                <a href="">
-                    Deleted<span class="badge">{{todoDeleted}}</span>
+            <li ng-class="{active: showDeletedTask}">
+                <a href="" ng-click="showDeleted()">
+                    Deleted<span class="badge">{{deletedTasks.length}}</span>
                 </a>
             </li>
-            <li>
-                <button class="btn btn-default" ng-click="showModal()">
+            <li class="pull-right">
+                <a href="" class="btn btn-default" ng-click="showAddTaskModal()">
                     Add new task
-                </button>
+                </a>
             </li>
         </ul>
     </div>
@@ -36,108 +36,207 @@
                 </div>
             </div>
         </div>
-        <div ng-if="todoAll > 0" class="list-group">
+        <div ng-if="newTasks.length > 0 && showNewTask" class="list-group">
             <h4>New tasks:</h4>
-            <a class="list-group-item" ng-click="completeTodo(todo)" ng-repeat="todo in getTodos()">
+            <a class="list-group-item" value="{{t}}" ng-repeat="t in newTasks">
                 <div>
-                    <div class="text-hide">{{todo.uuid}}</div>
-                    <strong>{{todo.text}}</strong>
+                    <div class="text-hide">{{t.uuid}}</div>
+                    <strong>{{t.title}}</strong>
+                    <i class="glyphicon glyphicon-remove pull-right" style="cursor: pointer" ng-click="deleteTask(t, true)"></i>
+                    <span class="pull-right">&nbsp;&nbsp;</span>
+                    <i class="glyphicon glyphicon-edit pull-right" style="cursor: pointer" ng-click="editTask(t)></i>
+                    <span class="pull-right">&nbsp;&nbsp;</span>
+                    <i class="glyphicon glyphicon-ok pull-right" style="cursor: pointer" ng-click="completeTask(t)"></i>
                     <br/>
-                    {{todo.description}}
+                    {{t.description}}
                 </div>
             </a>
         </div>
-        <div ng-if="todoComplete > 0" class="list-group">
+        <div ng-if="completedTasks.length > 0 && showCompletedTask" class="list-group">
             <h5>Complete tasks:</h5>
-            <a class="list-group-item list-group-item-warning" ng-click="deleteTodo(todo)" ng-repeat="todo in getCompletedTodos()">
+            <a class="list-group-item list-group-item-warning" value="{{t}}" ng-repeat="t in completedTasks">
                 <div>
-                    <div class="text-hide">{{todo.uuid}}</div>
-                    <strong>{{todo.text}}</strong>
+                    <div class="text-hide">{{t.uuid}}</div>
+                    <strong>{{t.title}}</strong>
+                    <i class="glyphicon glyphicon-edit pull-right" style="cursor: pointer" ng-click="editTask(t)></i>
+                    <span class="pull-right">&nbsp;&nbsp;</span>
+                    <i class="glyphicon glyphicon-ok pull-right" style="cursor: pointer" ng-click="deleteTask(t)"></i>
                     <br/>
-                    {{todo.description}}
+                    {{t.description}}
+                </div>
+            </a>
+        </div>
+        <div ng-if="deletedTasks.length > 0 && showDeletedTask" class="list-group">
+            <h5>Deleted tasks:</h5>
+            <a class="list-group-item list-group-item-danger" value="{{t}}" ng-repeat="t in deletedTasks">
+                <div>
+                    <div class="text-hide">{{t.uuid}}</div>
+                    <strong>{{t.title}}</strong>
+                    <i class="glyphicon glyphicon-edit pull-right" style="cursor: pointer" ng-click="editTask(t)"></i>
+                    <br/>
+                    {{t.description}}
                 </div>
             </a>
         </div>
     </div>
 </div>
-<div modal="addTaskModal" class="modal hide fade in" aria-hidden="false" aria-labelledby="modal-label" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Add new task</h4>
+
+<div modal="addTaskModal" class="modal fade" aria-hidden="false" aria-labelledby="modal-label" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+    <form name="addTaskForm" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">Add new task</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    <strong>Todo *</strong>
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" ng-model="task.title" class="form-control" placeholder="Input todo title">
+                </div>
             </div>
-            <div class="modal-body">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">
-                            <strong>Todo *</strong>
-                        </label>
-                        <div class="col-sm-10">
-                            <input type="text" ng-model="task.title" class="form-control" placeholder="Input todo title">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">
-                            <strong>Description</strong>
-                        </label>
-                        <div class="col-sm-10">
-                            <input type="text" ng-model="task.description" class="form-control" placeholder="Input todo description">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">
-                            <strong>Date</strong>
-                        </label>
-                        <div class="col-sm-10">
-                            <!--todo input date-->
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">
-                            <strong>Time</strong>
-                        </label>
-                        <div class="col-sm-10">
-                            <!--todo input time-->
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">
-                            <strong>Repeat</strong>
-                        </label>
-                        <div class="col-sm-10">
-                            <select select2 select2-disabled="false" select2-text="Repeat" class="filter-select" data-placeholder="&nbsp;">
-                                <option></option>
-                                <option ng-repeat="repeat in repeats">
-                                    {{repeat.localizationCode}}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">
-                        </label>
-                        <div class="col-sm-10">
-                            <label>
-                                <input type="checkbox"> Completed
-                            </label>
-                        </div>
-                    </div>
-                </form>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    <strong>Description</strong>
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" ng-model="task.description" class="form-control" placeholder="Input todo description">
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                    Close
-                </button>
-                <button type="button" class="btn btn-primary" ng-click="addTodo()" data-dismiss="modal">
-                    Save
-                </button>
-                <button type="button" class="btn btn-primary" ng-click="addTodo()">
-                    Save and continue
-                </button>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    <strong>Date</strong>
+                </label>
+                <div class="col-sm-10">
+                    <input datepicker class="form-control" ng-model="task.executionDate" name="date" placeholder="Input todo date" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    <strong>Time</strong>
+                </label>
+
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    <strong>Repeat</strong>
+                </label>
+                <div class="col-sm-10">
+                    <select ui-select2 ng-model="task.repeat" class="form-control"
+                            data-placeholder="Repeat">
+                        <option></option>
+                        <option ng-repeat="repeat in repeats" value="{{repeat}}">
+                            {{repeat.localizationCode}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                </label>
+                <div class="col-sm-10">
+                    <label>
+                        <input type="checkbox" ng-model="task.completed"> Completed
+                    </label>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+                Close
+            </button>
+            <button type="button" class="btn btn-primary" ng-click="addTodo()" data-dismiss="modal">
+                Save
+            </button>
+            <button type="button" class="btn btn-primary" ng-click="addTodo()">
+                Save and continue
+            </button>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+
+
+<div modal="addTaskModal" class="modal fade" aria-hidden="false" aria-labelledby="modal-label" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+    <form name="editTaskForm" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">Edit task task</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    <strong>Todo *</strong>
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" ng-model="_task.title" class="form-control" placeholder="Input todo title">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    <strong>Description</strong>
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" ng-model="_task.description" class="form-control" placeholder="Input todo description">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    <strong>Date</strong>
+                </label>
+                <div class="col-sm-10">
+                    <input datepicker class="form-control" ng-model="_task.executionDate" name="date" placeholder="Input todo date" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    <strong>Time</strong>
+                </label>
+
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    <strong>Repeat</strong>
+                </label>
+                <div class="col-sm-10">
+                    <select ui-select2 ng-model="_task.repeat" class="form-control"
+                            data-placeholder="Repeat">
+                        <option></option>
+                        <option ng-repeat="repeat in repeats" value="{{repeat}}">
+                            {{repeat.localizationCode}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                </label>
+                <div class="col-sm-10">
+                    <label>
+                        <input type="checkbox" ng-model="_task.completed"> Completed
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+                Close
+            </button>
+            <button type="button" class="btn btn-primary" ng-click="editTodo()" data-dismiss="modal">
+                Save
+            </button>
+        </div>
+    </form>
+</div>
+</div>
 </div>

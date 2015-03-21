@@ -97,7 +97,7 @@ public class TaskRestController {
             }
             UserVo user = userService.getUserById(userId);
             task.setUser(user);
-            taskService.add(task);
+            task = taskService.add(task);
             response.setStatus(AjaxResponseStatus.OK);
             response.setData(task);
         } catch (Throwable t) {
@@ -144,15 +144,19 @@ public class TaskRestController {
             if (task.isCompleted() != null) {
                 persisted.setCompleted(task.isCompleted());
             }
+            if (task.isDeleted() != null) {
+                persisted.setDeleted(task.isDeleted());
+            }
             taskVoValidator.validate(persisted);
             if (taskVoValidator.hasErrors()) {
                 response.setStatus(AjaxResponseStatus.ERROR);
                 response.setMessage("Validation error");
                 return response;
             }
-            taskService.update(task);
+            persisted.setUser(userService.getUserById(userId));
+            taskService.update(persisted);
             response.setStatus(AjaxResponseStatus.OK);
-            response.setData(task);
+            response.setData(persisted);
         } catch (Throwable t) {
             response.setStatus(AjaxResponseStatus.ERROR);
             response.setMessage(t.getMessage());

@@ -76,9 +76,10 @@ public class TaskServiceImpl implements TaskService {
         try {
             TaskVo task = new TaskVo();
             task.setId(id);
-            return taskVoConverter.convertSourceToTarget(
+            task = taskVoConverter.convertSourceToTarget(
                     taskDao.getById(taskVoConverter.convertTargetToSource(task, new Task())),
                     new TaskVo());
+            return task;
         } catch (Exception e) {
             throw new BusinessException(e);
         }
