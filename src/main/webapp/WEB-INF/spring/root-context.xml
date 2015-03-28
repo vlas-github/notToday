@@ -29,7 +29,6 @@
     <context:component-scan base-package="services" />
     <context:component-scan base-package="dao" />
     <context:component-scan base-package="web.validators" />
-    <context:component-scan base-package="utils.converter.vo" />
 
     <!-- Файл с настройками ресурсов для работы с данными (Data Access Resources) -->
     <import resource="data.xml" />

@@ -4,7 +4,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -37,9 +36,8 @@ public class Task {
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean timeIsSet;
 
-    @ManyToOne(targetEntity = Repeat.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "repeat_id", referencedColumnName="id")
-    private Repeat repeat;
+    @Column(name = "repeat_id")
+    private String repeat;
 
     @Column(name = "completed")
     @Type(type = "org.hibernate.type.NumericBooleanType")
@@ -137,11 +135,11 @@ public class Task {
         this.timeIsSet = timeIsSet;
     }
 
-    public Repeat getRepeat() {
+    public String getRepeat() {
         return repeat;
     }
 
-    public void setRepeat(Repeat repeat) {
+    public void setRepeat(String repeat) {
         this.repeat = repeat;
     }
 
@@ -177,7 +175,7 @@ public class Task {
         task.setDateIsSet(getDateIsSet());
         task.setDescription(getDescription());
         task.setTimeIsSet(getTimeIsSet());
-        task.setRepeat(getRepeat() != null ? getRepeat().clone() : null);
+        task.setRepeat(getRepeat());
         task.setExecutionDate(getExecutionDate());
         task.setTitle(getTitle());
         task.setUser(null);

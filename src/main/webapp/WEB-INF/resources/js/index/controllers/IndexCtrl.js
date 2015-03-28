@@ -21,9 +21,11 @@
             if (response.status === "OK") {
                 $scope.adverts = response.data
                 var locale = Locale.get()
-                $scope.adverts.forEach(function (advert) {
-                    advert.title = locale === "ru" ? advert.titleRu : advert.titleEn
-                })
+                if ($scope.adverts && $scope.adverts.length > 0) {
+                    $scope.adverts.forEach(function (advert) {
+                        advert.title = locale === "ru" ? advert.titleRu : advert.titleEn
+                    })
+                }
             }
         })
     }

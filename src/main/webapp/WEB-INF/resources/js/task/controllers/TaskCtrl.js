@@ -5,144 +5,102 @@
 
         $scope.activePage = 'tasks'
         $scope.task = {}
-        $scope.newTasks = []
-        $scope.completedTasks = []
-        $scope.deletedTasks = []
         $scope.showNewTask = true
 
         if (!$rootScope.user || !$rootScope.user.id) {
-            $location.path("/login");
+            $location.path("/login")
         } else {
             UserService.get().$promise.then(function (response) {
                 if (response.status === "OK") {
                     $scope.user = response.data
 
-                    TaskService.list($scope.user.id).$promise.then(function (response) {
-                        if (response.status === "OK") {
-                            if (response.data && response.data.length > 0) {
-                                response.data.forEach(function (t) {
-                                    var task = angular.copy(t)
-                                    task.user = {} // todo delete this
-                                    if (task.deleted) {
-                                        $scope.deletedTasks.push(task)
-                                    } else if (task.completed) {
-                                        $scope.completedTasks.push(task)
-                                    } else {
-                                        $scope.newTasks.push(task)
-                                    }
-                                })
+                    $scope.getListTasks()
+                }
+            })
+        }
+
+        $scope.getListTasks = function () {
+            TaskService.list($scope.user.id).$promise.then(function (response) {
+                if (response.status === "OK") {
+                    if (response.data && response.data.length > 0) {
+                        $scope.newTasks = []
+                        $scope.completedTasks = []
+                        $scope.deletedTasks = []
+                        response.data.forEach(function (t) {
+                            var task = angular.copy(t)
+                            if (task.deleted) {
+                                $scope.deletedTasks.push(task)
+                            } else if (task.completed) {
+                                $scope.completedTasks.push(task)
+                            } else {
+                                $scope.newTasks.push(task)
                             }
-                        }
-                    })
+                        })
+                    }
                 }
             })
         }
 
         $scope.showAddTaskModal = function() {
+            $scope._task = {}
             CatalogService.list('repeat').$promise.then(function (response) {
                 if (response.status === "OK") {
                     $scope.repeats = response.data
                 }
             })
-            $scope.openModal($scope.addTaskModal);
+            $scope.openModal($scope.addTaskModal)
         }
 
         $scope.showEditTaskModal = function (t) {
-            $scope._task = t
+            $scope._task = angular.copy(t)
             CatalogService.list('repeat').$promise.then(function (response) {
                 if (response.status === "OK") {
                     $scope.repeats = response.data
                 }
             })
-            $scope.openModal($scope.editTaskModal);
+            $scope.openModal($scope.editTaskModal)
         }
 
         $scope.showShowTaskModal = function (t) {
-            $scope._task = t
+            $scope._task = angular.copy(t)
             $scope.openModal($scope.showTaskModal)
         }
 
         $scope.addTask = function () {
-            TaskService.add($scope.user, $scope.task).$promise.then(function (response) {
-
+            TaskService.add($scope.user, $scope._task).$promise.then(function (response) {
                 if (response.status === "OK") {
-                    var task = angular.copy(response.data)
-                    task.user = {}
-                    if (task.deleted) {
-                        $scope.deletedTasks.push(task)
-                    } else if (task.completed) {
-                        $scope.completedTasks.push(task)
-                    } else {
-                        $scope.newTasks.push(task)
-                    }
-                    $scope.task = {}
+                    $scope.getListTasks()
+                    $scope._task = {}
                 }
             })
         }
 
         $scope.editTask = function () {
-            var tasks = $scope.completedTasks
-            if (tasks.indexOf($scope._task) == -1) {
-                tasks = $scope.newTasks
-            }
-            if (tasks.indexOf($scope._task) == -1) {
-                tasks = $scope.deletedTasks
-            }
-            var index = tasks.indexOf($scope._task)
-            if (index > -1) {
-                var task = tasks[index]
-                TaskService.update($scope.user, task).$promise.then(function (response) {
-                    if (response.status === "OK") {
-                        var _task = response.data
-                        tasks.splice(index, 1)
-                        _task.user = {}
-                        if (_task.deleted) {
-                            $scope.deletedTasks.push(_task)
-                        } else if (_task.completed) {
-                            $scope.completedTasks.push(_task)
-                        } else {
-                            $scope.newTasks.push(_task)
-                        }
-                    }
+            TaskService.update($scope.user, $scope._task).$promise.then(function (response) {
+                if (response.status === "OK") {
+                    $scope.getListTasks()
                     $scope._task = {}
-                })
-            }
+                }
+            })
         }
 
         $scope.completeTask = function (t) {
-            var index = $scope.newTasks.indexOf(t)
-            if (index > -1) {
-                var task = $scope.newTasks[index]
-                task.completed = true
-                TaskService.update($scope.user, task).$promise.then(function (response) {
-                    if (response.status === "OK") {
-                        var _task = response.data
-                        _task.user = {}
-                        $scope.newTasks.splice(index, 1)
-                        $scope.completedTasks.push(_task)
-                    }
-                })
-            }
+            t.completed = true
+            TaskService.update($scope.user, t).$promise.then(function (response) {
+                if (response.status === "OK") {
+                    $scope.getListTasks()
+                }
+            })
         }
 
         $scope.deleteTask = function (t, isNewTask) {
-            var tasks = $scope.completedTasks
-            if (isNewTask) {
-                tasks = $scope.newTasks
-            }
-            var index = tasks.indexOf(t)
-            if (index > -1) {
-                var task = tasks[index]
-                task.deleted = true
-                TaskService.update($scope.user, task).$promise.then(function (response) {
-                    if (response.status === "OK") {
-                        var _task = response.data
-                        _task.user = {}
-                        tasks.splice(index, 1)
-                        $scope.deletedTasks.push(_task)
-                    }
-                })
-            }
+            t.deleted = true
+            TaskService.update($scope.user, t).$promise.then(function (response) {
+                if (response.status === "OK") {
+                    $scope.getListTasks()
+                }
+            })
+
         }
 
         $scope.showDeleted = function () {
