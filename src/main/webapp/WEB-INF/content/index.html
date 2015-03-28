@@ -14,7 +14,8 @@
 <body ng-app="todolistApp">
 	<div class="container">
 		<div ng-view=""></div>
-		<script src="resources/bower_components/jquery/dist/jquery.js"></script>
+        <div class="footer" ng-include src="'content/templates/bottom.html'"></div>
+        <script src="resources/bower_components/jquery/dist/jquery.js"></script>
 		<script src="resources/bower_components/angular/angular.js"></script>
 		<script src="resources/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 		<script src="resources/bower_components/angular-animate/angular-animate.js"></script>
