@@ -34,7 +34,11 @@
         </form>
     </div>
 
-    <div class="col-md-6">
-        <p class="alert alert-info">Login with either user:user to read entries or with admin:admin to read and edit entries.</p>
+    <div class="col-md-6" ng-if="!invalid">
+        <p class="alert alert-info">Enter your email and password that you used to login or go to the <a>registration</a>.</p>
+    </div>
+
+    <div class="col-md-6" ng-if="invalid">
+        <p class="alert alert-danger">Not valid email or password. Check that you have entered the data correctly, or contact your administrator</p>
     </div>
 </div>

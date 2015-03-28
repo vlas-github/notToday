@@ -16,7 +16,12 @@
                         $cookieStore.put('authToken', authToken)
                     }
                     $rootScope.user = authenticationResult.data
+                    $scope.invalid = false
                     $location.path("/")
+                } else {
+                    $scope.username = ""
+                    $scope.password = ""
+                    $scope.invalid = true
                 }
             })
         }
