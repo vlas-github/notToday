@@ -109,7 +109,7 @@
             delete $rootScope.user;
             delete $rootScope.authToken;
             $cookieStore.remove('authToken');
-            $location.path("/login");
+            $location.path("/logout");
         };
 
         var originalPath = $location.path();

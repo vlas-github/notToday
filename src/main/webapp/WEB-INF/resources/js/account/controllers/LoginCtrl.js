@@ -38,8 +38,7 @@
         }
 
         $scope.logout = function() {
-            $cookieStore.remove('authToken')
-            $rootScope.user = {}
+            $rootScope.logout()
         }
 
         if ($rootScope.authToken === null) {

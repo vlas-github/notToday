@@ -18,18 +18,20 @@
 
                     TaskService.list($scope.user.id).$promise.then(function (response) {
                         if (response.status === "OK") {
-                            response.data.forEach(function(t) {
-                                var task = angular.copy(t)
-                                task.user = {}
-                                if (task.deleted) {
-                                    $scope.user.deletedTasks.push(task)
-                                } else if (task.completed) {
-                                    $scope.user.completedTasks.push(task)
-                                } else {
-                                    $scope.user.newTasks.push(task)
-                                }
-                                $scope.user.tasks.push(task)
-                            })
+                            if (response.data && response.data.length > 0) {
+                                response.data.forEach(function (t) {
+                                    var task = angular.copy(t)
+                                    task.user = {}
+                                    if (task.deleted) {
+                                        $scope.user.deletedTasks.push(task)
+                                    } else if (task.completed) {
+                                        $scope.user.completedTasks.push(task)
+                                    } else {
+                                        $scope.user.newTasks.push(task)
+                                    }
+                                    $scope.user.tasks.push(task)
+                                })
+                            }
                         }
                     })
                 }
