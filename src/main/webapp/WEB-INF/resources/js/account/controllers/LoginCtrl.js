@@ -9,7 +9,7 @@ angular.module('todolistApp')
 
         $scope.login = function() {
             AuthenticateService.authenticate($.param({username: $scope.username, password: $scope.password}), function(authenticationResult) {
-                if (authenticationResult.status === 0) {
+                if (authenticationResult.status === "OK") {
                     var authToken = authenticationResult.message;
                     $rootScope.authToken = authToken;
                     if ($scope.rememberMe) {

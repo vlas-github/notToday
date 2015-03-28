@@ -60,18 +60,18 @@ public class TaskDaoImpl extends GenericDao implements TaskDao {
     @Override
     public List<Task> getList(Task pattern) {
         try {
-            Criteria cr = getSession().createCriteria(User.class);
+            Criteria cr = getSession().createCriteria(Task.class);
 
             if (StringUtils.isNotEmpty(pattern.getId())) {
                 cr.add(Restrictions.eq("id", pattern.getId()));
             }
 
             if (StringUtils.isNotEmpty(pattern.getTitle())) {
-                cr.add(Restrictions.like("fio", "%"+pattern.getTitle()+"%"));
+                cr.add(Restrictions.like("title", "%"+pattern.getTitle()+"%"));
             }
 
             if (StringUtils.isNotEmpty(pattern.getDescription())) {
-                cr.add(Restrictions.like("email", "%"+pattern.getDescription()+"%"));
+                cr.add(Restrictions.like("description", "%"+pattern.getDescription()+"%"));
             }
 
             if (pattern.isCompleted() != null) {

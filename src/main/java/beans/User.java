@@ -6,17 +6,19 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by vlasov-id-131216 on 14.02.15.
  */
 @Entity
 @Table(name = "Users")
-public class User implements UserDetails {
+public class User  implements UserDetails {
 
     @Id
     @Column(name = "id")
@@ -43,7 +45,7 @@ public class User implements UserDetails {
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean isAccountNonLocked;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private Set<UserAuthority> authorities;
 
@@ -61,15 +63,12 @@ public class User implements UserDetails {
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (fio != null ? !fio.equals(user.fio) : user.fio != null) return false;
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
-        if (isAccountNonLocked != null ? !isAccountNonLocked.equals(user.isAccountNonLocked) : user.isAccountNonLocked != null)
-            return false;
+        if (isAccountNonLocked != null ? !isAccountNonLocked.equals(user.isAccountNonLocked) : user.isAccountNonLocked != null) return false;
         if (locality != null ? !locality.equals(user.locality) : user.locality != null) return false;
         if (passHash != null ? !passHash.equals(user.passHash) : user.passHash != null) return false;
-        if (registrationDate != null ? !registrationDate.equals(user.registrationDate) : user.registrationDate != null)
-            return false;
+        if (registrationDate != null ? !registrationDate.equals(user.registrationDate) : user.registrationDate != null) return false;
         if (tasks != null ? !tasks.equals(user.tasks) : user.tasks != null) return false;
-        if (authorities != null ? !authorities.equals(user.authorities) : user.authorities != null)
-            return false;
+        if (authorities != null ? !authorities.equals(user.authorities) : user.authorities != null) return false;
 
         return true;
     }
@@ -199,5 +198,19 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public User clone() {
+        User user = new User();
+        user.setId(getId());
+        user.setEmail(getEmail());
+        user.setFio(getFio());
+        user.setIsAccountNonLocked(getIsAccountNonLocked());
+        user.setLocality(getLocality());
+        user.setPassHash(getPassHash());
+        user.setRegistrationDate(getRegistrationDate());
+        user.setUserAuthorities(getUserAuthorities() != null ? getUserAuthorities() : null);
+        user.setTasks(getTasks().stream().map((t) -> t != null ? t.clone() : null).collect(Collectors.toList()));
+        return user;
     }
 }

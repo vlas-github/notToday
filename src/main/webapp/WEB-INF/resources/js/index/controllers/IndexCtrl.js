@@ -11,7 +11,7 @@
             $location.path("/login");
         } else {
             UserService.get().$promise.then(function (response) {
-                if (response.status === 0) {
+                if (response.status === "OK") {
                     $scope.user = response.data
                 }
             })

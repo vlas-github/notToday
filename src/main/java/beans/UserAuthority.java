@@ -5,13 +5,14 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by vlasov-id-131216 on 14.02.15.
  */
 @Entity
 @Table(name = "UserAuthorities")
-public class UserAuthority implements GrantedAuthority {
+public class UserAuthority  implements GrantedAuthority {
 
     @Id
     @Column(name = "id")

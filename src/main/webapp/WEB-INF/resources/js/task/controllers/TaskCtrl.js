@@ -14,11 +14,11 @@
             $location.path("/login");
         } else {
             UserService.get().$promise.then(function (response) {
-                if (response.status === 0) {
+                if (response.status === "OK") {
                     $scope.user = response.data
 
                     TaskService.list($scope.user.id).$promise.then(function (response) {
-                        if (response.status === 0) {
+                        if (response.status === "OK") {
                             response.data.forEach(function(t) {
                                 var task = angular.copy(t)
                                 task.user = {}
@@ -38,7 +38,7 @@
 
         $scope.showAddTaskModal = function() {
             CatalogService.list('repeat').$promise.then(function (response) {
-                if (response.status === 0) {
+                if (response.status === "OK") {
                     $scope.repeats = response.data
                 }
             })
@@ -48,7 +48,7 @@
         $scope.showEditTaskModal = function (t) {
             $scope._task = t
             CatalogService.list('repeat').$promise.then(function (response) {
-                if (response.status === 0) {
+                if (response.status === "OK") {
                     $scope.repeats = response.data
                 }
             })
@@ -58,7 +58,7 @@
         $scope.addTask = function () {
             TaskService.add($scope.user, $scope.task).$promise.then(function (response) {
 
-                if (response.status === 0) {
+                if (response.status === "OK") {
                     var task = angular.copy(response.data)
                     task.user = {}
                     if (task.deleted) {
@@ -85,7 +85,7 @@
             if (index > -1) {
                 var task = tasks[index]
                 TaskService.update($scope.user, task).$promise.then(function (response) {
-                    if (response.status === 0) {
+                    if (response.status === "OK") {
                         var _task = response.data
                         tasks.splice(index, 1)
                         _task.user = {}
@@ -108,7 +108,7 @@
                 var task = $scope.newTasks[index]
                 task.completed = true
                 TaskService.update($scope.user, task).$promise.then(function (response) {
-                    if (response.status === 0) {
+                    if (response.status === "OK") {
                         var _task = response.data
                         _task.user = {}
                         $scope.newTasks.splice(index, 1)
@@ -128,7 +128,7 @@
                 var task = tasks[index]
                 task.deleted = true
                 TaskService.update($scope.user, task).$promise.then(function (response) {
-                    if (response.status === 0) {
+                    if (response.status === "OK") {
                         var _task = response.data
                         _task.user = {}
                         tasks.splice(index, 1)

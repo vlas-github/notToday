@@ -8,7 +8,7 @@
             $location.path("/login");
         } else {
             UserService.get().$promise.then(function (response) {
-                if (response.status === 0) {
+                if (response.status === "OK") {
                     $scope.user = response.data
 
                     $scope.user.tasks = []
@@ -17,7 +17,7 @@
                     $scope.user.deletedTasks = []
 
                     TaskService.list($scope.user.id).$promise.then(function (response) {
-                        if (response.status === 0) {
+                        if (response.status === "OK") {
                             response.data.forEach(function(t) {
                                 var task = angular.copy(t)
                                 task.user = {}
@@ -32,6 +32,14 @@
                             })
                         }
                     })
+                }
+            })
+        }
+
+        $scope.saveProfile = function() {
+            UserService.update($scope.user).$promise.then(function (response) {
+                if (response.status === "OK") {
+                    $location.path('/account')
                 }
             })
         }

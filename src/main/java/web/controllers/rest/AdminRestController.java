@@ -1,5 +1,6 @@
 package web.controllers.rest;
 
+import beans.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import services.UserService;
 import utils.json.AjaxResponse;
 import utils.json.AjaxResponseStatus;
-import vo.UserVo;
 
 /**
  * Created by vlasov-id-131216 on 15.02.15.
@@ -29,7 +29,7 @@ public class AdminRestController {
                 response.setMessage("User id is empty");
                 return response;
             }
-            UserVo user = userService.getUserById(userId);
+            User user = userService.getUserById(userId);
             user.setIsAccountNonLocked(false);
             userService.saveOrUpdate(user);
             response.setStatus(AjaxResponseStatus.OK);
@@ -56,7 +56,7 @@ public class AdminRestController {
                 response.setMessage("Password id is empty");
                 return response;
             }
-            UserVo user = userService.getUserById(id);
+            User user = userService.getUserById(id);
             user.setPassHash(password);
             userService.saveOrUpdate(user);
             response.setStatus(AjaxResponseStatus.OK);

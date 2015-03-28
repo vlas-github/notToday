@@ -27,6 +27,11 @@
                 controller: 'AccountCtrl',
                 activePage: 'account'
             })
+            .when('/account/edit', {
+                templateUrl: 'content/account/edit.html',
+                controller: 'AccountCtrl',
+                activePage: 'account'
+            })
             .when('/login', {
                 templateUrl: 'content/account/login.html',
                 controller: 'LoginCtrl',

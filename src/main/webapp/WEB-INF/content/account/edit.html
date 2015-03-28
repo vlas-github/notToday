@@ -1,0 +1,45 @@
+<div class="header" ng-include src="'content/templates/top.html'"></div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>Edit profile</h3>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="inputEmail3" ng-model="user.fio" placeholder="Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Locality</label>
+                <div class="col-sm-10">
+                    <select ui-select2 ng-model="user.locality" class="form-control" placeholder="Locality">
+                        <option value="ru">
+                            ru
+                        </option>
+                        <option value="en">
+                            en
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Subscribe to email newsletter
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="panel-footer">
+        <span class="btn-group pull-right">
+            <a ng-click="saveProfile()" type="button" class="btn btn-success">Save profile</a>
+            <a ng-href="#/account" type="button" class="btn btn-default">Close</a>
+        </span>
+        <div class="clearfix"></div>
+    </div>
+</div>

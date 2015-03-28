@@ -3,6 +3,7 @@ package beans;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by vlasov-id-131216 on 14.02.15.
@@ -54,5 +55,12 @@ public class Repeat {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Repeat clone() {
+        Repeat repeat = new Repeat();
+        repeat.setId(getId());
+        repeat.setName(getName());
+        return repeat;
     }
 }

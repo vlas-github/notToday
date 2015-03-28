@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -63,8 +64,7 @@ public class Task {
         if (dateIsSet != null ? !dateIsSet.equals(task.dateIsSet) : task.dateIsSet != null) return false;
         if (deleted != null ? !deleted.equals(task.deleted) : task.deleted != null) return false;
         if (description != null ? !description.equals(task.description) : task.description != null) return false;
-        if (executionDate != null ? !executionDate.equals(task.executionDate) : task.executionDate != null)
-            return false;
+        if (executionDate != null ? !executionDate.equals(task.executionDate) : task.executionDate != null) return false;
         if (id != null ? !id.equals(task.id) : task.id != null) return false;
         if (repeat != null ? !repeat.equals(task.repeat) : task.repeat != null) return false;
         if (timeIsSet != null ? !timeIsSet.equals(task.timeIsSet) : task.timeIsSet != null) return false;
@@ -167,5 +167,20 @@ public class Task {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Task clone() {
+        Task task = new Task();
+        task.setId(getId());
+        task.setDeleted(isDeleted());
+        task.setCompleted(isCompleted());
+        task.setDateIsSet(getDateIsSet());
+        task.setDescription(getDescription());
+        task.setTimeIsSet(getTimeIsSet());
+        task.setRepeat(getRepeat() != null ? getRepeat().clone() : null);
+        task.setExecutionDate(getExecutionDate());
+        task.setTitle(getTitle());
+        task.setUser(null);
+        return task;
     }
 }

@@ -3,6 +3,7 @@ package beans;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by vlasov-id-131216 on 07.03.15.

@@ -1,5 +1,6 @@
 package web.controllers.rest;
 
+import beans.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import services.UserService;
 import utils.json.AjaxResponse;
 import utils.json.AjaxResponseStatus;
-import vo.UserVo;
 import web.validators.UserVoValidator;
 
 /**
@@ -38,7 +38,7 @@ public class UserRestController {
 
     @RequestMapping(value = "user.json", method = RequestMethod.POST)
     @ResponseBody
-    public Object add(@RequestBody UserVo user) {
+    public Object add(@RequestBody User user) {
         AjaxResponse response = new AjaxResponse();
         try {
             userVoValidator.validate(user);
@@ -47,9 +47,8 @@ public class UserRestController {
                 response.setData(userVoValidator.getErrors());
                 return response;
             }
-            user = userService.save(user);
+            response.setData(userService.save(user));
             response.setStatus(AjaxResponseStatus.OK);
-            response.setData(user);
         } catch (Throwable t) {
             response.setStatus(AjaxResponseStatus.ERROR);
             response.setMessage(t.getMessage());
@@ -59,15 +58,12 @@ public class UserRestController {
 
     @RequestMapping(value = "user/{id}.json", method = RequestMethod.PUT)
     @ResponseBody
-    public Object update(@PathVariable("id") String id, @RequestBody UserVo user) {
+    public Object update(@PathVariable("id") String id, @RequestBody User user) {
         AjaxResponse response = new AjaxResponse();
         try {
-            UserVo persisted = userService.getUserById(id);
+            User persisted = userService.getUserById(id);
             if (StringUtils.isNotEmpty(user.getFio())) {
                 persisted.setFio(user.getFio());
-            }
-            if (StringUtils.isNotEmpty(user.getEmail())) {
-                persisted.setEmail(user.getEmail());
             }
             if (StringUtils.isNotEmpty(user.getLocality())) {
                 persisted.setLocality(user.getLocality());
@@ -78,9 +74,8 @@ public class UserRestController {
                 response.setMessage("Validate error");
                 return response;
             }
-            userService.saveOrUpdate(user);
+            response.setData(userService.saveOrUpdate(user));
             response.setStatus(AjaxResponseStatus.OK);
-            response.setData(user);
         } catch (Throwable t) {
             response.setStatus(AjaxResponseStatus.ERROR);
             response.setMessage(t.getMessage());

@@ -8,11 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import services.TaskService;
-import utils.converter.vo.TaskVoConverter;
-import utils.converter.vo.UserVoConverter;
 import utils.exception.BusinessException;
-import vo.TaskVo;
-import vo.UserVo;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,23 +20,18 @@ import java.util.stream.Collectors;
 public class TaskServiceImpl implements TaskService {
 
     @Autowired
-    private UserVoConverter userVoConverter;
-    @Autowired
-    private TaskVoConverter taskVoConverter;
-    @Autowired
     private TaskDao taskDao;
 
     @Override
     @Transactional
-    public List<TaskVo> getByUser(UserVo user) throws BusinessException {
+    public List<Task> getByUser(User user) throws BusinessException {
         try {
             if (StringUtils.isEmpty(user.getEmail())) {
                 throw new BusinessException("Email - is null!");
             }
-            return taskDao.getList(userVoConverter.convertTargetToSource(user, new User()))
-                    .stream()
-                    .map(x -> taskVoConverter.convertSourceToTarget(x, new TaskVo()))
-                    .collect(Collectors.toList());
+            List<Task> tasks = taskDao.getList(user).stream().map((t) -> t.clone()).collect(Collectors.toList());
+
+            return tasks;
         } catch (Exception e) {
             throw new BusinessException(e);
         }
@@ -48,11 +39,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public TaskVo add(TaskVo task) throws BusinessException {
+    public Task add(Task task) throws BusinessException {
         try {
-            return taskVoConverter.convertSourceToTarget(
-                    taskDao.save(taskVoConverter.convertTargetToSource(task, new Task())),
-                    new TaskVo());
+            return taskDao.save(task).clone();
         } catch (Exception e) {
             throw new BusinessException(e);
         }
@@ -60,11 +49,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public TaskVo update(TaskVo task) throws BusinessException {
+    public Task update(Task task) throws BusinessException {
         try {
-            return taskVoConverter.convertSourceToTarget(
-                    taskDao.saveOrUpdate(taskVoConverter.convertTargetToSource(task, new Task())),
-                    new TaskVo());
+            return taskDao.saveOrUpdate(task).clone();
         } catch (Exception e) {
             throw new BusinessException(e);
         }
@@ -72,13 +59,11 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public TaskVo getById(String id) throws BusinessException {
+    public Task getById(String id) throws BusinessException {
         try {
-            TaskVo task = new TaskVo();
+            Task task = new Task();
             task.setId(id);
-            task = taskVoConverter.convertSourceToTarget(
-                    taskDao.getById(taskVoConverter.convertTargetToSource(task, new Task())),
-                    new TaskVo());
+            task = taskDao.getById(task).clone();
             return task;
         } catch (Exception e) {
             throw new BusinessException(e);
