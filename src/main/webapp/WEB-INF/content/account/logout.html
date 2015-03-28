@@ -1,9 +1,9 @@
 <div class="header" ng-include src="'content/templates/top.html'"></div>
 <div class="page-header" data-ng-init="logout()">
-    <h2>Logout</h2>
+    <h2>{{'logout' | i18n}}</h2>
 </div>
 <div class="row">
     <div class="col-md-12">
-        You are out of the system, which would come back, go to <a ng-href="#/login">login</a>
+        {{'logout.message' | i18n}}<a ng-href="#/login">{{'logout.message.login' | i18n}}</a>
     </div>
 </div>

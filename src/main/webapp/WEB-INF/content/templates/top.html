@@ -11,14 +11,14 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li ng-class="{active: activePage == 'home'}">
-                    <a ng-href="#/">Home</a>
+                    <a ng-href="#/">{{'page.home' | i18n}}</a>
                 </li>
                 <li ng-if="user && user.id"
                     ng-class="{active: activePage == 'tasks'}">
-                    <a ng-href="#/tasks">Tasks</a>
+                    <a ng-href="#/tasks">{{'page.tasks' | i18n}}</a>
                 </li>
                 <li ng-class="{active: activePage == 'about'}">
-                    <a ng-href="#/about">About</a>
+                    <a ng-href="#/about">{{'page.about' | i18n }}</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -27,14 +27,14 @@
                     ng-class="{active: activePage == 'account'}">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.fio}} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a ng-href="#/account">Profile</a></li>
+                        <li><a ng-href="#/account">{{'profile' | i18n}}</a></li>
                         <li class="divider"></li>
-                        <li><a href="#/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        <li><a href="#/logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;{{'logout' | i18n}}</a></li>
                     </ul>
                 </li>
                 <li ng-if="!(user && user.id)"
                     ng-class="{active: activePage == 'login'}">
-                    <a ng-href="#/login">Login</a>
+                    <a ng-href="#/login">{{'login' | i18n}}</a>
                 </li>
             </ul>
         </div>

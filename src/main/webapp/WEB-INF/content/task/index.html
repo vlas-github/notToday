@@ -4,22 +4,22 @@
         <ul class="nav nav-pills" role="tablist">
             <li ng-class="{active: showNewTask}">
                 <a href="" ng-click="showNew()">
-                    Task count<span class="badge">{{newTasks.length}}</span>
+                    {{'tasks.all' | i18n}}<span class="badge">{{newTasks.length}}</span>
                 </a>
             </li>
             <li ng-class="{active: showCompletedTask}">
                 <a href="" ng-click="showCompleted()">
-                    Completed<span class="badge">{{completedTasks.length}}</span>
+                    {{'tasks.completed' | i18n}}<span class="badge">{{completedTasks.length}}</span>
                 </a>
             </li>
             <li ng-class="{active: showDeletedTask}">
                 <a href="" ng-click="showDeleted()">
-                    Deleted<span class="badge">{{deletedTasks.length}}</span>
+                    {{'tasks.deleted' | i18n}}<span class="badge">{{deletedTasks.length}}</span>
                 </a>
             </li>
             <li class="pull-right">
                 <a href="" class="btn btn-default" ng-click="showAddTaskModal()">
-                    Add new task
+                    {{'task.add' | i18n}}
                 </a>
             </li>
         </ul>
@@ -28,16 +28,17 @@
         <div class="list-group">
             <div class="input-group col-xs-12">
                 <div class="input-group">
-                    <div class="input-group-addon">Fast task:</div>
-                    <input type="text" ng-keyup="$event.keyCode == 13 ? addTodo() : null" ng-model="task.title" class="form-control" placeholder="Input todo title">
+                    <div class="input-group-addon">{{'task.add.fast' | i18n}}</div>
+                    <input type="text" ng-keyup="$event.keyCode == 13 ? addTodo() : null" ng-model="task.title" class="form-control"
+                           placeholder="{{'task.add.fast.text' | i18n}}">
                     <span class="input-group-btn">
-                        <button type="submit" ng-click="addTodo()" class="btn btn-primary">add</button>
+                        <button type="submit" ng-click="addTodo()" class="btn btn-primary">{{'task.add.fast.button.text' | i18n}}</button>
                     </span>
                 </div>
             </div>
         </div>
         <div ng-if="newTasks.length > 0 && showNewTask" class="list-group">
-            <h4>New tasks:</h4>
+            <h4>{{'tasks.new' | i18n}}:</h4>
             <a class="list-group-item" value="{{t}}" ng-click="showShowTaskModal(t)" ng-repeat="t in newTasks">
                 <div>
                     <div class="text-hide">{{t.uuid}}</div>
@@ -53,7 +54,7 @@
             </a>
         </div>
         <div ng-if="completedTasks.length > 0 && showCompletedTask" class="list-group">
-            <h5>Complete tasks:</h5>
+            <h5>{{'tasks.completed' | i18n}}:</h5>
             <a class="list-group-item list-group-item-warning" ng-click="showShowTaskModal(t)" value="{{t}}" ng-repeat="t in completedTasks">
                 <div>
                     <div class="text-hide">{{t.uuid}}</div>
@@ -67,7 +68,7 @@
             </a>
         </div>
         <div ng-if="deletedTasks.length > 0 && showDeletedTask" class="list-group">
-            <h5>Deleted tasks:</h5>
+            <h5>{{'tasks.deleted' | i18n}}:</h5>
             <a class="list-group-item list-group-item-danger" ng-click="showShowTaskModal(t)" value="{{t}}" ng-repeat="t in deletedTasks">
                 <div>
                     <div class="text-hide">{{t.uuid}}</div>
@@ -89,49 +90,52 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title">Add new task</h4>
+            <h4 class="modal-title">{{'task.add' | i18n}}</h4>
         </div>
         <div class="modal-body">
             <div class="form-group">
                 <label class="col-sm-2 control-label">
-                    <strong>Todo *</strong>
+                    <strong>{{'task.title' | i18n}}</strong>
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" ng-model="task.title" class="form-control" placeholder="Input todo title">
+                    <input type="text" ng-model="task.title" class="form-control"
+                           placeholder="{{'task.placeholder.title' | i18n}}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">
-                    <strong>Description</strong>
+                    <strong>{{'task.description' | i18n}}</strong>
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" ng-model="task.description" class="form-control" placeholder="Input todo description">
+                    <input type="text" ng-model="task.description" class="form-control"
+                           placeholder="{{'task.placeholder.description' | i18n}}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">
-                    <strong>Date</strong>
+                    <strong>{{'task.date' |i18n}}</strong>
                 </label>
                 <div class="col-sm-10">
-                    <input datepicker class="form-control" ng-model="task.executionDate" name="date" placeholder="Input todo date" type="text">
+                    <input datepicker class="form-control" ng-model="task.executionDate" name="date"
+                           placeholder="{{'task.placeholder.date' | i18n}}" type="text">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">
-                    <strong>Time</strong>
+                    <strong>{{'task.time' | i18n}}</strong>
                 </label>
 
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">
-                    <strong>Repeat</strong>
+                    <strong>{{'task.repeat' | i18n}}</strong>
                 </label>
                 <div class="col-sm-10">
                     <select ui-select2 ng-model="task.repeat" class="form-control"
                             data-placeholder="Repeat">
                         <option></option>
                         <option ng-repeat="repeat in repeats" value="{{repeat}}">
-                            {{repeat.localizationCode}}
+                            {{repeat.localizationCode | i18n}}
                         </option>
                     </select>
                 </div>
@@ -141,20 +145,20 @@
                 </label>
                 <div class="col-sm-10">
                     <label>
-                        <input type="checkbox" ng-model="task.completed"> Completed
+                        <input type="checkbox" ng-model="task.completed"> {{'task.completed' | i18n}}
                     </label>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-primary" ng-click="addTask()" data-dismiss="modal">
-                Save
+                {{'save' | i18n}}
             </button>
             <button type="button" class="btn btn-primary" ng-click="addTask()">
-                Save and continue
+                {{'save.and.continue' | i18n}}
             </button>
             <button type="button" class="btn btn-default" data-dismiss="modal">
-                Close
+                {{'close' |i18n}}
             </button>
         </div>
     </form>
@@ -171,49 +175,52 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title">Edit task</h4>
+            <h4 class="modal-title">{{'task.edit' | i18n}}</h4>
         </div>
         <div class="modal-body">
             <div class="form-group">
                 <label class="col-sm-2 control-label">
-                    <strong>Todo *</strong>
+                    <strong>{{'task.title' | i18n}}</strong>
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" ng-model="_task.title" class="form-control" placeholder="Input todo title">
+                    <input type="text" ng-model="_task.title" class="form-control"
+                           placeholder="{{'task.placeholder.title' | i18n}}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">
-                    <strong>Description</strong>
+                    <strong>{{'task.description' | i18n}}</strong>
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" ng-model="_task.description" class="form-control" placeholder="Input todo description">
+                    <input type="text" ng-model="_task.description" class="form-control"
+                           placeholder="{{'task.placeholder.description' | i18n}}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">
-                    <strong>Date</strong>
+                    <strong>{{'task.date' | i18n}}</strong>
                 </label>
                 <div class="col-sm-10">
-                    <input datepicker class="form-control" ng-model="_task.executionDate" name="date" placeholder="Input todo date" type="text">
+                    <input datepicker class="form-control" ng-model="_task.executionDate" name="date"
+                           placeholder="{{'task.placeholder.date' | i18n}}" type="text">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">
-                    <strong>Time</strong>
+                    <strong>{{'task.time' | i18n}}</strong>
                 </label>
                 <!--todo-->
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">
-                    <strong>Repeat</strong>
+                    <strong>{{'task.repeat' | i18n}}</strong>
                 </label>
                 <div class="col-sm-10">
                     <select ui-select2 ng-model="_task.repeat" class="form-control"
                             data-placeholder="Repeat">
                         <option></option>
                         <option ng-repeat="repeat in repeats" value="{{repeat}}">
-                            {{repeat.localizationCode}}
+                            {{repeat.localizationCode | i18n}}
                         </option>
                     </select>
                 </div>
@@ -223,17 +230,17 @@
                 </label>
                 <div class="col-sm-10">
                     <label>
-                        <input type="checkbox" ng-model="_task.completed"> Completed
+                        <input type="checkbox" ng-model="_task.completed"> {{'task.completed' | i18n}}
                     </label>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-primary" ng-click="editTask()" data-dismiss="modal">
-                Save
+                {{'save' | i18n}}
             </button>
             <button type="button" class="btn btn-default" data-dismiss="modal">
-                Close
+                {{'close' | i18n}}
             </button>
         </div>
     </form>
@@ -249,33 +256,33 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title">Show task</h4>
+            <h4 class="modal-title">{{'task.show' | i18n}}</h4>
         </div>
         <div class="modal-body">
             <table class="table table-hover table-bordered">
                 <tbody>
                 <tr>
-                    <td>Title</td>
+                    <td>{{'task.title' | i18n}}</td>
                     <td>{{_task.title}}</td>
                 </tr>
                 <tr>
-                    <td>Description</td>
+                    <td>{{'task.description' | i18n}}</td>
                     <td>{{_task.description}}</td>
                 </tr>
                 <tr>
-                    <td>Date</td>
+                    <td>{{'task.date' | i18n}}</td>
                     <td>{{_task.executionDate}}</td>
                 </tr>
                 <tr>
-                    <td>Repeat</td>
-                    <td>{{_task.repeat.localizationCode}}</td>
+                    <td>{{'task.repeat' | i18n}}</td>
+                    <td>{{_task.repeat.localizationCode | i18n}}</td>
                 </tr>
                 <tr>
-                    <td>Completed</td>
+                    <td>{{'task.completed' | i18n}}</td>
                     <td>{{_task.completed}}</td>
                 </tr>
                 <tr>
-                    <td>Deleted</td>
+                    <td>{{'task.deleted' | i18n}}</td>
                     <td>{{_task.deleted}}</td>
                 </tr>
                 </tbody>
@@ -283,16 +290,16 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-primary" ng-click="showEditTaskModal(_task)" data-dismiss="modal">
-                Edit
+                {{'task.edit' | i18n}}
             </button>
             <button type="button" ng-if="!_task.completed && !_task.deleted" class="btn btn-primary" ng-click="completeTask(_task)" data-dismiss="modal">
-                Complete
+                {{'task.complete' | i18n}}
             </button>
             <button type="button" ng-if="!_task.deleted" class="btn btn-danger" ng-click="deleteTask(_task, true)" data-dismiss="modal">
-                Delete
+                {{'task.delete' | i18n}}
             </button>
             <button type="button" class="btn btn-default" data-dismiss="modal">
-                Close
+                {{'close' | i18n}}
             </button>
         </div>
     </form>

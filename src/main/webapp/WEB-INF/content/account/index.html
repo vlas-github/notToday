@@ -1,37 +1,37 @@
 <div class="header" ng-include src="'content/templates/top.html'"></div>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3>Your profile</h3>
+        <h3>{{'profile.your' | i18n}}</h3>
     </div>
     <div class="panel-body">
         <table class="table table-hover table-bordered">
             <tbody>
                 <tr>
-                    <td>E-mail</td>
+                    <td>{{'profile.email' | i18n}}</td>
                     <td>{{user.email}}</td>
                 </tr>
                 <tr>
-                    <td>Name</td>
+                    <td>{{'profile.name' | i18n}}</td>
                     <td>{{user.fio}}</td>
                 </tr>
                 <tr>
-                    <td>Locality</td>
+                    <td>{{'profile.locality' | i18n}}</td>
                     <td>{{user.locality}}</td>
                 </tr>
                 <tr>
-                    <td>All tasks</td>
+                    <td>{{'tasks.all' | i18n}}</td>
                     <td>{{user.tasks.length}}</td>
                 </tr>
                 <tr>
-                    <td>New tasks</td>
+                    <td>{{'tasks.new' | i18n}}</td>
                     <td>{{user.newTasks.length}}</td>
                 </tr>
                 <tr>
-                    <td>Complete tasks</td>
+                    <td>{{'tasks.completed' | i18n}}</td>
                     <td>{{user.completedTasks.length}}</td>
                 </tr>
                 <tr>
-                    <td>Delete tasks</td>
+                    <td>{{'tasks.deleted' | i18n}}</td>
                     <td>{{user.deletedTasks.length}}</td>
                 </tr>
             </tbody>
@@ -40,7 +40,7 @@
     <div class="panel-footer">
         <span class="btn-group pull-right">
             <a ng-href="#/account/edit">
-                <button type="button" class="btn btn-default">Edit profile</button>
+                <button type="button" class="btn btn-default">{{'profile.edit.button' | i18n}}</button>
             </a>
         </span>
         <div class="clearfix"></div>
