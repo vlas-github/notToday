@@ -12,5 +12,6 @@
         <mapping class="beans.GenericCatalog"/>
         <mapping class="beans.UserAuthorityCatalog"/>
         <mapping class="beans.RepeatCatalog"/>
+        <mapping class="beans.Advert"/>
     </session-factory>
 </hibernate-configuration>

@@ -5,9 +5,9 @@
         {{'page.main.message.2' | i18n}}
         <br/>
         <br/>
-        <h4>{{'page.name.message.news' | i18n}}</h4>
-        <div class="alert alert-success" role="alert">
-            The project will start soon
+        <h4 ng-if="adverts">{{'page.name.message.news' | i18n}}</h4>
+        <div ng-repeat="advert in adverts" class="alert alert-{{advert.type}}" role="alert">
+            {{advert.titleRu}}
         </div>
     </div>
 </div>

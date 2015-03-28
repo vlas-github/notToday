@@ -23,6 +23,7 @@
         <intercept-url pattern="/api/admin/**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/authenticate" access="permitAll" />
         <intercept-url pattern="/api/user.json" access="permitAll"/>
+        <intercept-url pattern="/api/advert/list.json" access="permitAll"/>
         <logout/>
     </http>
 
