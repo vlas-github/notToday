@@ -119,23 +119,23 @@
                     <strong>{{'task.date' |i18n}}</strong>
                 </label>
                 <div class="col-sm-10">
-                    <input datepicker class="form-control" ng-model="task.executionDate" name="date"
-                           placeholder="{{'task.placeholder.date' | i18n}}" type="text">
+                    <!--<input datepicker class="form-control" ng-model="task.executionDate" name="date"
+                           placeholder="{{'task.placeholder.date' | i18n}}" type="text">-->
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">
                     <strong>{{'task.time' | i18n}}</strong>
                 </label>
-
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">
                     <strong>{{'task.repeat' | i18n}}</strong>
                 </label>
                 <div class="col-sm-10">
-                    <select ui-select2 ng-model="task.repeat" class="form-control"
-                            data-placeholder="Repeat">
+                    <select select2 ng-model="task.repeat"
+                            data-placeholder="Repeat"
+                            class="form-control">
                         <option></option>
                         <option ng-repeat="repeat in repeats" value="{{repeat}}">
                             {{repeat.localizationCode | i18n}}
@@ -204,8 +204,8 @@
                     <strong>{{'task.date' | i18n}}</strong>
                 </label>
                 <div class="col-sm-10">
-                    <input datepicker class="form-control" ng-model="_task.executionDate" name="date"
-                           placeholder="{{'task.placeholder.date' | i18n}}" type="text">
+                    <!--<input datepicker class="form-control" ng-model="_task.executionDate" name="date"
+                           placeholder="{{'task.placeholder.date' | i18n}}" type="text">-->
                 </div>
             </div>
             <div class="form-group">
@@ -219,8 +219,9 @@
                     <strong>{{'task.repeat' | i18n}}</strong>
                 </label>
                 <div class="col-sm-10">
-                    <select ui-select2 ng-model="_task.repeat" class="form-control"
-                            data-placeholder="Repeat">
+                    <select select2 ng-model="task.repeat"
+                            data-placeholder="Repeat"
+                            class="form-control">
                         <option></option>
                         <option ng-repeat="repeat in repeats" value="{{repeat}}">
                             {{repeat.localizationCode | i18n}}
