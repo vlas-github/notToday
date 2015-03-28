@@ -19,17 +19,19 @@
 
                     TaskService.list($scope.user.id).$promise.then(function (response) {
                         if (response.status === "OK") {
-                            response.data.forEach(function(t) {
-                                var task = angular.copy(t)
-                                task.user = {}
-                                if (task.deleted) {
-                                    $scope.deletedTasks.push(task)
-                                } else if (task.completed) {
-                                    $scope.completedTasks.push(task)
-                                } else {
-                                    $scope.newTasks.push(task)
-                                }
-                            })
+                            if (response.data && response.data.length > 0) {
+                                response.data.forEach(function (t) {
+                                    var task = angular.copy(t)
+                                    task.user = {} // todo delete this
+                                    if (task.deleted) {
+                                        $scope.deletedTasks.push(task)
+                                    } else if (task.completed) {
+                                        $scope.completedTasks.push(task)
+                                    } else {
+                                        $scope.newTasks.push(task)
+                                    }
+                                })
+                            }
                         }
                     })
                 }

@@ -29,10 +29,10 @@
             <div class="input-group col-xs-12">
                 <div class="input-group">
                     <div class="input-group-addon">{{'task.add.fast' | i18n}}</div>
-                    <input type="text" ng-keyup="$event.keyCode == 13 ? addTodo() : null" ng-model="task.title" class="form-control"
+                    <input type="text" ng-keyup="$event.keyCode == 13 ? addTask() : null" ng-model="task.title" class="form-control"
                            placeholder="{{'task.add.fast.text' | i18n}}">
                     <span class="input-group-btn">
-                        <button type="submit" ng-click="addTodo()" class="btn btn-primary">{{'task.add.fast.button.text' | i18n}}</button>
+                        <button type="submit" ng-click="addTask()" class="btn btn-primary">{{'task.add.fast.button.text' | i18n}}</button>
                     </span>
                 </div>
             </div>
@@ -234,6 +234,15 @@
                 <div class="col-sm-10">
                     <label>
                         <input type="checkbox" ng-model="_task.completed"> {{'task.completed' | i18n}}
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                </label>
+                <div class="col-sm-10">
+                    <label>
+                        <input type="checkbox" ng-model="_task.deleted"> {{'task.deleted' | i18n}}
                     </label>
                 </div>
             </div>
