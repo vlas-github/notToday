@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var TaskCtrl = function($scope, $rootScope, UserService, TaskService, CatalogService) {
+    var TaskCtrl = function($scope, $rootScope, $location, UserService, TaskService, CatalogService) {
 
         $scope.activePage = 'tasks'
         $scope.task = {}
@@ -16,25 +16,25 @@
             UserService.get().$promise.then(function (response) {
                 if (response.status === 0) {
                     $scope.user = response.data
+
+                    TaskService.list($scope.user.id).$promise.then(function (response) {
+                        if (response.status === 0) {
+                            response.data.forEach(function(t) {
+                                var task = angular.copy(t)
+                                task.user = {}
+                                if (task.deleted) {
+                                    $scope.deletedTasks.push(task)
+                                } else if (task.completed) {
+                                    $scope.completedTasks.push(task)
+                                } else {
+                                    $scope.newTasks.push(task)
+                                }
+                            })
+                        }
+                    })
                 }
             })
         }
-
-        TaskService.list($scope.user.id).$promise.then(function (response) {
-            if (response.status === 0) {
-                response.data.forEach(function(t) {
-                    var task = angular.copy(t)
-                    task.user = {}
-                    if (task.deleted) {
-                        $scope.deletedTasks.push(task)
-                    } else if (task.completed) {
-                        $scope.completedTasks.push(task)
-                    } else {
-                        $scope.newTasks.push(task)
-                    }
-                })
-            }
-        })
 
         $scope.showAddTaskModal = function() {
             CatalogService.list('repeat').$promise.then(function (response) {
@@ -152,5 +152,5 @@
     }
 
     angular.module('todolistApp')
-        .controller('TaskCtrl', ['$scope', '$rootScope', 'UserService', 'TaskService', 'CatalogService', TaskCtrl])
+        .controller('TaskCtrl', ['$scope', '$rootScope', '$location', 'UserService', 'TaskService', 'CatalogService', TaskCtrl])
 })()

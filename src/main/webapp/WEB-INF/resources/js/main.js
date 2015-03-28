@@ -24,7 +24,7 @@
             })
             .when('/account', {
                 templateUrl: 'content/account/index.html',
-                controller: 'LoginCtrl',
+                controller: 'AccountCtrl',
                 activePage: 'account'
             })
             .when('/login', {
