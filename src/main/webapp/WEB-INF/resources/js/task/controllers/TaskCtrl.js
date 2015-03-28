@@ -55,6 +55,11 @@
             $scope.openModal($scope.editTaskModal);
         }
 
+        $scope.showShowTaskModal = function (t) {
+            $scope._task = t
+            $scope.openModal($scope.showTaskModal)
+        }
+
         $scope.addTask = function () {
             TaskService.add($scope.user, $scope.task).$promise.then(function (response) {
 
