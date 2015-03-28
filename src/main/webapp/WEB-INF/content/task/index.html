@@ -39,7 +39,8 @@
         </div>
         <div ng-if="newTasks.length > 0 && showNewTask" class="list-group">
             <h4>{{'tasks.new' | i18n}}:</h4>
-            <a class="list-group-item" value="{{t}}" ng-click="showShowTaskModal(t)" ng-repeat="t in newTasks">
+            <a class="list-group-item" value="{{t}}" ng-click="showShowTaskModal(t)"
+               ng-repeat="t in newTasks | orderBy:'title'">
                 <div>
                     <div class="text-hide">{{t.uuid}}</div>
                     <strong>{{t.title}}</strong>
@@ -55,7 +56,8 @@
         </div>
         <div ng-if="completedTasks.length > 0 && showCompletedTask" class="list-group">
             <h5>{{'tasks.completed' | i18n}}:</h5>
-            <a class="list-group-item list-group-item-warning" ng-click="showShowTaskModal(t)" value="{{t}}" ng-repeat="t in completedTasks">
+            <a class="list-group-item list-group-item-warning" ng-click="showShowTaskModal(t)" value="{{t}}"
+               ng-repeat="t in completedTasks | orderBy:'title'">
                 <div>
                     <div class="text-hide">{{t.uuid}}</div>
                     <strong>{{t.title}}</strong>
@@ -69,7 +71,8 @@
         </div>
         <div ng-if="deletedTasks.length > 0 && showDeletedTask" class="list-group">
             <h5>{{'tasks.deleted' | i18n}}:</h5>
-            <a class="list-group-item list-group-item-danger" ng-click="showShowTaskModal(t)" value="{{t}}" ng-repeat="t in deletedTasks">
+            <a class="list-group-item list-group-item-danger" ng-click="showShowTaskModal(t)" value="{{t}}"
+               ng-repeat="t in deletedTasks | orderBy:'title'">
                 <div>
                     <div class="text-hide">{{t.uuid}}</div>
                     <strong>{{t.title}}</strong>
