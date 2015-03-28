@@ -37,6 +37,11 @@
                 controller: 'LoginCtrl',
                 activePage: 'login'
             })
+            .when('/logout', {
+                templateUrl: 'content/account/logout.html',
+                controller: 'LoginCtrl',
+                activePage: 'login'
+            })
             .otherwise({
                 redirectTo: '/'
             });

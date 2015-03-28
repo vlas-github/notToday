@@ -8,7 +8,7 @@
         $scope.activePage = 'home'
 
         if (!$rootScope.user || !$rootScope.user.id) {
-            $location.path("/login");
+            //$location.path("/login"); todo try get user by cookie
         } else {
             UserService.get().$promise.then(function (response) {
                 if (response.status === "OK") {
@@ -17,7 +17,6 @@
             })
         }
     }
-
 
     angular.module('todolistApp')
         .controller('IndexCtrl', ['$scope', '$rootScope', '$location', '$cookieStore', 'UserService', 'TaskService', IndexCtrl])
