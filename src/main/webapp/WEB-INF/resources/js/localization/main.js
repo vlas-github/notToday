@@ -25,6 +25,6 @@
 
     angular.module('todolistApp').
         constant('localizedTexts', {}).
-        run(['$filter',localizationModuleRun ]);
+        run(['$filter', localizationModuleRun]);
 
 })();

@@ -2,7 +2,7 @@
 
     'use strict';
 
-    var LoginCtrl = function ($scope, $rootScope, $location, $cookieStore, AuthenticateService, UserService) {
+    var LoginCtrl = function ($scope, $rootScope, $location, $cookieStore, AuthenticateService, UserService, Locale) {
         $scope.user = {}
         $scope.rememberMe = false
         $scope.activePage = 'login'
@@ -16,6 +16,9 @@
                         $cookieStore.put('authToken', authToken)
                     }
                     $rootScope.user = authenticationResult.data
+                    if ($rootScope.user && $rootScope.user.locality) {
+                        Locale.set($rootScope.user.locality)
+                    }
                     $scope.invalid = false
                     $location.path("/")
                 } else {
@@ -45,5 +48,5 @@
     }
 
     angular.module('todolistApp')
-        .controller('LoginCtrl', ['$scope', '$rootScope', '$location', '$cookieStore', 'AuthenticateService', 'UserService', LoginCtrl])
+        .controller('LoginCtrl', ['$scope', '$rootScope', '$location', '$cookieStore', 'AuthenticateService', 'UserService', 'Locale', LoginCtrl])
 })()

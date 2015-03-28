@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var AccountCtrl = function($scope, $rootScope, $location, UserService, TaskService, CatalogService) {
+    var AccountCtrl = function($scope, $rootScope, $location, UserService, TaskService, CatalogService, Locale) {
         $scope.activePage = 'account'
         
         if (!$rootScope.user || !$rootScope.user.id) {
@@ -39,6 +39,9 @@
         $scope.saveProfile = function() {
             UserService.update($scope.user).$promise.then(function (response) {
                 if (response.status === "OK") {
+                    if (response.data && response.data.locality) {
+                        Locale.set(response.data.locality)
+                    }
                     $location.path('/account')
                 }
             })
@@ -46,5 +49,5 @@
     }
 
     angular.module('todolistApp')
-        .controller('AccountCtrl', ['$scope', '$rootScope', '$location', 'UserService', 'TaskService', 'CatalogService', AccountCtrl])
+        .controller('AccountCtrl', ['$scope', '$rootScope', '$location', 'UserService', 'TaskService', 'CatalogService', 'Locale', AccountCtrl])
 })()
