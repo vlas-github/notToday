@@ -24,7 +24,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <li ng-if="user && user.id"
                     class="dropdown"
-                    ng-class="{active: activePage == 'account'}">
+                    ng-class="{active: activePage == 'account'}"
+                    style="cursor: pointer">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.fio}} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a ng-href="#/account">{{'profile' | i18n}}</a></li>
