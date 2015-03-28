@@ -17,4 +17,10 @@ angular.module('todolistApp')
                 id: user.id
             }, user)
         }
+
+        this.create = function(user) {
+            return $resource('api/user.json', {} , {
+                create: {method: 'POST'}
+            }).create({}, user)
+        }
 }])

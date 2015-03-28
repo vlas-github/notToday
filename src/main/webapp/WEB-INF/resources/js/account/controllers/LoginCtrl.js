@@ -2,7 +2,7 @@
 
     'use strict';
 
-    var LoginCtrl = function ($scope, $rootScope, $location, $cookieStore, AuthenticateService) {
+    var LoginCtrl = function ($scope, $rootScope, $location, $cookieStore, AuthenticateService, UserService) {
         $scope.user = {}
         $scope.rememberMe = false
         $scope.activePage = 'login'
@@ -26,6 +26,14 @@
             })
         }
 
+        $scope.registration = function() {
+            UserService.create($scope.user).$promise.then(function (response) {
+                if (response.status === "OK") {
+                    $location.path("/login")
+                }
+            })
+        }
+
         $scope.logout = function() {
             $cookieStore.remove('authToken')
             $rootScope.user = {}
@@ -37,5 +45,5 @@
     }
 
     angular.module('todolistApp')
-        .controller('LoginCtrl', ['$scope', '$rootScope', '$location', '$cookieStore', 'AuthenticateService', LoginCtrl])
+        .controller('LoginCtrl', ['$scope', '$rootScope', '$location', '$cookieStore', 'AuthenticateService', 'UserService', LoginCtrl])
 })()

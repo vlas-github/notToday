@@ -210,7 +210,9 @@ public class User  implements UserDetails {
         user.setPassHash(getPassHash());
         user.setRegistrationDate(getRegistrationDate());
         user.setUserAuthorities(getUserAuthorities() != null ? getUserAuthorities() : null);
-        user.setTasks(getTasks().stream().map((t) -> t != null ? t.clone() : null).collect(Collectors.toList()));
+        if (user.getTasks() != null) {
+            user.setTasks(getTasks().stream().map((t) -> t != null ? t.clone() : null).collect(Collectors.toList()));
+        }
         return user;
     }
 }

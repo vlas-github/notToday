@@ -1,14 +1,20 @@
 package web.controllers.rest;
 
 import beans.User;
+import beans.UserAuthority;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import services.UserService;
 import utils.json.AjaxResponse;
 import utils.json.AjaxResponseStatus;
 import web.validators.UserVoValidator;
+
+import java.util.*;
 
 /**
  * Created by vlasov-id-131216 on 15.02.15.
@@ -21,6 +27,9 @@ public class UserRestController {
     private UserService userService;
     @Autowired
     private UserVoValidator userVoValidator;
+    @Autowired
+    @Qualifier("passwordEncoder")
+    private StandardPasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "user/{id}.json", method = RequestMethod.GET)
     @ResponseBody
@@ -47,6 +56,16 @@ public class UserRestController {
                 response.setData(userVoValidator.getErrors());
                 return response;
             }
+            Set<UserAuthority> authorities = new HashSet<>();
+            UserAuthority authority = new UserAuthority();
+            authority.setValue("ROLE_USER");
+            authorities.add(authority);
+            user.setUserAuthorities(authorities);
+            user.setIsAccountNonLocked(true);
+            user.setLocality("en");
+            user.setPassHash(passwordEncoder.encode(user.getPassword()));
+            user.setRegistrationDate(new Date());
+
             response.setData(userService.save(user));
             response.setStatus(AjaxResponseStatus.OK);
         } catch (Throwable t) {
@@ -81,6 +100,5 @@ public class UserRestController {
             response.setMessage(t.getMessage());
         }
         return response;
-
     }
 }
