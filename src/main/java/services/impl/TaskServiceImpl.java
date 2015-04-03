@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import services.TaskService;
+import services.UserService;
 import utils.exception.BusinessException;
 
 import java.util.Date;
@@ -28,6 +29,10 @@ public class TaskServiceImpl implements TaskService {
 
     @Autowired
     private TaskParticipantDao taskParticipantDao;
+
+    @Autowired
+    private UserService userService;
+
 
     @Override
     @Transactional
@@ -48,15 +53,27 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public Task add(Task task) throws BusinessException {
+    public Task add(Task task, User user) throws BusinessException {
         try {
             task.setId("");
             task.setGuid(UUID.randomUUID().toString());
+            task.setActive(true);
+            task.setChangeDate(new Date());
             task = taskDao.save(task);
             if (task.getParentTaskGuid() != null && StringUtils.isNotEmpty(task.getParentTaskGuid())) {
                 Task parent = taskDao.getLast(task.getParentTaskGuid());
                 parent.setHaveSubtasks(true);
                 update(parent);
+            }
+            if (user != null && StringUtils.isNotEmpty(user.getId())) {
+                user = userService.getUserById(user.getId());
+                if (user != null) {
+                    TaskParticipant taskParticipant = new TaskParticipant();
+                    taskParticipant.setUserId(user.getId());
+                    taskParticipant.setTaskGuid(task.getGuid());
+                    taskParticipant.setNotify(true);            // todo брать из настроек пользователя, когда это будет возможно
+                    taskParticipantDao.save(taskParticipant);
+                }
             }
             return task;
         } catch (Exception e) {

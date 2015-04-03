@@ -24,6 +24,9 @@ public class TaskVoConverterProvider implements ConverterProvider<Task, TaskVo> 
 
     @Override
     public TaskVo convertSourceToTarget(Task from, TaskVo to) {
+        if (to == null) {
+            to = new TaskVo();
+        }
         to.setId(from.getId());
         to.setGuid(from.getGuid());
         to.setActive(from.isActive());
@@ -52,6 +55,9 @@ public class TaskVoConverterProvider implements ConverterProvider<Task, TaskVo> 
 
     @Override
     public Task convertTargetToSource(TaskVo from, Task to) {
+        if (to == null) {
+            to = new Task();
+        }
         to.setId(from.getId());
         to.setGuid(from.getGuid());
         to.setActive(from.isActive());

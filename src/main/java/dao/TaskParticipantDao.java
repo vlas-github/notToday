@@ -13,4 +13,5 @@ public interface TaskParticipantDao {
 
     List<TaskParticipant> getParticipant(Task task);
     List<TaskParticipant> getParticipant(User user);
+    TaskParticipant save(TaskParticipant taskParticipant);
 }

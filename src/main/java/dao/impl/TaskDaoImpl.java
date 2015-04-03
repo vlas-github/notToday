@@ -50,8 +50,8 @@ public class TaskDaoImpl extends GenericDao implements TaskDao {
     public List<Task> getList() {
         try {
             return getSession().createCriteria(Task.class)
-                    .add(Restrictions.eq("_active", true))
-                    .addOrder(Order.asc("_creation_date")).list();
+                    .add(Restrictions.eq("active", true))
+                    .addOrder(Order.asc("creationDate")).list();
         } catch (Throwable t) {
             throw new DataAccessException(t);
         }
@@ -70,18 +70,18 @@ public class TaskDaoImpl extends GenericDao implements TaskDao {
     @Override
     public Task getLast(String guid) {
         return (Task) getSession().createCriteria(Task.class)
-                .add(Restrictions.eq("_guid", guid))
-                .add(Restrictions.eq("_active", true))
-                .addOrder(Order.asc("_creation_date")).uniqueResult();
+                .add(Restrictions.eq("guid", guid))
+                .add(Restrictions.eq("active", true))
+                .addOrder(Order.asc("text")).uniqueResult();
     }
 
     @Override
     public List<Task> getSubtasks(Task task) {
         if (task.getHaveSubtasks()) {
             return getSession().createCriteria(Task.class)
-                    .add(Restrictions.eq("_active", true))
-                    .add(Restrictions.eq("_parent_task", task.getGuid()))
-                    .addOrder(Order.asc("_creation_date")).list();
+                    .add(Restrictions.eq("active", true))
+                    .add(Restrictions.eq("parentTask", task.getGuid()))
+                    .addOrder(Order.asc("text")).list();
         }
         return null;
     }

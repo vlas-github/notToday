@@ -6,6 +6,7 @@
 <hibernate-configuration>
     <session-factory>
         <mapping class="beans.Task"/>
+        <mapping class="beans.TaskParticipant"/>
         <mapping class="beans.UserAuthority"/>
         <mapping class="beans.User"/>
         <mapping class="beans.UserAuthorityCatalog"/>

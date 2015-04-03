@@ -15,6 +15,6 @@ public interface TaskService {
     Task get(String guid) throws BusinessException;
     List<Task> getSubtasks(Task task) throws BusinessException;
     List<Task> getByUser(User user) throws BusinessException;
-    Task add(Task task) throws BusinessException;
+    Task add(Task task, User user) throws BusinessException;
     Task update(Task task) throws BusinessException;
 }

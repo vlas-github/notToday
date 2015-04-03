@@ -6,6 +6,7 @@ import beans.User;
 import dao.TaskParticipantDao;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import utils.exception.DataAccessException;
 
 import java.util.List;
 
@@ -17,13 +18,32 @@ public class TaskParticipantDaoImpl extends GenericDao implements TaskParticipan
 
     @Override
     public List<TaskParticipant> getParticipant(Task task) {
-        return getSession().createCriteria(TaskParticipant.class)
-                .add(Restrictions.eq("_task_guid", task.getGuid())).list();
+        try {
+            return getSession().createCriteria(TaskParticipant.class)
+                    .add(Restrictions.eq("_task_guid", task.getGuid())).list();
+        } catch (Throwable t) {
+            throw new DataAccessException(t);
+        }
     }
 
     @Override
     public List<TaskParticipant> getParticipant(User user) {
-        return getSession().createCriteria(TaskParticipant.class)
-                .add(Restrictions.eq("_user_id", user.getId())).list();
+        try {
+            return getSession().createCriteria(TaskParticipant.class)
+                    .add(Restrictions.eq("userId", user.getId())).list();
+        } catch (Throwable t) {
+            throw new DataAccessException(t);
+        }
+    }
+
+    @Override
+    public TaskParticipant save(TaskParticipant taskParticipant) {
+        try {
+            getSession().save(taskParticipant);
+            getSession().flush();
+            return taskParticipant;
+        } catch (Throwable t) {
+            throw new DataAccessException(t);
+        }
     }
 }

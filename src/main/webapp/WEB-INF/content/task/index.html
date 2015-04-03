@@ -29,7 +29,7 @@
             <div class="input-group col-xs-12">
                 <div class="input-group">
                     <div class="input-group-addon">{{'task.add.fast' | i18n}}</div>
-                    <input type="text" ng-keyup="$event.keyCode == 13 ? addTask() : null" ng-model="_task.title" class="form-control"
+                    <input type="text" ng-keyup="$event.keyCode == 13 ? addTask() : null" ng-model="_task.text" class="form-control"
                            placeholder="{{'task.add.fast.text' | i18n}}">
                     <span class="input-group-btn">
                         <button type="submit" ng-click="addTask()" class="btn btn-primary">{{'task.add.fast.button.text' | i18n}}</button>
@@ -40,10 +40,10 @@
         <div ng-if="newTasks.length > 0 && showNewTask" class="list-group">
             <h4>{{'tasks.new' | i18n}}:</h4>
             <a class="list-group-item" value="{{t}}" ng-click="showShowTaskModal(t)"
-               ng-repeat="t in newTasks | orderBy:'title'">
+               ng-repeat="t in newTasks | orderBy:'text'">
                 <div>
                     <div class="text-hide">{{t.uuid}}</div>
-                    <strong>{{t.title}}</strong>
+                    <strong>{{t.text}}</strong>
                     <i class="glyphicon glyphicon-remove pull-right" style="cursor: pointer" ng-click="deleteTask(t, true);$event.stopPropagation()"></i>
                     <span class="pull-right">&nbsp;&nbsp;</span>
                     <i class="glyphicon glyphicon-edit pull-right" style="cursor: pointer" ng-click="showEditTaskModal(t);$event.stopPropagation()"></i>
@@ -57,10 +57,10 @@
         <div ng-if="completedTasks.length > 0 && showCompletedTask" class="list-group">
             <h5>{{'tasks.completed' | i18n}}:</h5>
             <a class="list-group-item list-group-item-warning" ng-click="showShowTaskModal(t)" value="{{t}}"
-               ng-repeat="t in completedTasks | orderBy:'title'">
+               ng-repeat="t in completedTasks | orderBy:'text'">
                 <div>
                     <div class="text-hide">{{t.uuid}}</div>
-                    <strong>{{t.title}}</strong>
+                    <strong>{{t.text}}</strong>
                     <i class="glyphicon glyphicon-edit pull-right" style="cursor: pointer" ng-click="showEditTaskModal(t);$event.stopPropagation()"></i>
                     <span class="pull-right">&nbsp;&nbsp;</span>
                     <i class="glyphicon glyphicon-ok pull-right" style="cursor: pointer" ng-click="deleteTask(t);$event.stopPropagation()"></i>
@@ -72,10 +72,10 @@
         <div ng-if="deletedTasks.length > 0 && showDeletedTask" class="list-group">
             <h5>{{'tasks.deleted' | i18n}}:</h5>
             <a class="list-group-item list-group-item-danger" ng-click="showShowTaskModal(t)" value="{{t}}"
-               ng-repeat="t in deletedTasks | orderBy:'title'">
+               ng-repeat="t in deletedTasks | orderBy:'text'">
                 <div>
                     <div class="text-hide">{{t.uuid}}</div>
-                    <strong>{{t.title}}</strong>
+                    <strong>{{t.text}}</strong>
                     <i class="glyphicon glyphicon-edit pull-right" style="cursor: pointer" ng-click="showEditTaskModal(t);$event.stopPropagation()"></i>
                     <br/>
                     {{t.description}}
@@ -101,7 +101,7 @@
                     <strong>{{'task.title' | i18n}}</strong>
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" ng-model="_task.title" class="form-control"
+                    <input type="text" ng-model="_task.text" class="form-control"
                            placeholder="{{'task.placeholder.title' | i18n}}">
                 </div>
             </div>
@@ -137,7 +137,7 @@
                             data-placeholder="{{'task.repeat' | i18n}}"
                             class="form-control">
                         <option></option>
-                        <option ng-repeat="repeat in repeats" value="{{repeat.id}}">
+                        <option ng-repeat="repeat in repeats" value="{{repeat.value}}">
                             {{repeat.localizationCode | i18n}}
                         </option>
                     </select>
@@ -186,7 +186,7 @@
                     <strong>{{'task.title' | i18n}}</strong>
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" ng-model="_task.title" class="form-control"
+                    <input type="text" ng-model="_task.text" class="form-control"
                            placeholder="{{'task.placeholder.title' | i18n}}">
                 </div>
             </div>
@@ -277,7 +277,7 @@
                 <tbody>
                 <tr>
                     <td>{{'task.title' | i18n}}</td>
-                    <td>{{_task.title}}</td>
+                    <td>{{_task.text}}</td>
                 </tr>
                 <tr>
                     <td>{{'task.description' | i18n}}</td>

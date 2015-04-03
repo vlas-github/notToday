@@ -4,6 +4,7 @@ import beans.Task;
 import beans.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,8 @@ import services.UserService;
 import utils.exception.BusinessException;
 import utils.json.AjaxResponse;
 import utils.json.AjaxResponseStatus;
+import web.controllers.utils.converter.Converter;
+import web.controllers.vo.TaskVo;
 import web.validators.TaskVoValidator;
 
 import java.security.Principal;
@@ -26,10 +29,16 @@ public class TaskRestController {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private TaskService taskService;
+
     @Autowired
     private TaskVoValidator taskVoValidator;
+
+    @Autowired
+    @Qualifier("voConverter")
+    private Converter converter;
 
     @RequestMapping(value = "user/{user}/task/{id}.json", method = RequestMethod.GET)
     @ResponseBody
@@ -81,7 +90,7 @@ public class TaskRestController {
     @RequestMapping(value = "user/{user}/task.json", method = RequestMethod.POST)
     @ResponseBody
     public Object add(@PathVariable("user") String userId,
-                      @RequestBody Task task) {
+                      @RequestBody TaskVo task) {
         AjaxResponse response = new AjaxResponse();
         try {
             if (!verificationOfUserRights(userId)) {
@@ -96,7 +105,7 @@ public class TaskRestController {
                 return response;
             }
             User user = userService.getUserById(userId);
-            task = taskService.add(task);
+            task = converter.convert(taskService.add(converter.convert(task), user));
             response.setStatus(AjaxResponseStatus.OK);
             response.setData(task);
         } catch (Throwable t) {
@@ -146,7 +155,7 @@ public class TaskRestController {
             if (task.isDeleted() != null) {
                 persisted.setDeleted(task.isDeleted());
             }
-            taskVoValidator.validate(persisted);
+            taskVoValidator.validate(converter.convert(persisted, TaskVo.class));
             if (taskVoValidator.hasErrors()) {
                 response.setStatus(AjaxResponseStatus.ERROR);
                 response.setMessage("Validation error");
