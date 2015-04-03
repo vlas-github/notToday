@@ -28,6 +28,7 @@
             'profile.edit.button': 'Изменить',
             'profile.email': 'Электронная почта',
             'profile.locality': 'Язык',
+            'profile.login': 'Логин',
             'profile.name': 'Имя',
             'profile.save': 'Сохранить',
             'profile.subscribe': 'Присылать уведомления на почту',

@@ -28,6 +28,7 @@
             'profile.edit.button': 'Edit profile',
             'profile.email': 'Email',
             'profile.locality': 'Locality',
+            'profile.login': 'Login',
             'profile.name': 'Name',
             'profile.save': 'Save profile',
             'profile.subscribe': 'Subscribe to email newsletter',
