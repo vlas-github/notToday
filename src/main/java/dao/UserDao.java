@@ -7,4 +7,5 @@ import beans.User;
  */
 public interface UserDao extends SimpleDao<User> {
 
+    User getByEmail(String email);
 }

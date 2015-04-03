@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import services.UserService;
 import utils.json.AjaxResponse;
 import utils.json.AjaxResponseStatus;
+import web.controllers.utils.converter.Converter;
+import web.controllers.vo.UserVo;
 import web.validators.UserVoValidator;
 
 import java.util.*;
@@ -25,11 +27,13 @@ public class UserRestController {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private UserVoValidator userVoValidator;
+
     @Autowired
-    @Qualifier("passwordEncoder")
-    private StandardPasswordEncoder passwordEncoder;
+    @Qualifier("voConverter")
+    private Converter converter;
 
     @RequestMapping(value = "user/{id}.json", method = RequestMethod.GET)
     @ResponseBody
@@ -45,41 +49,13 @@ public class UserRestController {
         return response;
     }
 
-    @RequestMapping(value = "user.json", method = RequestMethod.POST)
-    @ResponseBody
-    public Object add(@RequestBody User user) {
-        AjaxResponse response = new AjaxResponse();
-        try {
-            userVoValidator.validate(user);
-            if (userVoValidator.hasErrors()) {
-                response.setStatus(AjaxResponseStatus.ERROR);
-                response.setData(userVoValidator.getErrors());
-                return response;
-            }
-            Set<UserAuthority> authorities = new HashSet<>();
-            UserAuthority authority = new UserAuthority();
-            authority.setValue("ROLE_USER");
-            authorities.add(authority);
-            user.setIsAccountNonLocked(true);
-            user.setLocality("en");
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setRegistrationDate(new Date());
-
-            response.setData(userService.save(user));
-            response.setStatus(AjaxResponseStatus.OK);
-        } catch (Throwable t) {
-            response.setStatus(AjaxResponseStatus.ERROR);
-            response.setMessage(t.getMessage());
-        }
-        return response;
-    }
 
     @RequestMapping(value = "user/{id}.json", method = RequestMethod.PUT)
     @ResponseBody
-    public Object update(@PathVariable("id") String id, @RequestBody User user) {
+    public Object update(@PathVariable("id") String id, @RequestBody UserVo user) {
         AjaxResponse response = new AjaxResponse();
         try {
-            User persisted = userService.getUserById(id);
+            UserVo persisted = converter.convert(userService.getUserById(id));
             if (StringUtils.isNotEmpty(user.getName())) {
                 persisted.setName(user.getName());
             }
@@ -92,7 +68,7 @@ public class UserRestController {
                 response.setMessage("Validate error");
                 return response;
             }
-            response.setData(userService.update(user));
+            response.setData(userService.update(converter.convert(user)));
             response.setStatus(AjaxResponseStatus.OK);
         } catch (Throwable t) {
             response.setStatus(AjaxResponseStatus.ERROR);

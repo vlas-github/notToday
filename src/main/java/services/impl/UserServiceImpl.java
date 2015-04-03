@@ -30,16 +30,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             if (StringUtils.isEmpty(user.getEmail())) {
                 throw new BusinessException("Validate email - is null!");
             }
-            User pattern = new User();
-            pattern.setEmail(user.getEmail());
-            List<User> users = userDao.getList(user);
-            if (users.size() > 1) {
-                throw new BusinessException("Two users in db with one email!");
-            }
-            if (users.size() == 0) {
-                return null;
-            }
-            return users.get(0);
+            return userDao.getByEmail(user.getEmail());
         } catch (Exception e) {
             throw new BusinessException(e);
         }

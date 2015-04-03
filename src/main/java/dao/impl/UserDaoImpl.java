@@ -1,6 +1,7 @@
 package dao.impl;
 
 import beans.User;
+import beans.UserAuthority;
 import dao.UserDao;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +31,12 @@ public class UserDaoImpl extends GenericDao implements UserDao {
     public User save(User user) {
         try {
             getSession().save(user);
+            if (user.getAuthorities() != null) {
+                for (UserAuthority authority : user.getAuthorities()) {
+                    authority.setUserId(user.getId());
+                    getSession().save(authority);
+                }
+            }
             getSession().flush();
             return user;
         } catch (Throwable t) {
@@ -46,6 +53,12 @@ public class UserDaoImpl extends GenericDao implements UserDao {
         } catch (Throwable t) {
             throw new DataAccessException(t);
         }
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        return (User) getSession().createCriteria(User.class)
+                .add(Restrictions.eq("email", email)).uniqueResult();
     }
 
     @Override

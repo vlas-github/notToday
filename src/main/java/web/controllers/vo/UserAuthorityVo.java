@@ -1,9 +1,11 @@
 package web.controllers.vo;
 
+import org.springframework.security.core.GrantedAuthority;
+
 /**
  * Created by vlasov-id-131216 on 03.04.15.
  */
-public class UserAuthorityVo {
+public class UserAuthorityVo implements GrantedAuthority {
     private String id;
     private String value;
     private UserVo user;
@@ -30,5 +32,10 @@ public class UserAuthorityVo {
 
     public void setUser(UserVo user) {
         this.user = user;
+    }
+
+    @Override
+    public String getAuthority() {
+        return value;
     }
 }

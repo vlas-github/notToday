@@ -1,12 +1,14 @@
 package web.controllers.vo;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Date;
 import java.util.Set;
 
 /**
  * Created by vlasov-id-131216 on 03.04.15.
  */
-public class UserVo {
+public class UserVo implements UserDetails {
     private String id;
     private String name;
     private String email;
@@ -66,6 +68,7 @@ public class UserVo {
         this.locality = locality;
     }
 
+    @Override
     public Set<UserAuthorityVo> getAuthorities() {
         return authorities;
     }
@@ -96,5 +99,30 @@ public class UserVo {
 
     public void setLastActivityDate(Date lastActivityDate) {
         this.lastActivityDate = lastActivityDate;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return isAccountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

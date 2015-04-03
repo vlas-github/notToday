@@ -1,12 +1,10 @@
 package web.validators;
 
-import beans.User;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import services.UserService;
+import web.controllers.vo.UserVo;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -19,12 +17,12 @@ import java.util.Map;
  */
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class UserVoValidator implements Validator<User> {
+public class UserVoValidator implements Validator<UserVo> {
 
     private Map<String, Object> errors = new HashMap<String, Object>();
 
     @Override
-    public Object validate(User user) {
+    public Object validate(UserVo user) {
         if (StringUtils.isEmpty(user.getEmail())) {
             errors.put("email is null", true);
         }
@@ -44,7 +42,7 @@ public class UserVoValidator implements Validator<User> {
     }
 
     @Override
-    public Object validate(Collection<User> list) {
+    public Object validate(Collection<UserVo> list) {
         list.stream().forEach(x -> validate(x));
         return errors;
     }

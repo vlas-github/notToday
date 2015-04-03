@@ -23,6 +23,9 @@ public class UserVoConverterProvider implements ConverterProvider<User, UserVo> 
 
     @Override
     public UserVo convertSourceToTarget(User from, UserVo to) {
+        if (to == null) {
+            to = new UserVo();
+        }
         to.setId(from.getId());
         to.setName(from.getName());
         to.setEmail(from.getEmail());
@@ -38,6 +41,9 @@ public class UserVoConverterProvider implements ConverterProvider<User, UserVo> 
 
     @Override
     public User convertTargetToSource(UserVo from, User to) {
+        if (to == null) {
+            to = new User();
+        }
         to.setId(from.getId());
         to.setName(from.getName());
         to.setEmail(from.getEmail());

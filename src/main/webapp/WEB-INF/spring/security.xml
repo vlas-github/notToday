@@ -40,10 +40,12 @@
     <authentication-manager>
         <authentication-provider>
             <jdbc-user-service data-source-ref="dataSource"
-                               users-by-username-query="select _email as email, _password as password, _is_account_non_locked as enabled from User where email=?"
-                               authorities-by-username-query="select Users._email as email, UserAuthorities.value as authorities
-                                                              from Users, UserAuthorities
-                                                              where email = ? AND Users._id=UserAuthorities._user_id "/>
+                               users-by-username-query="select _email as email, _password as password, _is_account_non_locked as enabled from User where _email=?"
+                               authorities-by-username-query="select User._email as email, UserAuthority._value as authorities
+                                                              from User, UserAuthority
+                                                              where User._email=? AND User._id=UserAuthority._user_id"/>
+
+
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

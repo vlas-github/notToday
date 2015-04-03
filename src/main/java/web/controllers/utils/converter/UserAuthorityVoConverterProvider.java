@@ -26,6 +26,9 @@ public class UserAuthorityVoConverterProvider implements ConverterProvider<UserA
 
     @Override
     public UserAuthorityVo convertSourceToTarget(UserAuthority from, UserAuthorityVo to) {
+        if (to == null) {
+            to = new UserAuthorityVo();
+        }
         to.setId(from.getId());
         to.setValue(from.getValue());
         to.setUser(null);
@@ -41,6 +44,9 @@ public class UserAuthorityVoConverterProvider implements ConverterProvider<UserA
 
     @Override
     public UserAuthority convertTargetToSource(UserAuthorityVo from, UserAuthority to) {
+        if (to == null) {
+            to = new UserAuthority();
+        }
         to.setId(from.getId());
         to.setValue(from.getValue());
         to.setUserId(null);
