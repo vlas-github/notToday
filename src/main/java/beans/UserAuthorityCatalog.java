@@ -8,12 +8,11 @@ import javax.persistence.*;
 @Entity
 @Table(name="UserAuthorityCatalog")
 @AttributeOverrides({
-        @AttributeOverride(name="id",               column=@Column(name="id")),
-        @AttributeOverride(name="name",             column=@Column(name="name")),
-        @AttributeOverride(name="localizationCode", column=@Column(name="localizationCode")),
-        @AttributeOverride(name="order",            column=@Column(name="_order"))
-})
-public class UserAuthorityCatalog extends GenericCatalog {
+        @AttributeOverride(name="id",               column=@Column(name="_id")),
+        @AttributeOverride(name="name",             column=@Column(name="_name")),
+        @AttributeOverride(name="localizationCode", column=@Column(name="_localization_code")),
+        @AttributeOverride(name="order",            column=@Column(name="_order"))})
+public final class UserAuthorityCatalog extends BaseCatalog {
     public static String ROLE_USER = "ROLE_USER";
     public static String ROLE_ADMIN = "ROLE_ADMIN";
 }

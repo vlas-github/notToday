@@ -18,9 +18,9 @@ import java.util.List;
 public class UserDaoImpl extends GenericDao implements UserDao {
 
     @Override
-    public User getById(User user) {
+    public User getById(String id) {
         try {
-            return (User) getSession().get(User.class, user.getId());
+            return (User) getSession().get(User.class, id);
         } catch (Throwable t) {
             throw new DataAccessException(t);
         }
@@ -38,7 +38,7 @@ public class UserDaoImpl extends GenericDao implements UserDao {
     }
 
     @Override
-    public User saveOrUpdate(User user) {
+    public User update(User user) {
         try {
             getSession().saveOrUpdate(user);
             getSession().flush();
@@ -60,30 +60,7 @@ public class UserDaoImpl extends GenericDao implements UserDao {
     @Override
     public List<User> getList(User pattern) {
         try {
-            Criteria cr = getSession().createCriteria(User.class);
-
-            if (StringUtils.isNotEmpty(pattern.getId())) {
-                cr.add(Restrictions.eq("id", pattern.getId()));
-            }
-
-            if (StringUtils.isNotEmpty(pattern.getFio())) {
-                String [] names = pattern.getFio().split(" ");
-                StringBuilder fullName = new StringBuilder();
-                for (String name : names) {
-                    fullName.append("%"+name+"%");
-                }
-                cr.add(Restrictions.like("fio", fullName.toString()));
-            }
-
-            if (StringUtils.isNotEmpty(pattern.getEmail())) {
-                cr.add(Restrictions.like("email", "%"+pattern.getEmail()+"%"));
-            }
-
-            if (StringUtils.isNotEmpty(pattern.getLocality())) {
-                cr.add(Restrictions.like("locality", "%"+pattern.getLocality()+"%"));
-            }
-
-            return cr.list();
+            throw new Exception("don't work");
         } catch (Throwable t) {
             throw new DataAccessException(t);
         }

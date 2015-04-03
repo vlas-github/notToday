@@ -96,7 +96,6 @@ public class TaskRestController {
                 return response;
             }
             User user = userService.getUserById(userId);
-            task.setUser(user);
             task = taskService.add(task);
             response.setStatus(AjaxResponseStatus.OK);
             response.setData(task);
@@ -123,8 +122,8 @@ public class TaskRestController {
                 return response;
             }
             Task persisted = taskService.getById(task.getId());
-            if (StringUtils.isNotEmpty(task.getTitle())) {
-                persisted.setTitle(task.getTitle());
+            if (StringUtils.isNotEmpty(task.getText())) {
+                persisted.setText(task.getText());
             }
             if (StringUtils.isNotEmpty(task.getDescription())) {
                 persisted.setDescription(task.getDescription());
@@ -153,7 +152,6 @@ public class TaskRestController {
                 response.setMessage("Validation error");
                 return response;
             }
-            persisted.setUser(userService.getUserById(userId));
             taskService.update(persisted);
             response.setStatus(AjaxResponseStatus.OK);
             response.setData(persisted);

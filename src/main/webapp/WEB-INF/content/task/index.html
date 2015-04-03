@@ -134,7 +134,7 @@
                 </label>
                 <div class="col-sm-10">
                     <select select2 ng-model="_task.repeat"
-                            data-placeholder="Repeat"
+                            data-placeholder="{{'task.repeat' | i18n}}"
                             class="form-control">
                         <option></option>
                         <option ng-repeat="repeat in repeats" value="{{repeat.id}}">
@@ -221,7 +221,7 @@
                 </label>
                 <div class="col-sm-10">
                     <select select2 ng-model="_task.repeat"
-                            data-placeholder="Repeat"
+                            data-placeholder="{{'task.repeat' | i18n}}"
                             class="form-control">
                         <option></option>
                         <option ng-repeat="repeat in repeats" value="{{repeat.id}}">

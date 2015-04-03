@@ -47,4 +47,19 @@
         <property name="suffix" value=".html"/>
         <property name="contentType" value="text/html; charset=UTF-8"/>
     </bean>
+
+    <!-- Конвертер -->
+    <bean id="voConverter" class="web.controllers.utils.converter.ConverterImpl" scope="singleton">
+        <property name="providers">
+            <util:list id="voProviders">
+                <ref bean="newsTypeCatalogVoConverterProvider"/>
+                <ref bean="newsVoConverterProvider"/>
+                <ref bean="repeatCatalogVoConverterProvider"/>
+                <ref bean="taskVoConverterProvider"/>
+                <ref bean="userAuthorityCatalogVoConverterProvider"/>
+                <ref bean="userAuthorityVoConverterProvider"/>
+                <ref bean="userVoConverterProvider"/>
+            </util:list>
+        </property>
+    </bean>
 </beans>

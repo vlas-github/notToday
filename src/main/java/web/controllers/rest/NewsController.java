@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import services.AdvertService;
+import services.NewsService;
 import utils.json.AjaxResponse;
 import utils.json.AjaxResponseStatus;
 
@@ -14,17 +14,17 @@ import utils.json.AjaxResponseStatus;
  */
 @Controller
 @RequestMapping(value = "/api/", produces="application/json; charset=utf-8")
-public class AdvertController {
+public class NewsController {
 
     @Autowired
-    private AdvertService advertService;
+    private NewsService newsService;
 
     @RequestMapping(value = "news/list.json", method = RequestMethod.GET)
     @ResponseBody
     public Object getList() {
         AjaxResponse response = new AjaxResponse();
         try {
-            response.setData(advertService.list());
+            response.setData(newsService.list());
             response.setStatus(AjaxResponseStatus.OK);
         } catch (Throwable t) {
             response.setStatus(AjaxResponseStatus.ERROR);

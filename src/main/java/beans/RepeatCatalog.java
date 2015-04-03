@@ -8,12 +8,11 @@ import javax.persistence.*;
 @Entity
 @Table(name="RepeatCatalog")
 @AttributeOverrides({
-        @AttributeOverride(name="id",               column=@Column(name="id")),
-        @AttributeOverride(name="name",             column=@Column(name="name")),
-        @AttributeOverride(name="localizationCode", column=@Column(name="localizationCode")),
-        @AttributeOverride(name="order",            column=@Column(name="_order"))
-})
-public class RepeatCatalog extends GenericCatalog {
+        @AttributeOverride(name="id",               column=@Column(name="_id")),
+        @AttributeOverride(name="name",             column=@Column(name="_name")),
+        @AttributeOverride(name="localizationCode", column=@Column(name="_localization_code")),
+        @AttributeOverride(name="order",            column=@Column(name="_order"))})
+public final class RepeatCatalog extends BaseCatalog {
     public static String EACH_DAY = "EACH_DAY";
     public static String EACH_TWO_DAYS = "EACH_TWO_DAYS";
     public static String EACH_THREE_DAYS = "EACH_THREE_DAYS";

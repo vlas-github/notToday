@@ -21,7 +21,7 @@ public class AdminRestController {
 
     @RequestMapping(value = "admin/blocker/{id}.json", method = RequestMethod.PUT)
     @ResponseBody
-    public Object block(@PathVariable("user") String userId) {
+    public Object block(@PathVariable("id") String userId) {
         AjaxResponse response = new AjaxResponse();
         try {
             if (StringUtils.isEmpty(userId)) {
@@ -31,7 +31,7 @@ public class AdminRestController {
             }
             User user = userService.getUserById(userId);
             user.setIsAccountNonLocked(false);
-            userService.saveOrUpdate(user);
+            userService.update(user);
             response.setStatus(AjaxResponseStatus.OK);
             response.setData(user);
         } catch (Throwable t) {
@@ -57,8 +57,8 @@ public class AdminRestController {
                 return response;
             }
             User user = userService.getUserById(id);
-            user.setPassHash(password);
-            userService.saveOrUpdate(user);
+            user.setPassword(password);
+            userService.update(user);
             response.setStatus(AjaxResponseStatus.OK);
             response.setData(user);
         } catch (Throwable t) {

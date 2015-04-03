@@ -1,106 +1,95 @@
 package beans;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Created by vlasov-id-131216 on 14.02.15.
  */
 @Entity
-@Table(name = "Users")
-public class User  implements UserDetails {
+@Table(name="User")
+@AttributeOverrides({
+        @AttributeOverride(name="id", column=@Column(name="_id"))})
+public final class User extends BaseEntity implements UserDetails {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(generator = "uuid", strategy=GenerationType.AUTO)
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    @Column(name="_name")
+    private String name;
 
-    @Column(name = "fio")
-    private String fio;
-
-    @Column(name = "email")
+    @Column(name="_email")
     private String email;
 
-    @Column(name = "pass")
-    private String passHash;
+    @Column(name="_login")
+    private String login;
 
-    @Column(name = "locality")
+    @Column(name="_password")
+    private String password;
+
+    @Column(name="_locality")
     private String locality;
 
-    @Column(name = "registrationDate")
-    private Date registrationDate;
-
-    @Column(name = "isAccountNonLocked")
-    @Type(type = "org.hibernate.type.NumericBooleanType")
-    private Boolean isAccountNonLocked;
-
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "_user_id")
     private Set<UserAuthority> authorities;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
-    private List<Task> tasks;
+    @Column(name="_is_account_non_locked")
+    @Type(type="org.hibernate.type.NumericBooleanType")
+    private Boolean isAccountNonLocked;
+
+    @Column(name="_registration_date")
+    private Date registrationDate;
+
+    @Column(name="_last_activity_date")
+    private Date lastActivityDate;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         User user = (User) o;
 
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (fio != null ? !fio.equals(user.fio) : user.fio != null) return false;
-        if (id != null ? !id.equals(user.id) : user.id != null) return false;
-        if (isAccountNonLocked != null ? !isAccountNonLocked.equals(user.isAccountNonLocked) : user.isAccountNonLocked != null) return false;
-        if (locality != null ? !locality.equals(user.locality) : user.locality != null) return false;
-        if (passHash != null ? !passHash.equals(user.passHash) : user.passHash != null) return false;
-        if (registrationDate != null ? !registrationDate.equals(user.registrationDate) : user.registrationDate != null) return false;
-        if (tasks != null ? !tasks.equals(user.tasks) : user.tasks != null) return false;
         if (authorities != null ? !authorities.equals(user.authorities) : user.authorities != null) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (isAccountNonLocked != null ? !isAccountNonLocked.equals(user.isAccountNonLocked) : user.isAccountNonLocked != null)
+            return false;
+        if (lastActivityDate != null ? !lastActivityDate.equals(user.lastActivityDate) : user.lastActivityDate != null)
+            return false;
+        if (locality != null ? !locality.equals(user.locality) : user.locality != null) return false;
+        if (login != null ? !login.equals(user.login) : user.login != null) return false;
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (registrationDate != null ? !registrationDate.equals(user.registrationDate) : user.registrationDate != null)
+            return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (fio != null ? fio.hashCode() : 0);
+        int result = super.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (passHash != null ? passHash.hashCode() : 0);
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (locality != null ? locality.hashCode() : 0);
-        result = 31 * result + (registrationDate != null ? registrationDate.hashCode() : 0);
-        result = 31 * result + (isAccountNonLocked != null ? isAccountNonLocked.hashCode() : 0);
         result = 31 * result + (authorities != null ? authorities.hashCode() : 0);
-        result = 31 * result + (tasks != null ? tasks.hashCode() : 0);
+        result = 31 * result + (isAccountNonLocked != null ? isAccountNonLocked.hashCode() : 0);
+        result = 31 * result + (registrationDate != null ? registrationDate.hashCode() : 0);
+        result = 31 * result + (lastActivityDate != null ? lastActivityDate.hashCode() : 0);
         return result;
     }
 
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getFio() {
-        return fio;
-    }
-
-    public void setFio(String fio) {
-        this.fio = fio;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -111,12 +100,20 @@ public class User  implements UserDetails {
         this.email = email;
     }
 
-    public String getPassHash() {
-        return passHash;
+    public String getLogin() {
+        return login;
     }
 
-    public void setPassHash(String passHash) {
-        this.passHash = passHash;
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getLocality() {
@@ -127,12 +124,12 @@ public class User  implements UserDetails {
         this.locality = locality;
     }
 
-    public Date getRegistrationDate() {
-        return registrationDate;
+    public Set<UserAuthority> getAuthorities() {
+        return authorities;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
-        this.registrationDate = registrationDate;
+    public void setAuthorities(Set<UserAuthority> authorities) {
+        this.authorities = authorities;
     }
 
     public Boolean getIsAccountNonLocked() {
@@ -143,36 +140,20 @@ public class User  implements UserDetails {
         this.isAccountNonLocked = isAccountNonLocked;
     }
 
-    public Set<UserAuthority> getUserAuthorities() {
-        return authorities;
+    public Date getRegistrationDate() {
+        return registrationDate;
     }
 
-    public void setUserAuthorities(Set<UserAuthority> authorities) {
-        this.authorities = authorities;
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
+    public Date getLastActivityDate() {
+        return lastActivityDate;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-    }
-
-    /**
-     *
-     * implements UserDetails methods
-     *
-     */
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
-    public String getPassword() {
-        return passHash;
+    public void setLastActivityDate(Date lastActivityDate) {
+        this.lastActivityDate = lastActivityDate;
     }
 
     @Override
@@ -182,7 +163,7 @@ public class User  implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
@@ -192,27 +173,11 @@ public class User  implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
-    }
-
-    public User clone() {
-        User user = new User();
-        user.setId(getId());
-        user.setEmail(getEmail());
-        user.setFio(getFio());
-        user.setIsAccountNonLocked(getIsAccountNonLocked());
-        user.setLocality(getLocality());
-        user.setPassHash(getPassHash());
-        user.setRegistrationDate(getRegistrationDate());
-        user.setUserAuthorities(getUserAuthorities() != null ? getUserAuthorities() : null);
-        if (user.getTasks() != null) {
-            user.setTasks(getTasks().stream().map((t) -> t != null ? t.clone() : null).collect(Collectors.toList()));
-        }
-        return user;
+        return false;
     }
 }

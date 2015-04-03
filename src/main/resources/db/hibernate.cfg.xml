@@ -8,9 +8,9 @@
         <mapping class="beans.Task"/>
         <mapping class="beans.UserAuthority"/>
         <mapping class="beans.User"/>
-        <mapping class="beans.GenericCatalog"/>
         <mapping class="beans.UserAuthorityCatalog"/>
         <mapping class="beans.RepeatCatalog"/>
-        <mapping class="beans.Advert"/>
+        <mapping class="beans.News"/>
+        <mapping class="beans.NewsTypeCatalog"/>
     </session-factory>
 </hibernate-configuration>

@@ -60,10 +60,9 @@ public class UserRestController {
             UserAuthority authority = new UserAuthority();
             authority.setValue("ROLE_USER");
             authorities.add(authority);
-            user.setUserAuthorities(authorities);
             user.setIsAccountNonLocked(true);
             user.setLocality("en");
-            user.setPassHash(passwordEncoder.encode(user.getPassword()));
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRegistrationDate(new Date());
 
             response.setData(userService.save(user));
@@ -81,8 +80,8 @@ public class UserRestController {
         AjaxResponse response = new AjaxResponse();
         try {
             User persisted = userService.getUserById(id);
-            if (StringUtils.isNotEmpty(user.getFio())) {
-                persisted.setFio(user.getFio());
+            if (StringUtils.isNotEmpty(user.getName())) {
+                persisted.setName(user.getName());
             }
             if (StringUtils.isNotEmpty(user.getLocality())) {
                 persisted.setLocality(user.getLocality());
@@ -93,7 +92,7 @@ public class UserRestController {
                 response.setMessage("Validate error");
                 return response;
             }
-            response.setData(userService.saveOrUpdate(user));
+            response.setData(userService.update(user));
             response.setStatus(AjaxResponseStatus.OK);
         } catch (Throwable t) {
             response.setStatus(AjaxResponseStatus.ERROR);

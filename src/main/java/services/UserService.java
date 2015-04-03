@@ -12,6 +12,6 @@ public interface UserService {
 
     User getUserByEmail(User user) throws BusinessException;
     User getUserById(String id) throws BusinessException;
-    User saveOrUpdate(User user) throws BusinessException;
+    User update(User user) throws BusinessException;
     User save(User user) throws BusinessException;
 }

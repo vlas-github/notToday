@@ -1,41 +1,30 @@
 package beans;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * Created by vlasov-id-131216 on 07.03.15.
  */
 @Entity
-@Table(name = "GenericCatalog")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class GenericCatalog {
+public abstract class BaseCatalog extends BaseEntity {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(generator = "uuid", strategy=GenerationType.AUTO)
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    protected String id;
+    @Column(name="_localization_code")
+    private String localizationCode;
 
-    @Column(name = "name")
-    protected String name;
+    @Column(name="_name")
+    private String name;
 
-    @Column(name = "localizationCode")
-    protected String localizationCode;
-
-    @Column(name = "_order")
-    protected Integer order;
+    @Column(name="_order")
+    private Integer order;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
-        GenericCatalog that = (GenericCatalog) o;
+        BaseCatalog that = (BaseCatalog) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (localizationCode != null ? !localizationCode.equals(that.localizationCode) : that.localizationCode != null)
             return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -46,27 +35,11 @@ public abstract class GenericCatalog {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = super.hashCode();
         result = 31 * result + (localizationCode != null ? localizationCode.hashCode() : 0);
         result = 31 * result + (order != null ? order.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getLocalizationCode() {
@@ -83,5 +56,13 @@ public abstract class GenericCatalog {
 
     public void setOrder(Integer order) {
         this.order = order;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

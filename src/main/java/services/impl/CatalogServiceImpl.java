@@ -1,6 +1,6 @@
 package services.impl;
 
-import beans.GenericCatalog;
+import beans.BaseCatalog;
 import dao.CatalogDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     @Transactional
-    public <T extends GenericCatalog> List<T> getList(Class<T> clazz) {
+    public <T extends BaseCatalog> List<T> getList(Class<T> clazz) {
         List list = catalogDao.getList(clazz);
         Collections.sort(list, new GenericCatalogComparator());
         return list;
@@ -30,7 +30,7 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     @Transactional
-    public <T extends GenericCatalog> T get(String id, Class<T> clazz) {
+    public <T extends BaseCatalog> T get(String id, Class<T> clazz) {
         return catalogDao.get(id, clazz);
     }
 }

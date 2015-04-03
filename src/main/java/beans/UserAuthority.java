@@ -1,27 +1,24 @@
 package beans;
 
 
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * Created by vlasov-id-131216 on 14.02.15.
  */
 @Entity
-@Table(name = "UserAuthorities")
-public class UserAuthority  implements GrantedAuthority {
+@Table(name="UserAuthority")
+@AttributeOverrides({
+        @AttributeOverride(name="id", column=@Column(name="_id"))})
+public final class UserAuthority extends BaseEntity implements GrantedAuthority {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(generator = "uuid", strategy=GenerationType.AUTO)
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
-
-    @Column(name = "value")
+    @Column(name="_value")
     private String value;
+
+    @Column(name="_user_id")
+    private String userId;
 
     public UserAuthority() {
     }
@@ -30,12 +27,26 @@ public class UserAuthority  implements GrantedAuthority {
         this.value = value;
     }
 
-    public String getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        UserAuthority authority = (UserAuthority) o;
+
+        if (userId != null ? !userId.equals(authority.userId) : authority.userId != null) return false;
+        if (value != null ? !value.equals(authority.value) : authority.value != null) return false;
+
+        return true;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (value != null ? value.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        return result;
     }
 
     public String getValue() {
@@ -46,28 +57,16 @@ public class UserAuthority  implements GrantedAuthority {
         this.value = value;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String getAuthority() {
-        return getValue();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        UserAuthority that = (UserAuthority) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (value != null ? !value.equals(that.value) : that.value != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (value != null ? value.hashCode() : 0);
-        return result;
+        return value;
     }
 }

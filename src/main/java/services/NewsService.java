@@ -1,7 +1,6 @@
 package services;
 
-import beans.Advert;
-import org.springframework.beans.factory.annotation.Autowired;
+import beans.News;
 import org.springframework.transaction.annotation.Transactional;
 import utils.exception.BusinessException;
 
@@ -10,8 +9,9 @@ import java.util.List;
 /**
  * Created by vlasov-id-131216 on 28.03.15.
  */
-public interface AdvertService {
+public interface NewsService {
 
-    @Transactional
-    List<Advert> list() throws BusinessException;
+    List<News> list() throws BusinessException;
+    News save(News news) throws BusinessException;
+    News update(News news) throws BusinessException;
 }

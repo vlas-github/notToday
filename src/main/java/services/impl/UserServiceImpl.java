@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             if (users.size() == 0) {
                 return null;
             }
-            return users.get(0).clone();
+            return users.get(0);
         } catch (Exception e) {
             throw new BusinessException(e);
         }
@@ -49,13 +49,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public User getUserById(String id) throws BusinessException {
         try {
-            User user = new User();
-            user.setId(id);
-            user = userDao.getById(user);
+            User user = userDao.getById(id);
             if (user == null) {
                 throw new BusinessException("User not found");
             }
-            return user.clone();
+            return user;
         } catch (Exception e) {
             throw new BusinessException(e);
         }
@@ -63,9 +61,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public User saveOrUpdate(User user) throws BusinessException {
+    public User update(User user) throws BusinessException {
         try {
-            return userDao.saveOrUpdate(user).clone();
+            return userDao.update(user);
         } catch (Exception e) {
             throw new BusinessException(e);
         }
@@ -75,7 +73,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public User save(User user) throws BusinessException {
         try {
-            return userDao.save(user).clone();
+            return userDao.save(user);
         } catch (Exception e) {
             throw new BusinessException(e);
         }
@@ -88,7 +86,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             User user = new User();
             user.setEmail(s);
             user = getUserByEmail(user);
-            user.setTasks(null);
             return user;
         } catch (Exception e) {
             throw new UsernameNotFoundException("UserService -> loadUserByUsername", e);
