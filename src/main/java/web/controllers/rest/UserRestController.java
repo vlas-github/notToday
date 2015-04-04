@@ -40,7 +40,7 @@ public class UserRestController {
     public Object get(@PathVariable("id") String id) {
         AjaxResponse response = new AjaxResponse();
         try {
-            response.setData(userService.getUserById(id));
+            response.setData(converter.convert(userService.getUserById(id), UserVo.class));
             response.setStatus(AjaxResponseStatus.OK);
         } catch (Throwable t) {
             response.setStatus(AjaxResponseStatus.ERROR);

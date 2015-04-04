@@ -27,7 +27,8 @@ public final class News extends BaseVersionedEntity {
     @Column(name="_type")
     private String type;
 
-    @Column(name="_author")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "_author")
     private User author;
 
     @Column(name="_creation_date")

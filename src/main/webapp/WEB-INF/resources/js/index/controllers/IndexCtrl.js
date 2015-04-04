@@ -1,7 +1,7 @@
 (function () {
     'use strict'
 
-    var IndexCtrl = function ($scope, $rootScope, $location, $cookieStore, UserService, TaskService, AdvertService, Locale) {
+    var IndexCtrl = function ($scope, $rootScope, $location, $cookieStore, UserService, TaskService, NewsService, Locale) {
         $scope.todos = []
         $scope.showModal = false
         $scope.authToken = $cookieStore.get('authToken')
@@ -17,7 +17,7 @@
             })
         }
 
-        AdvertService.list().$promise.then(function (response) {
+        NewsService.list().$promise.then(function (response) {
             if (response.status === "OK") {
                 $scope.adverts = response.data
                 var locale = Locale.get()
@@ -31,7 +31,7 @@
     }
 
     angular.module('todolistApp')
-        .controller('IndexCtrl', ['$scope', '$rootScope', '$location', '$cookieStore', 'UserService', 'TaskService', 'AdvertService', 'Locale', IndexCtrl])
+        .controller('IndexCtrl', ['$scope', '$rootScope', '$location', '$cookieStore', 'UserService', 'TaskService', 'NewsService', 'Locale', IndexCtrl])
 })()
 
 function generateUUID() {

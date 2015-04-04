@@ -49,9 +49,7 @@ public class NewsDaoImpl extends GenericDao implements NewsDao {
     @Override
     public List<News> getList() {
         try {
-            return getSession().createCriteria(News.class)
-                    .add(Restrictions.eq("_active", true))
-                    .addOrder(Order.asc("_creation_date")).list();
+            return getSession().createCriteria(News.class).list();
         } catch (Throwable t) {
             throw new DataAccessException(t);
         }

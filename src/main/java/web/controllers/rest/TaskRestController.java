@@ -1,10 +1,7 @@
 package web.controllers.rest;
 
-import beans.Task;
-import beans.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +10,8 @@ import services.UserService;
 import utils.exception.BusinessException;
 import utils.json.AjaxResponse;
 import utils.json.AjaxResponseStatus;
-import web.controllers.utils.converter.Converter;
 import web.controllers.vo.TaskVo;
+import web.controllers.vo.UserVo;
 import web.validators.TaskVoValidator;
 
 import java.security.Principal;
@@ -36,10 +33,6 @@ public class TaskRestController {
     @Autowired
     private TaskVoValidator taskVoValidator;
 
-    @Autowired
-    @Qualifier("voConverter")
-    private Converter converter;
-
     @RequestMapping(value = "user/{user}/task/{id}.json", method = RequestMethod.GET)
     @ResponseBody
     public Object get(@PathVariable("user") String userId,
@@ -51,7 +44,7 @@ public class TaskRestController {
                 response.setMessage("403");
                 return response;
             }
-            Task task = taskService.getById(id);
+            TaskVo task = taskService.getById(id);
             if (task == null) {
                 response.setStatus(AjaxResponseStatus.ERROR);
                 response.setMessage("Task not found");
@@ -76,8 +69,8 @@ public class TaskRestController {
                 response.setMessage("403");
                 return response;
             }
-            User user = userService.getUserById(userId);
-            List<Task> tasks = taskService.getByUser(user);
+            UserVo user = userService.getUserById(userId);
+            List<TaskVo> tasks = taskService.getByUser(user);
             response.setStatus(AjaxResponseStatus.OK);
             response.setData(tasks);
         } catch (Throwable t) {
@@ -104,8 +97,8 @@ public class TaskRestController {
                 response.setMessage("Task validation error");
                 return response;
             }
-            User user = userService.getUserById(userId);
-            task = converter.convert(taskService.add(converter.convert(task), user));
+            UserVo user = userService.getUserById(userId);
+            task = taskService.add(task, user);
             response.setStatus(AjaxResponseStatus.OK);
             response.setData(task);
         } catch (Throwable t) {
@@ -117,7 +110,7 @@ public class TaskRestController {
 
     @RequestMapping(value = "user/{user}/task/{id}.json", method = RequestMethod.PUT)
     @ResponseBody
-    public Object update(@PathVariable("user") String userId, @RequestBody Task task) {
+    public Object update(@PathVariable("user") String userId, @RequestBody TaskVo task) {
         AjaxResponse response = new AjaxResponse();
         try {
             if (!verificationOfUserRights(userId)) {
@@ -130,7 +123,7 @@ public class TaskRestController {
                 response.setMessage("Task id is empty");
                 return response;
             }
-            Task persisted = taskService.getById(task.getId());
+            TaskVo persisted = taskService.getById(task.getId());
             if (StringUtils.isNotEmpty(task.getText())) {
                 persisted.setText(task.getText());
             }
@@ -155,7 +148,7 @@ public class TaskRestController {
             if (task.isDeleted() != null) {
                 persisted.setDeleted(task.isDeleted());
             }
-            taskVoValidator.validate(converter.convert(persisted, TaskVo.class));
+            taskVoValidator.validate(persisted);
             if (taskVoValidator.hasErrors()) {
                 response.setStatus(AjaxResponseStatus.ERROR);
                 response.setMessage("Validation error");
@@ -182,7 +175,7 @@ public class TaskRestController {
                 response.setMessage("403");
                 return response;
             }
-            Task task = taskService.getById(id);
+            TaskVo task = taskService.getById(id);
             if (task == null) {
                 response.setStatus(AjaxResponseStatus.ERROR);
                 response.setMessage("Task not found");
@@ -204,7 +197,7 @@ public class TaskRestController {
             return false;
         }
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.getUserById(userId);
+        UserVo user = userService.getUserById(userId);
         if (!user.getEmail().equals(principal.getName())) {
             return false;
         }

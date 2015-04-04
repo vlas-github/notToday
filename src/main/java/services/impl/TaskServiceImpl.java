@@ -7,11 +7,15 @@ import dao.TaskDao;
 import dao.TaskParticipantDao;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import services.TaskService;
 import services.UserService;
 import utils.exception.BusinessException;
+import web.controllers.utils.converter.Converter;
+import web.controllers.vo.TaskVo;
+import web.controllers.vo.UserVo;
 
 import java.util.Date;
 import java.util.List;
@@ -33,19 +37,22 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    @Qualifier("voConverter")
+    private Converter converter;
 
     @Override
     @Transactional
-    public List<Task> getByUser(User user) throws BusinessException {
+    public List<TaskVo> getByUser(UserVo user) throws BusinessException {
         try {
             if (StringUtils.isEmpty(user.getId())) {
                 return null;
             }
-            List<TaskParticipant> taskParticipants = taskParticipantDao.getParticipant(user);
+            List<TaskParticipant> taskParticipants = taskParticipantDao.getParticipant(converter.convert(user, User.class));
             List<Task> tasks = taskParticipants.stream()
                     .map((participant) -> taskDao.getLast(participant.getTaskGuid()))
                     .collect(Collectors.toList());
-            return tasks;
+            return converter.convert(tasks);
         } catch (Exception e) {
             throw new BusinessException(e);
         }
@@ -53,20 +60,20 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public Task add(Task task, User user) throws BusinessException {
+    public TaskVo add(TaskVo task, UserVo user) throws BusinessException {
         try {
             task.setId("");
             task.setGuid(UUID.randomUUID().toString());
             task.setActive(true);
             task.setChangeDate(new Date());
-            task = taskDao.save(task);
-            if (task.getParentTaskGuid() != null && StringUtils.isNotEmpty(task.getParentTaskGuid())) {
-                Task parent = taskDao.getLast(task.getParentTaskGuid());
+            task = converter.convert(taskDao.save(converter.convert(task)));
+            if (task.getParentTask().getGuid() != null && StringUtils.isNotEmpty(task.getParentTask().getGuid())) {
+                TaskVo parent = converter.convert(taskDao.getLast(task.getParentTask().getGuid()));
                 parent.setHaveSubtasks(true);
                 update(parent);
             }
             if (user != null && StringUtils.isNotEmpty(user.getId())) {
-                user = userService.getUserById(user.getId());
+                user = converter.convert(userService.getUserById(user.getId()));
                 if (user != null) {
                     TaskParticipant taskParticipant = new TaskParticipant();
                     taskParticipant.setUserId(user.getId());
@@ -75,7 +82,7 @@ public class TaskServiceImpl implements TaskService {
                     taskParticipantDao.save(taskParticipant);
                 }
             }
-            return task;
+            return converter.convert(task);
         } catch (Exception e) {
             throw new BusinessException(e);
         }
@@ -83,7 +90,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public Task update(Task task) throws BusinessException {
+    public TaskVo update(TaskVo task) throws BusinessException {
         try {
             if (StringUtils.isEmpty(task.getGuid())) {
                 throw new Exception("guid is null");
@@ -92,7 +99,7 @@ public class TaskServiceImpl implements TaskService {
             task.setPrevious(last.getId());
             task.setChangeDate(new Date());
             task.setId(null);
-            task = taskDao.save(task);
+            task = converter.convert(taskDao.save(converter.convert(task)));
             last.setNext(task.getId());
             last.setActive(false);
             taskDao.update(last);
@@ -104,12 +111,12 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public Task getById(String id) throws BusinessException {
+    public TaskVo getById(String id) throws BusinessException {
         try {
             if (StringUtils.isEmpty(id)) {
                 throw new Exception("id is null");
             }
-            return taskDao.getById(id);
+            return converter.convert(taskDao.getById(id));
         } catch (Exception e) {
             throw new BusinessException(e);
         }
@@ -117,12 +124,12 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public Task get(String guid) throws BusinessException {
+    public TaskVo get(String guid) throws BusinessException {
         try {
             if (StringUtils.isEmpty(guid)) {
                 throw new Exception("guid is null");
             }
-            return taskDao.getLast(guid);
+            return converter.convert(taskDao.getLast(guid));
         } catch (Exception e) {
             throw new BusinessException(e);
         }
@@ -130,12 +137,12 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public List<Task> getSubtasks(Task task) throws BusinessException {
+    public List<TaskVo> getSubtasks(TaskVo task) throws BusinessException {
         try {
             if (StringUtils.isEmpty(task.getGuid())) {
                 throw new Exception("guid is null");
             }
-            return taskDao.getSubtasks(task);
+            return converter.convert(taskDao.getSubtasks(converter.convert(task)));
         } catch (Exception e) {
             throw new BusinessException(e);
         }

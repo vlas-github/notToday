@@ -16,10 +16,6 @@ import web.controllers.vo.TaskVo;
 public class TaskVoConverterProvider implements ConverterProvider<Task, TaskVo> {
 
     @Autowired
-    @Qualifier("voConverter")
-    private Converter converter;
-
-    @Autowired
     private TaskService taskService;
 
     @Override
@@ -44,9 +40,9 @@ public class TaskVoConverterProvider implements ConverterProvider<Task, TaskVo> 
         to.setParentTask(null);
         if (StringUtils.isNotEmpty(from.getParentTaskGuid())) {
             try {
-                Task parent = taskService.get(from.getParentTaskGuid());
-                parent.setParentTaskGuid(null);
-                to.setParentTask(converter.convert(parent, TaskVo.class));
+                TaskVo parent = taskService.get(from.getParentTaskGuid());
+                parent.setParentTask(null);
+                to.setParentTask(parent);
             } catch (BusinessException e) { }
         }
         to.setHaveSubtasks(from.getHaveSubtasks());

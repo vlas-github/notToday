@@ -1,6 +1,5 @@
 package web.controllers.rest;
 
-import beans.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import services.UserService;
 import utils.json.AjaxResponse;
 import utils.json.AjaxResponseStatus;
-import web.controllers.utils.converter.Converter;
 import web.controllers.vo.UserAuthorityVo;
 import web.controllers.vo.UserVo;
 import web.validators.UserVoValidator;
@@ -33,10 +31,6 @@ public class AdminRestController {
     private UserVoValidator userVoValidator;
 
     @Autowired
-    @Qualifier("voConverter")
-    private Converter converter;
-
-    @Autowired
     @Qualifier("passwordEncoder")
     private StandardPasswordEncoder passwordEncoder;
 
@@ -50,7 +44,7 @@ public class AdminRestController {
                 response.setMessage("User id is empty");
                 return response;
             }
-            User user = userService.getUserById(userId);
+            UserVo user = userService.getUserById(userId);
             user.setIsAccountNonLocked(false);
             userService.update(user);
             response.setStatus(AjaxResponseStatus.OK);
@@ -83,7 +77,7 @@ public class AdminRestController {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setLastActivityDate(new Date());
             user.setRegistrationDate(new Date());
-            user = converter.convert(userService.save(converter.convert(user)));
+            user = userService.save(user);
             response.setData(user);
             response.setStatus(AjaxResponseStatus.OK);
         } catch (Throwable t) {
@@ -108,7 +102,7 @@ public class AdminRestController {
                 response.setMessage("Password id is empty");
                 return response;
             }
-            User user = userService.getUserById(id);
+            UserVo user = userService.getUserById(id);
             user.setPassword(password);
             userService.update(user);
             response.setStatus(AjaxResponseStatus.OK);

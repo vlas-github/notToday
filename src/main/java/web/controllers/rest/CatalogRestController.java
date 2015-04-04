@@ -1,7 +1,5 @@
 package web.controllers.rest;
 
-import beans.RepeatCatalog;
-import beans.UserAuthorityCatalog;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +10,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import services.CatalogService;
 import utils.json.AjaxResponse;
 import utils.json.AjaxResponseStatus;
+import web.controllers.vo.NewsTypeCatalogVo;
+import web.controllers.vo.RepeatCatalogVo;
+import web.controllers.vo.UserAuthorityCatalogVo;
 
 /**
  * Created by vlasov-id-131216 on 07.03.15.
@@ -34,9 +35,11 @@ public class CatalogRestController {
                 return response;
             }
             if ("userAuthority".equals(name)) {
-                response.setData(catalogService.getList(UserAuthorityCatalog.class));
+                response.setData(catalogService.getList(UserAuthorityCatalogVo.class));
             } else if ("repeat".equals(name)) {
-                response.setData(catalogService.getList(RepeatCatalog.class));
+                response.setData(catalogService.getList(RepeatCatalogVo.class));
+            } else if ("newsType".equals(name)) {
+                response.setData(catalogService.getList(NewsTypeCatalogVo.class));
             }
             response.setStatus(AjaxResponseStatus.OK);
         } catch (Throwable t) {
@@ -61,9 +64,9 @@ public class CatalogRestController {
                 return response;
             }
             if ("userAuthority".equals(name)) {
-                response.setData(catalogService.get(id, UserAuthorityCatalog.class));
+                response.setData(catalogService.get(id, UserAuthorityCatalogVo.class));
             } else if ("repeat".equals(name)) {
-                response.setData(catalogService.get(id, RepeatCatalog.class));
+                response.setData(catalogService.get(id, RepeatCatalogVo.class));
             }
             response.setStatus(AjaxResponseStatus.OK);
         } catch (Throwable t) {

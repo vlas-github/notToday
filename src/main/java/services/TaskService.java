@@ -1,9 +1,8 @@
 package services;
 
-import beans.Task;
-import beans.TaskParticipant;
-import beans.User;
 import utils.exception.BusinessException;
+import web.controllers.vo.TaskVo;
+import web.controllers.vo.UserVo;
 
 import java.util.List;
 
@@ -11,10 +10,10 @@ import java.util.List;
  * Created by vlasov-id-131216 on 07.03.15.
  */
 public interface TaskService {
-    Task getById(String id) throws BusinessException;
-    Task get(String guid) throws BusinessException;
-    List<Task> getSubtasks(Task task) throws BusinessException;
-    List<Task> getByUser(User user) throws BusinessException;
-    Task add(Task task, User user) throws BusinessException;
-    Task update(Task task) throws BusinessException;
+    TaskVo getById(String id) throws BusinessException;
+    TaskVo get(String guid) throws BusinessException;
+    List<TaskVo> getSubtasks(TaskVo task) throws BusinessException;
+    List<TaskVo> getByUser(UserVo user) throws BusinessException;
+    TaskVo add(TaskVo task, UserVo user) throws BusinessException;
+    TaskVo update(TaskVo task) throws BusinessException;
 }

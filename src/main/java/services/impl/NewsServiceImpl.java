@@ -1,12 +1,14 @@
 package services.impl;
 
-import beans.News;
 import dao.NewsDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import services.NewsService;
 import utils.exception.BusinessException;
+import web.controllers.utils.converter.Converter;
+import web.controllers.vo.NewsVo;
 
 import java.util.List;
 
@@ -19,29 +21,35 @@ public class NewsServiceImpl implements NewsService {
     @Autowired
     private NewsDao newsDao;
 
+    @Autowired
+    @Qualifier("voConverter")
+    private Converter converter;
+
     @Override
     @Transactional
-    public List<News> list() throws BusinessException {
+    public List<NewsVo> list() throws BusinessException {
         try {
-            return newsDao.getList();
+            return converter.convert(newsDao.getList(), NewsVo.class);
         } catch (Exception e) {
             throw new BusinessException(e);
         }
     }
 
     @Override
-    public News save(News news) throws BusinessException {
+    @Transactional
+    public NewsVo save(NewsVo news) throws BusinessException {
         try {
-            return newsDao.save(news);
+            return null; // newsDao.save(news); // todo
         } catch (Exception e) {
             throw new BusinessException(e);
         }
     }
 
     @Override
-    public News update(News news) throws BusinessException {
+    @Transactional
+    public NewsVo update(NewsVo news) throws BusinessException {
         try {
-            return newsDao.update(news); // todo
+            return null; // newsDao.update(news); // todo
         } catch (Exception e) {
             throw new BusinessException(e);
         }

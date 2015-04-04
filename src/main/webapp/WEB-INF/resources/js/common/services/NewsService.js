@@ -2,7 +2,7 @@
 
     'use strict';
 
-    var AdvertService = function ($resource) {
+    var NewsService = function ($resource) {
 
         this.list = function () {
             return $resource('api/news/list.json', {}, {
@@ -12,5 +12,5 @@
     }
 
     angular.module('todolistApp').
-        service('AdvertService', ['$resource', AdvertService]);
+        service('NewsService', ['$resource', NewsService]);
 })()

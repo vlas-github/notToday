@@ -55,6 +55,11 @@
                 controller: 'AdminCtrl',
                 activePage: 'admin'
             })
+            .when('/admin/news', {
+                templateUrl: 'content/admin/news.html',
+                controller: 'NewsCtrl',
+                activePage: 'admin'
+            })
             .otherwise({
                 redirectTo: '/'
             });

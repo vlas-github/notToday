@@ -4,6 +4,7 @@ import beans.User;
 import dao.UserDao;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import services.UserService;
 import utils.exception.BusinessException;
+import web.controllers.utils.converter.Converter;
+import web.controllers.vo.UserVo;
 
 import java.util.List;
 
@@ -23,27 +26,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     UserDao userDao;
 
+    @Autowired
+    @Qualifier("voConverter")
+    private Converter converter;
+
     @Override
     @Transactional
-    public User getUserByEmail(User user) throws BusinessException {
+    public UserVo getUserByEmail(UserVo user) throws BusinessException {
         try {
             if (StringUtils.isEmpty(user.getEmail())) {
                 throw new BusinessException("Validate email - is null!");
             }
-            return userDao.getByEmail(user.getEmail());
-        } catch (Exception e) {
-            throw new BusinessException(e);
-        }
-    }
-
-    @Override
-    @Transactional
-    public User getUserById(String id) throws BusinessException {
-        try {
-            User user = userDao.getById(id);
-            if (user == null) {
-                throw new BusinessException("User not found");
-            }
+            user = converter.convert(userDao.getByEmail(user.getEmail()));
             return user;
         } catch (Exception e) {
             throw new BusinessException(e);
@@ -52,9 +46,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public User update(User user) throws BusinessException {
+    public UserVo getUserById(String id) throws BusinessException {
         try {
-            return userDao.update(user);
+            User user = userDao.getById(id);
+            if (user == null) {
+                throw new BusinessException("User not found");
+            }
+            return converter.convert(user);
         } catch (Exception e) {
             throw new BusinessException(e);
         }
@@ -62,9 +60,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public User save(User user) throws BusinessException {
+    public UserVo update(UserVo user) throws BusinessException {
         try {
-            return userDao.save(user);
+            return converter.convert(userDao.update(converter.convert(user)));
+        } catch (Exception e) {
+            throw new BusinessException(e);
+        }
+    }
+
+    @Override
+    @Transactional
+    public UserVo save(UserVo user) throws BusinessException {
+        try {
+            return converter.convert(userDao.save(converter.convert(user)));
         } catch (Exception e) {
             throw new BusinessException(e);
         }
@@ -74,7 +82,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         try {
-            User user = new User();
+            UserVo user = new UserVo();
             user.setEmail(s);
             user = getUserByEmail(user);
             return user;

@@ -1,8 +1,9 @@
 (function () {
     'use strict';
 
-    var AdminCtrl = function ($scope, $rootScope, UserService) {
+    var NewsCtrl = function ($scope, $rootScope, UserService, NewsService) {
         $scope.activePage = 'admin'
+        $scope.news = []
 
         if (!$rootScope.user || !$rootScope.user.id) {
             $location.path("/login");
@@ -18,8 +19,14 @@
                 }
             })
         }
+
+        NewsService.list().$promise.then(function (response) {
+            if (response.status === "OK") {
+                $scope.news = response.data
+            }
+        })
     }
 
     angular.module('todolistApp')
-        .controller('AdminCtrl', ['$scope', '$rootScope', 'UserService', AdminCtrl])
+        .controller('NewsCtrl', ['$scope', '$rootScope', 'UserService', 'NewsService', NewsCtrl])
 })()

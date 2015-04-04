@@ -5,7 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 /**
  * Created by vlasov-id-131216 on 03.04.15.
  */
-public class UserAuthorityVo implements GrantedAuthority {
+public class UserAuthorityVo extends BaseVo implements GrantedAuthority {
     private String id;
     private String value;
     private UserVo user;

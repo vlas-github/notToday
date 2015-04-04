@@ -2,9 +2,9 @@ package web.controllers.utils.converter;
 
 import beans.User;
 import beans.UserAuthority;
+import dao.UserDao;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import services.UserService;
 import utils.exception.BusinessException;
@@ -18,11 +18,7 @@ import web.controllers.vo.UserVo;
 public class UserAuthorityVoConverterProvider implements ConverterProvider<UserAuthority, UserAuthorityVo> {
 
     @Autowired
-    @Qualifier("voConverter")
-    private Converter converter;
-
-    @Autowired
-    private UserService userService;
+    private UserDao userDao;
 
     @Override
     public UserAuthorityVo convertSourceToTarget(UserAuthority from, UserAuthorityVo to) {
@@ -33,11 +29,7 @@ public class UserAuthorityVoConverterProvider implements ConverterProvider<UserA
         to.setValue(from.getValue());
         to.setUser(null);
         if (StringUtils.isNotEmpty(from.getUserId())) {
-            try {
-                User user = userService.getUserById(from.getUserId());
-                user.setAuthorities(null);
-                to.setUser(converter.convert(user, UserVo.class));
-            } catch (BusinessException e) { }
+            to.setUser(null);
         }
         return to;
     }

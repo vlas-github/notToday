@@ -31,7 +31,7 @@ public final class User extends BaseEntity implements UserDetails {
     @Column(name="_locality")
     private String locality;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "_user_id")
     private Set<UserAuthority> authorities;
 

@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * Created by vlasov-id-131216 on 03.04.15.
  */
-public class UserVo implements UserDetails {
+public class UserVo extends BaseVo implements UserDetails {
     private String id;
     private String name;
     private String email;

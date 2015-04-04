@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by vlasov-id-131216 on 03.04.15.
  */
-public class TaskVo {
+public class TaskVo extends BaseVo {
     private String id;
     private String guid;
     private Boolean active;

@@ -1,8 +1,7 @@
 package services;
 
-import beans.News;
-import org.springframework.transaction.annotation.Transactional;
 import utils.exception.BusinessException;
+import web.controllers.vo.NewsVo;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ import java.util.List;
  */
 public interface NewsService {
 
-    List<News> list() throws BusinessException;
-    News save(News news) throws BusinessException;
-    News update(News news) throws BusinessException;
+    List<NewsVo> list() throws BusinessException;
+    NewsVo save(NewsVo news) throws BusinessException;
+    NewsVo update(NewsVo news) throws BusinessException;
 }

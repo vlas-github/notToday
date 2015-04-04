@@ -3,7 +3,7 @@ package web.controllers.vo;
 /**
  * Created by vlasov-id-131216 on 03.04.15.
  */
-public class NewsTypeCatalogVo {
+public class NewsTypeCatalogVo extends BaseCatalogVo {
     private String id;
     private String localizationCode;
     private String name;
