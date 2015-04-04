@@ -84,7 +84,22 @@
             'tasks.new': 'New tasks',
             'tasks.completed': 'Completed tasks',
             'tasks.deleted': 'Deleted tasks',
-            'users': 'Users'
+            'users': 'Users',
+
+
+            'EACH_DAY': 'Each day',
+            'EACH_TWO_DAYS': 'Each month',
+            'EACH_THREE_DAYS': 'Each three days',
+            'EACH_WEEKDAY': 'Each two days',
+            'EACH_WEEK': 'Each weekday',
+            'EACH_MONTH': 'Each week',
+            'EACH_YEAR': 'Each year',
+
+
+            'info': 'Info',
+            'success': 'Success',
+            'warning': 'Warning',
+            'danger': 'Danger'
         }
     }
 

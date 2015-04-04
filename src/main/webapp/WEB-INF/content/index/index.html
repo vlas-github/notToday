@@ -5,9 +5,17 @@
         {{'page.main.message.2' | i18n}}
         <br/>
         <br/>
-        <h4 ng-if="adverts">{{'page.name.message.news' | i18n}}</h4>
-        <div ng-repeat="new in news" ng-if="new.show" class="alert alert-{{new.type}}" role="alert">
+        <h4 ng-if="news">{{'page.name.message.news' | i18n}}</h4>
+        <div ng-repeat="new in news" ng-if="new.show" class="bs-callout bs-callout-{{new.type}}" role="alert">
+            <h4>{{new.creationDate | date:'MMMM, dd yyyy'}}</h4>
             {{new.title}}
+            <br>
+            <span class="bs-likes">
+                <span>{{new.likes}} <span class="glyphicon glyphicon-plus"></span></span>
+                &nbsp;
+                <span>{{new.dislikes}} <span class="glyphicon glyphicon-minus"></span></span>
+            </span>
+            <span class="bs-author">{{new.author.name}}&nbsp;<span ng-if="new.author.login">({{new.author.login}})</span></span>
         </div>
     </div>
 </div>

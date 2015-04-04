@@ -50,6 +50,11 @@
         $scope.showAddTaskModal = function() {
             $scope.validateTaskError = false;
             $scope._task = {}
+            CatalogService.list('repeat').$promise.then(function (response) {
+                if (response.status === "OK") {
+                    $scope.repeats = response.data
+                }
+            })
             $scope.openModal($scope.addTaskModal)
         }
 
@@ -58,12 +63,15 @@
             $scope._task = angular.copy(t)
             if ($scope._task.timeIsSet) {
                 $scope._setTime = $scope._task.timeIsSet
-                if ($scope._task.executionDate) {
-                    $scope._task.executionTime = angular.copy($scope._task.executionDate)
-                } else {
+                if (!$scope._task.executionDate) {
                     $scope._task.executionTime = new Date()
                 }
             }
+            CatalogService.list('repeat').$promise.then(function (response) {
+                if (response.status === "OK") {
+                    $scope.repeats = response.data
+                }
+            })
             $scope.openModal($scope.editTaskModal)
         }
 
@@ -181,8 +189,6 @@
         $scope.setTime = function () {
             if ($scope._setTime) {
                 $scope._task.executionTime = new Date()
-            } else {
-                delete $scope._task.executionTime
             }
         }
     }
