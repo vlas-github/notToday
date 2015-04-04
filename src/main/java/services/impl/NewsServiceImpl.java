@@ -1,16 +1,21 @@
 package services.impl;
 
+import beans.News;
 import dao.NewsDao;
+import dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import services.NewsService;
+import services.UserService;
 import utils.exception.BusinessException;
 import web.controllers.utils.converter.Converter;
 import web.controllers.vo.NewsVo;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by vlasov-id-131216 on 28.03.15.
@@ -20,6 +25,9 @@ public class NewsServiceImpl implements NewsService {
 
     @Autowired
     private NewsDao newsDao;
+
+    @Autowired
+    private UserDao userDao;
 
     @Autowired
     @Qualifier("voConverter")
@@ -39,7 +47,13 @@ public class NewsServiceImpl implements NewsService {
     @Transactional
     public NewsVo save(NewsVo news) throws BusinessException {
         try {
-            return null; // newsDao.save(news); // todo
+            News persisted = converter.convert(news);
+            persisted.setGuid(UUID.randomUUID().toString());
+            persisted.setActive(true);
+            persisted.setAuthor(userDao.getById(news.getAuthor().getId()));
+            persisted.setCreationDate(new Date());
+            persisted.setChangeDate(new Date());
+            return converter.convert(newsDao.save(persisted));
         } catch (Exception e) {
             throw new BusinessException(e);
         }

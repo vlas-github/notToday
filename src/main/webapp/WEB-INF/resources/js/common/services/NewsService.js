@@ -9,6 +9,12 @@
                 get: { method: 'GET' }
             }).get();
         }
+
+        this.add = function (news) {
+            return $resource('api/admin/news.json', {}, {
+                save: { method: 'POST', params: {}}
+            }).save({ }, news)
+        }
     }
 
     angular.module('todolistApp').

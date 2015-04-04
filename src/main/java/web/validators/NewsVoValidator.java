@@ -28,6 +28,10 @@ public class NewsVoValidator implements Validator<NewsVo>  {
         if (StringUtils.isEmpty(newsVo.getRussianText())) {
             errors.put("Russian text is empty", true);
         }
+
+        if (StringUtils.isEmpty(newsVo.getType())) {
+            errors.put("Type is empty", true);
+        }
         return errors;
     }
 

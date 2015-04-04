@@ -4,6 +4,19 @@
         <h3>{{'news' | i18n}}</h3>
     </div>
     <div class="panel-body">
+        <div class="col-md-3 col-sm-6">
+            <div class="panel panel-info">
+                <div class="panel-heading text-center">
+                    <strong>{{'news.add.title' | i18n}}</strong>
+                </div>
+                <div class="panel-body text-center">
+                    <a ng-click="showAddNewsModal()"><img src="resources/img/icontexto-inside-netvibes_3234.png"></a>
+                </div>
+                <div class="panel-footer text-center">
+                    <a ng-click="showAddNewsModal()">{{'news.add' | i18n}}</a>
+                </div>
+            </div>
+        </div>
         <div class="col-md-3 col-sm-6" ng-repeat="new in news">
             <div class="panel panel-{{new.type}}">
                 <div class="panel-heading text-center">
@@ -47,4 +60,86 @@
     </div>
     <div class="panel-footer">
     </div>
+</div>
+
+<div modal="addNewsModal" class="modal fade" aria-hidden="false" aria-labelledby="modal-label" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+    <form name="addNewsForm" class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="_news = {}" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">{{'news.add2' | i18n}}</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group" ng-class="{'has-error': validateEnglishTextError}">
+                <label class="col-sm-4 control-label">
+                    <strong>{{'news.englishText' | i18n}}<span class="has-error">*</span></strong>
+                </label>
+                <div class="col-sm-6">
+                    <input type="text" ng-model="_news.englishText" class="form-control"
+                           ng-change="validateEnglishText()"
+                           placeholder="{{'task.placeholder.title' | i18n}}">
+                    <span class="help-inline" ng-if="validateEnglishTextError">
+                        {{'field.is.required' | i18n}}
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': validateRussianTextError}">
+                <label class="col-sm-4 control-label">
+                    <strong>{{'news.russianText' | i18n}}<span class="has-error">*</span></strong>
+                </label>
+                <div class="col-sm-6">
+                    <input type="text" ng-model="_news.russianText" class="form-control"
+                           ng-change="validateRussianText()"
+                           placeholder="{{'task.placeholder.title' | i18n}}">
+                    <span class="help-inline" ng-if="validateRussianTextError">
+                        {{'field.is.required' | i18n}}
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': validateTypeError}">
+                <label class="col-sm-4 control-label">
+                    <strong>{{'news.type' | i18n}}<span class="has-error">*</span></strong>
+                </label>
+                <div class="col-sm-6">
+                    <select select2 ng-model="_news.type"
+                            ng-change="validateType()"
+                            data-placeholder="{{'news.type' | i18n}}"
+                            class="form-control">
+                        <option></option>
+                        <option ng-repeat="type in types" value="{{type.name}}">
+                            {{type.localizationCode | i18n}}
+                        </option>
+                    </select>
+                    <span class="help-inline" ng-if="validateTypeError">
+                        {{'field.is.required' | i18n}}
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                </label>
+                <div class="col-sm-6">
+                    <label>
+                        <input type="checkbox" ng-model="_news.show"> {{'news.show' | i18n}}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" ng-click="validate() && addNews()">
+                {{'save' | i18n}}
+            </button>
+            <button type="button" class="btn btn-primary" ng-click="validate() && addNews(true)">
+                {{'save.and.continue' | i18n}}
+            </button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="_task = {}">
+                {{'close' |i18n}}
+            </button>
+        </div>
+    </form>
+</div>
+</div>
 </div>

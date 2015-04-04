@@ -76,7 +76,7 @@
             $scope.openModal($scope.showTaskModal)
         }
 
-        $scope.addTask = function (close) {
+        $scope.addTask = function (cont) {
             var date = new Date()
             if ($scope._task.executionDate && $scope._task.executionDate.valueOf() > 0) {
                 date = new Date($scope._task.executionDate.valueOf())
@@ -102,7 +102,9 @@
                     $scope._task = {}
                 }
             })
-            $scope.closeModal($scope.addTaskModal)
+            if (!cont) {
+                $scope.closeModal($scope.addTaskModal)
+            }
         }
 
         $scope.editTask = function () {

@@ -11,6 +11,9 @@ import web.controllers.vo.NewsTypeCatalogVo;
 public class NewsTypeCatalogVoConverterProvider implements ConverterProvider<NewsTypeCatalog, NewsTypeCatalogVo> {
     @Override
     public NewsTypeCatalogVo convertSourceToTarget(NewsTypeCatalog from, NewsTypeCatalogVo to) {
+        if (to == null) {
+            to = new NewsTypeCatalogVo();
+        }
         to.setId(from.getId());
         to.setName(from.getName());
         to.setLocalizationCode(from.getLocalizationCode());
@@ -20,6 +23,9 @@ public class NewsTypeCatalogVoConverterProvider implements ConverterProvider<New
 
     @Override
     public NewsTypeCatalog convertTargetToSource(NewsTypeCatalogVo from, NewsTypeCatalog to) {
+        if (to == null) {
+            to = new NewsTypeCatalog();
+        }
         to.setId(from.getId());
         to.setName(from.getName());
         to.setLocalizationCode(from.getLocalizationCode());
