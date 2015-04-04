@@ -25,6 +25,7 @@
             'news.add': 'Добавить новость',
             'news.add2': 'Добавление новости',
             'news.author': 'Автор',
+            'news.edit': 'Изменение новости',
             'news.show': 'Показывать',
             'news.type.catalog.info': 'Информация',
             'news.type.catalog.success': 'Успех',

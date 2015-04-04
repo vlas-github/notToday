@@ -59,4 +59,24 @@ public class NewsRestController {
         }
         return response;
     }
+
+    @RequestMapping(value = "admin/news.json", method = RequestMethod.PUT)
+    @ResponseBody
+    public Object update(@RequestBody NewsVo news) {
+        AjaxResponse response = new AjaxResponse();
+        try {
+            newsVoValidator.validate(news);
+            if (newsVoValidator.hasErrors()) {
+                response.setData(newsVoValidator.getErrors());
+                response.setStatus(AjaxResponseStatus.ERROR);
+            }
+            news = newsService.update(news);
+            response.setData(news);
+            response.setStatus(AjaxResponseStatus.OK);
+        } catch (Throwable t) {
+            response.setStatus(AjaxResponseStatus.ERROR);
+            response.setMessage(t.getMessage());
+        }
+        return response;
+    }
 }

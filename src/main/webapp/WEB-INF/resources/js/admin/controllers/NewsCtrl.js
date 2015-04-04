@@ -35,6 +35,16 @@
             $scope.openModal($scope.addNewsModal)
         }
 
+        $scope.showEditNewsModal = function(news) {
+            $scope._news = angular.copy(news)
+            CatalogService.list('newsType').$promise.then(function (response) {
+                if (response.status === "OK") {
+                    $scope.types = response.data
+                }
+            })
+            $scope.openModal($scope.editNewsModal)
+        }
+
         $scope.validateEnglishText = function () {
             if (!$scope._news.englishText || $scope._news.englishText.length === 0) {
                 $scope.validateEnglishTextError = true
@@ -86,6 +96,20 @@
             }
         }
 
+        $scope.updateNews = function () {
+            $scope._news.author = { id: $scope.user.id }
+            NewsService.update($scope._news).$promise.then(function (response) {
+                if (response.status === "OK") {
+                    NewsService.list().$promise.then(function (response) {
+                        if (response.status === "OK") {
+                            $scope.news = response.data
+                        }
+                    })
+                }
+            })
+            $scope._news = {}
+            $scope.closeModal($scope.editNewsModal)
+        }
     }
 
     angular.module('todolistApp')

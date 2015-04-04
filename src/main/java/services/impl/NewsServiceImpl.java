@@ -63,7 +63,17 @@ public class NewsServiceImpl implements NewsService {
     @Transactional
     public NewsVo update(NewsVo news) throws BusinessException {
         try {
-            return null; // newsDao.update(news); // todo
+            News old = newsDao.getLast(news.getGuid());
+            News persisted = converter.convert(news);
+            persisted.setAuthor(userDao.getById(news.getAuthor().getId()));
+            persisted.setChangeDate(new Date());
+            persisted.setPrevious(old.getId());
+            persisted.setActive(true);
+            news = converter.convert(newsDao.save(persisted));
+            old.setNext(news.getId());
+            old.setActive(false);
+            newsDao.update(old);
+            return converter.convert(newsDao.save(persisted));
         } catch (Exception e) {
             throw new BusinessException(e);
         }

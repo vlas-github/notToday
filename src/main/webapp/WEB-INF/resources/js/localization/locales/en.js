@@ -25,6 +25,7 @@
             'news.add': 'Add news',
             'news.add2': 'Add News',
             'news.author': 'Author',
+            'news.edit': 'Edit news',
             'news.show': 'Show',
             'news.type.catalog.info': 'Info',
             'news.type.catalog.success': 'Success',

@@ -12,8 +12,14 @@
 
         this.add = function (news) {
             return $resource('api/admin/news.json', {}, {
-                save: { method: 'POST', params: {}}
-            }).save({ }, news)
+                add: { method: 'POST', params: {}}
+            }).add({ }, news)
+        }
+
+        this.update = function (news) {
+            return $resource('api/admin/news.json', {}, {
+                update: { method: 'PUT', params: {}}
+            }).update({ }, news)
         }
     }
 
