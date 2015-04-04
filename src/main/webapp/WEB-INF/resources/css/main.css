@@ -174,3 +174,70 @@ body {
     padding: 3px 7px;
     bottom: -10px;
 }
+
+.task-date {
+    height: auto;
+    width: auto;
+    position: relative;
+    padding: 3px 7px;
+    font-size: 12px;
+    -webkit-border-radius: 0px 0 4px 0;
+    -moz-border-radius: 0px 0 4px 0;
+    border-radius: 0px 0 4px 0;
+    left: -15px;
+    top: -8px;
+
+
+}
+
+.task-button {
+    height: auto;
+    width: auto;
+    position: relative;
+    padding: 3px 7px;
+    float: right;
+    right: -11px;
+    top: -3px;
+}
+
+.list-group-item-default .task-date {
+    background-color: #FDFDFD;
+    border-right: 1px solid #E5E5E5;
+    border-bottom: 1px solid #C5C5C5;
+    color: #9da0a4;
+}
+
+.list-group-item-danger .task-date {
+    background-color: #FDFDFD;
+    border-right: 1px solid #D0CCCC;
+    border-bottom: 1px solid #BDACAC;
+    color: #9da0a4;
+}
+
+.list-group-item-warning .task-date {
+    background-color: #FFFDF4;
+    border-right: 1px solid #E5DEBA;
+    border-bottom: 1px solid #CDC9B5;
+    color: #9da0a4;
+}
+
+.list-group-item-default:hover .task-date {
+    background-color: #FCFCFC;
+    border-right: 1px solid #D8D8D8;
+    border-bottom: 1px solid #BABABA;
+    color: #888B90;
+}
+
+.list-group-item-danger:hover .task-date {
+    background-color: #FCEFEF;
+    border-right: 1px solid #CBB2B2;
+    border-bottom: 1px solid #ABA0A0;
+    color: #888B90;
+}
+
+.list-group-item-warning:hover .task-date {
+    background-color: #FCFAEE;
+    border-right: 1px solid #D8D1AE;
+    border-bottom: 1px solid #B3AF9A;
+    color: #888B90;
+}
