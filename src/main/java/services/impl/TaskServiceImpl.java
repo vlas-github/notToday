@@ -91,8 +91,10 @@ public class TaskServiceImpl implements TaskService {
             Task last = taskDao.getLast(task.getGuid());
             task.setPrevious(last.getId());
             task.setChangeDate(new Date());
-            task = taskDao.update(task);
+            task.setId(null);
+            task = taskDao.save(task);
             last.setNext(task.getId());
+            last.setActive(false);
             taskDao.update(last);
             return task;
         } catch (Exception e) {

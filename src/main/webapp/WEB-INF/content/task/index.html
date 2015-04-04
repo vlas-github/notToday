@@ -137,7 +137,7 @@
                             data-placeholder="{{'task.repeat' | i18n}}"
                             class="form-control">
                         <option></option>
-                        <option ng-repeat="repeat in repeats" value="{{repeat.value}}">
+                        <option ng-repeat="repeat in repeats" value="{{repeat.name}}">
                             {{repeat.localizationCode | i18n}}
                         </option>
                     </select>
@@ -204,16 +204,14 @@
                     <strong>{{'task.date' | i18n}}</strong>
                 </label>
                 <div class="col-sm-10">
-                    <!--todo-->
-                    <!--<input datepicker class="form-control" ng-model="_task.executionDate" name="date"
-                           placeholder="{{'task.placeholder.date' | i18n}}" type="text">-->
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">
                     <strong>{{'task.time' | i18n}}</strong>
                 </label>
-                <!--todo-->
+                <div class="col-sm-10">
+                </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">
@@ -224,7 +222,7 @@
                             data-placeholder="{{'task.repeat' | i18n}}"
                             class="form-control">
                         <option></option>
-                        <option ng-repeat="repeat in repeats" value="{{repeat.id}}">
+                        <option ng-repeat="repeat in repeats" value="{{repeat.name}}">
                             {{repeat.localizationCode | i18n}}
                         </option>
                     </select>
