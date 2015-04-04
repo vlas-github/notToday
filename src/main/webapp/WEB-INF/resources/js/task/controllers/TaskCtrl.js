@@ -42,6 +42,7 @@
         }
 
         $scope.showAddTaskModal = function() {
+            $scope.validateTaskError = false;
             $scope._task = {}
             CatalogService.list('repeat').$promise.then(function (response) {
                 if (response.status === "OK") {
@@ -52,13 +53,21 @@
         }
 
         $scope.showEditTaskModal = function (t) {
+            $scope.validateTaskError = false;
             $scope._task = angular.copy(t)
             CatalogService.list('repeat').$promise.then(function (response) {
                 if (response.status === "OK") {
                     $scope.repeats = response.data
                 }
             })
-            $scope._setTime = $scope._task.timeIsSet
+            if ($scope._task.timeIsSet) {
+                $scope._setTime = $scope._task.timeIsSet
+                if ($scope._task.executionDate) {
+                    $scope._task.executionTime = angular.copy($scope._task.executionDate)
+                } else {
+                    $scope._task.executionTime = new Date()
+                }
+            }
             $scope.openModal($scope.editTaskModal)
         }
 
@@ -67,11 +76,13 @@
             $scope.openModal($scope.showTaskModal)
         }
 
-        $scope.addTask = function () {
+        $scope.addTask = function (close) {
             var date = new Date()
             if ($scope._task.executionDate && $scope._task.executionDate.valueOf() > 0) {
                 date = new Date($scope._task.executionDate.valueOf())
                 $scope._task.dateIsSet = true;
+            } else {
+                $scope._task.dateIsSet = false;
             }
 
             if ($scope._setTime) {
@@ -81,6 +92,8 @@
                 date.setMinutes(time.getMinutes())
                 $scope._task.executionDate = date;
                 delete $scope._task.executionTime
+            } else {
+                $scope._task.timeIsSet = false;
             }
             $scope._setTime = false
             TaskService.add($scope.user, $scope._task).$promise.then(function (response) {
@@ -89,6 +102,7 @@
                     $scope._task = {}
                 }
             })
+            $scope.closeModal($scope.addTaskModal)
         }
 
         $scope.editTask = function () {
@@ -96,6 +110,8 @@
             if ($scope._task.executionDate && $scope._task.executionDate.valueOf() > 0) {
                 date = new Date($scope._task.executionDate.valueOf())
                 $scope._task.dateIsSet = true;
+            } else {
+                $scope._task.dateIsSet = false;
             }
 
             if ($scope._setTime) {
@@ -105,6 +121,8 @@
                 date.setMinutes(time.getMinutes())
                 $scope._task.executionDate = date;
                 delete $scope._task.executionTime
+            } else {
+                $scope._task.timeIsSet = false;
             }
             $scope._setTime = false
             TaskService.update($scope.user, $scope._task).$promise.then(function (response) {
@@ -113,6 +131,7 @@
                     $scope._task = {}
                 }
             })
+            $scope.closeModal($scope.editTaskModal)
         }
 
         $scope.completeTask = function (t) {
@@ -151,6 +170,23 @@
             $event.stopPropagation();
             $scope.opened = true;
         };
+
+        $scope.validate = function() {
+            if (!$scope._task.text || $scope._task.text.length === 0) {
+                $scope.validateTaskError = true
+                return false
+            }
+            $scope.validateTaskError = false
+            return true
+        }
+
+        $scope.setTime = function () {
+            if ($scope._setTime) {
+                $scope._task.executionTime = new Date()
+            } else {
+                delete $scope._task.executionTime
+            }
+        }
     }
 
     angular.module('todolistApp')

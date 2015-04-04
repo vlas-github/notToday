@@ -96,13 +96,17 @@
             <h4 class="modal-title">{{'task.add' | i18n}}</h4>
         </div>
         <div class="modal-body">
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error': validateTaskError}">
                 <label class="col-sm-2 control-label">
-                    <strong>{{'task.title' | i18n}}</strong>
+                    <strong>{{'task.title' | i18n}}<span class="has-error">*</span></strong>
                 </label>
                 <div class="col-sm-10">
                     <input type="text" ng-model="_task.text" class="form-control"
+                           ng-change="validate()"
                            placeholder="{{'task.placeholder.title' | i18n}}">
+                    <span class="help-inline" ng-if="validateTaskError">
+                        {{'field.is.required' | i18n}}
+                    </span>
                 </div>
             </div>
             <div class="form-group">
@@ -136,7 +140,8 @@
                 <div class="col-sm-10">
                     <p class="input-group">
                         <label class="control-label">
-                            <input type="checkbox" ng-model="_setTime"> {{'task.set.time' | i18n}}
+                            <input type="checkbox" ng-model="_setTime"
+                                   ng-change="setTime()"> {{'task.set.time' | i18n}}
                         </label>
                         <timepicker ng-if="_setTime" ng-model="_task.executionTime" hour-step="1" minute-step="1" show-meridian="false"></timepicker>
                     </p>
@@ -168,10 +173,10 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" ng-click="addTask()" data-dismiss="modal">
+            <button type="button" class="btn btn-primary" ng-click="validate() && addTask()">
                 {{'save' | i18n}}
             </button>
-            <button type="button" class="btn btn-primary" ng-click="addTask()">
+            <button type="button" class="btn btn-primary" ng-click="validate() && addTask()">
                 {{'save.and.continue' | i18n}}
             </button>
             <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="_task = {}">
@@ -195,13 +200,17 @@
             <h4 class="modal-title">{{'task.edit' | i18n}}</h4>
         </div>
         <div class="modal-body">
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error': validateTaskError}">
                 <label class="col-sm-2 control-label">
-                    <strong>{{'task.title' | i18n}}</strong>
+                    <strong>{{'task.title' | i18n}}<span class="has-error">*</span></strong>
                 </label>
                 <div class="col-sm-10">
                     <input type="text" ng-model="_task.text" class="form-control"
+                           ng-change="validate()"
                            placeholder="{{'task.placeholder.title' | i18n}}">
+                    <span class="help-inline" ng-if="validateTaskError">
+                        {{'field.is.required' | i18n}}
+                    </span>
                 </div>
             </div>
             <div class="form-group">
@@ -235,7 +244,8 @@
                 <div class="col-sm-10">
                     <p class="input-group">
                         <label class="control-label">
-                            <input type="checkbox" ng-model="_setTime"> {{'task.set.time' | i18n}}
+                            <input type="checkbox" ng-model="_setTime"
+                                   ng-change="setTime()"> {{'task.set.time' | i18n}}
                         </label>
                         <timepicker ng-if="_setTime" ng-model="_task.executionTime" hour-step="1" minute-step="1" show-meridian="false"></timepicker>
                     </p>
@@ -276,7 +286,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" ng-click="editTask()" data-dismiss="modal">
+            <button type="button" class="btn btn-primary" ng-click="validate() && editTask()">
                 {{'save' | i18n}}
             </button>
             <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="_task = {}">

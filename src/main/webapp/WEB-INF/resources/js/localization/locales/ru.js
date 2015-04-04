@@ -4,6 +4,7 @@
     var localizedTextsRu = function (localizedTexts) {
         localizedTexts['ru'] = {
             'close': 'Отмена',
+            'field.is.required': 'Это поле обязательно для заполнения',
             'login': 'Вход',
             'login.form.registration': 'регистрации',
             'login.message.error': 'Имя или пароль введены не верно. Проверьте правильность введенных данных или обратитесь к администратору',

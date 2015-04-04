@@ -4,6 +4,7 @@
     var localizedTextsEn = function (localizedTexts) {
         localizedTexts['en'] = {
             'close': 'Close',
+            'field.is.required': 'This field is required',
             'login': 'Login',
             'login.form.registration': 'registration',
             'login.message.error': 'Not valid email or password. Check that you have entered the data correctly, or contact your administrator',
