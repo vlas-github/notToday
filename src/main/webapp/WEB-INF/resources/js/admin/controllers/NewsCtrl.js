@@ -72,6 +72,26 @@
             $scope.closeModal($scope.editNewsModal)
         }
 
+        $scope.showNews = function (news) {
+            var _news = angular.copy(news)
+            _news.show = true
+            NewsService.update(_news).$promise.then(function (response) {
+                if (response.status === "OK") {
+                    $scope.getNews()
+                }
+            })
+        }
+
+        $scope.hideNews = function (news) {
+            var _news = angular.copy(news)
+            _news.show = false
+            NewsService.update(_news).$promise.then(function (response) {
+                if (response.status === "OK") {
+                    $scope.getNews()
+                }
+            })
+        }
+
         $scope.validateEnglishText = function () {
             if (!$scope._news.englishText || $scope._news.englishText.length === 0) {
                 $scope.validateEnglishTextError = true
