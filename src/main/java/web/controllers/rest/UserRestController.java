@@ -31,16 +31,12 @@ public class UserRestController {
     @Autowired
     private UserVoValidator userVoValidator;
 
-    @Autowired
-    @Qualifier("voConverter")
-    private Converter converter;
-
     @RequestMapping(value = "user/{id}.json", method = RequestMethod.GET)
     @ResponseBody
     public Object get(@PathVariable("id") String id) {
         AjaxResponse response = new AjaxResponse();
         try {
-            response.setData(converter.convert(userService.getUserById(id), UserVo.class));
+            response.setData(userService.getUserById(id));
             response.setStatus(AjaxResponseStatus.OK);
         } catch (Throwable t) {
             response.setStatus(AjaxResponseStatus.ERROR);
@@ -55,7 +51,7 @@ public class UserRestController {
     public Object update(@PathVariable("id") String id, @RequestBody UserVo user) {
         AjaxResponse response = new AjaxResponse();
         try {
-            UserVo persisted = converter.convert(userService.getUserById(id));
+            UserVo persisted = userService.getUserById(id);
             if (StringUtils.isNotEmpty(user.getName())) {
                 persisted.setName(user.getName());
             }
@@ -68,7 +64,7 @@ public class UserRestController {
                 response.setMessage("Validate error");
                 return response;
             }
-            response.setData(userService.update(converter.convert(user)));
+            response.setData(userService.update(user));
             response.setStatus(AjaxResponseStatus.OK);
         } catch (Throwable t) {
             response.setStatus(AjaxResponseStatus.ERROR);
