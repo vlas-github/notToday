@@ -58,6 +58,7 @@
                     $scope.repeats = response.data
                 }
             })
+            $scope._setTime = $scope._task.timeIsSet
             $scope.openModal($scope.editTaskModal)
         }
 
@@ -67,6 +68,21 @@
         }
 
         $scope.addTask = function () {
+            var date = new Date()
+            if ($scope._task.executionDate && $scope._task.executionDate.valueOf() > 0) {
+                date = new Date($scope._task.executionDate.valueOf())
+                $scope._task.dateIsSet = true;
+            }
+
+            if ($scope._setTime) {
+                var time = new Date($scope._task.executionTime.valueOf())
+                $scope._task.timeIsSet = true
+                date.setHours(time.getHours())
+                date.setMinutes(time.getMinutes())
+                $scope._task.executionDate = date;
+                delete $scope._task.executionTime
+            }
+            $scope._setTime = false
             TaskService.add($scope.user, $scope._task).$promise.then(function (response) {
                 if (response.status === "OK") {
                     $scope.getListTasks()
@@ -76,6 +92,21 @@
         }
 
         $scope.editTask = function () {
+            var date = new Date()
+            if ($scope._task.executionDate && $scope._task.executionDate.valueOf() > 0) {
+                date = new Date($scope._task.executionDate.valueOf())
+                $scope._task.dateIsSet = true;
+            }
+
+            if ($scope._setTime) {
+                var time = new Date($scope._task.executionTime.valueOf())
+                $scope._task.timeIsSet = true
+                date.setHours(time.getHours())
+                date.setMinutes(time.getMinutes())
+                $scope._task.executionDate = date;
+                delete $scope._task.executionTime
+            }
+            $scope._setTime = false
             TaskService.update($scope.user, $scope._task).$promise.then(function (response) {
                 if (response.status === "OK") {
                     $scope.getListTasks()
@@ -114,6 +145,12 @@
         $scope.showCompleted = function () {
             $scope.showCompletedTask = !$scope.showCompletedTask
         }
+
+        $scope.open = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.opened = true;
+        };
     }
 
     angular.module('todolistApp')

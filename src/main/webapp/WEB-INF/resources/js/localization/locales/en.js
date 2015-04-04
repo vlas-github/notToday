@@ -58,6 +58,7 @@
             'task.placeholder.description': 'Input description',
             'task.placeholder.title': 'Input task',
             'task.repeat': 'Repeat',
+            'task.set.time': 'Set time',
             'task.show': 'Show task',
             'task.time': 'Time',
             'task.title': 'Title',

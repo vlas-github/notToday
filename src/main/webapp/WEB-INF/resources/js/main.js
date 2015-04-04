@@ -4,7 +4,10 @@
     angular.module('todolistApp', [
         'ngCookies',
         'ngResource',
-        'ngRoute'
+        'ngRoute',
+        'ui.bootstrap',
+        'ui.bootstrap.datepicker',
+        'ui.bootstrap.timepicker'
     ]).config(['$routeProvider', '$locationProvider', '$httpProvider',
         function ($routeProvider, $locationProvider, $httpProvider) {
             $routeProvider.when('/', {

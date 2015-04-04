@@ -58,6 +58,7 @@
             'task.placeholder.description': 'Введите описание',
             'task.placeholder.title': 'Введите задачу',
             'task.repeat': 'Повтор',
+            'task.set.time': 'Установить время',
             'task.show': 'Просмотр задачи',
             'task.time': 'Время',
             'task.title': 'Название',
