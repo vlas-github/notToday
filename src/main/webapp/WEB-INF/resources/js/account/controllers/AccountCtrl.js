@@ -15,6 +15,7 @@
                     $scope.user.newTasks = []
                     $scope.user.completedTasks = []
                     $scope.user.deletedTasks = []
+                    $scope._user = angular.copy($scope.user)
 
                     TaskService.list($scope.user.id).$promise.then(function (response) {
                         if (response.status === "OK") {
@@ -39,7 +40,7 @@
         }
 
         $scope.saveProfile = function() {
-            UserService.update($scope.user).$promise.then(function (response) {
+            UserService.update($scope._user).$promise.then(function (response) {
                 if (response.status === "OK") {
                     if (response.data && response.data.locality) {
                         Locale.set(response.data.locality)
@@ -47,6 +48,15 @@
                     $location.path('/account')
                 }
             })
+        }
+
+        $scope.validate = function() {
+            if (!$scope._user.name || $scope._user.name.length === 0) {
+                $scope.validateNameError = true
+                return false
+            }
+            $scope.validateNameError = false
+            return true
         }
     }
 
