@@ -53,6 +53,8 @@ public class NewsServiceImpl implements NewsService {
             persisted.setAuthor(userDao.getById(news.getAuthor().getId()));
             persisted.setCreationDate(new Date());
             persisted.setChangeDate(new Date());
+            persisted.setLikes(0);
+            persisted.setDislikes(0);
             return converter.convert(newsDao.save(persisted));
         } catch (Exception e) {
             throw new BusinessException(e);
@@ -67,6 +69,7 @@ public class NewsServiceImpl implements NewsService {
             News persisted = converter.convert(news);
             persisted.setAuthor(userDao.getById(news.getAuthor().getId()));
             persisted.setChangeDate(new Date());
+            persisted.setCreationDate(old.getCreationDate());
             persisted.setPrevious(old.getId());
             persisted.setActive(true);
             news = converter.convert(newsDao.save(persisted));

@@ -19,6 +19,7 @@ public class UserVo extends BaseVo implements UserDetails {
     private Boolean isAccountNonLocked;
     private Date registrationDate;
     private Date lastActivityDate;
+    private Boolean notify;
 
     public String getId() {
         return id;
@@ -99,6 +100,14 @@ public class UserVo extends BaseVo implements UserDetails {
 
     public void setLastActivityDate(Date lastActivityDate) {
         this.lastActivityDate = lastActivityDate;
+    }
+
+    public Boolean getNotify() {
+        return notify;
+    }
+
+    public void setNotify(Boolean notify) {
+        this.notify = notify;
     }
 
     @Override

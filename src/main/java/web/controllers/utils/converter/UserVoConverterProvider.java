@@ -36,6 +36,7 @@ public class UserVoConverterProvider implements ConverterProvider<User, UserVo> 
         to.setIsAccountNonLocked(from.getIsAccountNonLocked());
         to.setRegistrationDate(from.getRegistrationDate());
         to.setLastActivityDate(from.getLastActivityDate());
+        to.setNotify(from.getNotify());
         return to;
     }
 
@@ -54,6 +55,7 @@ public class UserVoConverterProvider implements ConverterProvider<User, UserVo> 
         to.setIsAccountNonLocked(from.getIsAccountNonLocked());
         to.setRegistrationDate(from.getRegistrationDate());
         to.setLastActivityDate(from.getLastActivityDate());
+        to.setNotify(from.getNotify());
         return to;
     }
 

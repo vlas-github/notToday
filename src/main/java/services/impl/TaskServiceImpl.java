@@ -67,22 +67,23 @@ public class TaskServiceImpl implements TaskService {
             task.setActive(true);
             task.setChangeDate(new Date());
             task = converter.convert(taskDao.save(converter.convert(task)));
-            if (task.getParentTask().getGuid() != null && StringUtils.isNotEmpty(task.getParentTask().getGuid())) {
+            if (task.getParentTask() != null && task.getParentTask().getGuid() != null
+                    && StringUtils.isNotEmpty(task.getParentTask().getGuid())) {
                 TaskVo parent = converter.convert(taskDao.getLast(task.getParentTask().getGuid()));
                 parent.setHaveSubtasks(true);
                 update(parent);
             }
             if (user != null && StringUtils.isNotEmpty(user.getId())) {
-                user = converter.convert(userService.getUserById(user.getId()));
+                user = userService.getUserById(user.getId());
                 if (user != null) {
                     TaskParticipant taskParticipant = new TaskParticipant();
                     taskParticipant.setUserId(user.getId());
                     taskParticipant.setTaskGuid(task.getGuid());
-                    taskParticipant.setNotify(true);            // todo брать из настроек пользователя, когда это будет возможно
+                    taskParticipant.setNotify(true);
                     taskParticipantDao.save(taskParticipant);
                 }
             }
-            return converter.convert(task);
+            return task;
         } catch (Exception e) {
             throw new BusinessException(e);
         }

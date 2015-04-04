@@ -104,10 +104,8 @@
                     <strong>{{'news.type' | i18n}}<span class="has-error">*</span></strong>
                 </label>
                 <div class="col-sm-6">
-                    <select select2 ng-model="_news.type"
-                            ng-change="validateType()"
-                            data-placeholder="{{'news.type' | i18n}}"
-                            class="form-control">
+                    <select select2 ng-model="_news.type" ng-change="validateType()" ng-watch="types"
+                            data-placeholder="{{'news.type' | i18n}}" class="form-control">
                         <option></option>
                         <option ng-repeat="type in types" value="{{type.name}}">
                             {{type.localizationCode | i18n}}
@@ -187,10 +185,8 @@
                     <strong>{{'news.type' | i18n}}<span class="has-error">*</span></strong>
                 </label>
                 <div class="col-sm-6">
-                    <select select2 ng-model="_news.type"
-                            ng-change="validateType()"
-                            data-placeholder="{{'news.type' | i18n}}"
-                            class="form-control">
+                    <select select2 ng-model="_news.type" ng-change="validateType()" ng-watch="types"
+                            data-placeholder="{{'news.type' | i18n}}" class="form-control">
                         <option></option>
                         <option ng-repeat="type in types" value="{{type.name}}">
                             {{type.localizationCode | i18n}}

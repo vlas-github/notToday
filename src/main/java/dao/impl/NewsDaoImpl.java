@@ -51,7 +51,8 @@ public class NewsDaoImpl extends GenericDao implements NewsDao {
         try {
             return getSession().createCriteria(News.class)
                     .add(Restrictions.eq("active", true))
-                    .addOrder(Order.asc("creationDate")).list();
+                    .addOrder(Order.desc("creationDate"))
+                    .list();
         } catch (Throwable t) {
             throw new DataAccessException(t);
         }
@@ -71,6 +72,6 @@ public class NewsDaoImpl extends GenericDao implements NewsDao {
         return (News) getSession().createCriteria(News.class)
                 .add(Restrictions.eq("guid", guid))
                 .add(Restrictions.eq("active", true))
-                .addOrder(Order.asc("creationDate")).uniqueResult();
+                .uniqueResult();
     }
 }

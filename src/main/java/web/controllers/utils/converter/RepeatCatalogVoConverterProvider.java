@@ -11,6 +11,9 @@ import web.controllers.vo.RepeatCatalogVo;
 public class RepeatCatalogVoConverterProvider implements ConverterProvider<RepeatCatalog, RepeatCatalogVo> {
     @Override
     public RepeatCatalogVo convertSourceToTarget(RepeatCatalog from, RepeatCatalogVo to) {
+        if (to == null) {
+            to = new RepeatCatalogVo();
+        }
         to.setId(from.getId());
         to.setName(from.getName());
         to.setLocalizationCode(from.getLocalizationCode());
@@ -20,6 +23,9 @@ public class RepeatCatalogVoConverterProvider implements ConverterProvider<Repea
 
     @Override
     public RepeatCatalog convertTargetToSource(RepeatCatalogVo from, RepeatCatalog to) {
+        if (to == null) {
+            to = new RepeatCatalog();
+        }
         to.setId(from.getId());
         to.setName(from.getName());
         to.setLocalizationCode(from.getLocalizationCode());

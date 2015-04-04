@@ -45,6 +45,10 @@ public final class User extends BaseEntity implements UserDetails {
     @Column(name="_last_activity_date")
     private Date lastActivityDate;
 
+    @Column(name="notify")
+    @Type(type="org.hibernate.type.NumericBooleanType")
+    private Boolean notify;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -154,6 +158,14 @@ public final class User extends BaseEntity implements UserDetails {
 
     public void setLastActivityDate(Date lastActivityDate) {
         this.lastActivityDate = lastActivityDate;
+    }
+
+    public Boolean getNotify() {
+        return notify;
+    }
+
+    public void setNotify(Boolean notify) {
+        this.notify = notify;
     }
 
     @Override

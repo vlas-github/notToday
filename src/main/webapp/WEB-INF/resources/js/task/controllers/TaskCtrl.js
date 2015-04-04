@@ -19,6 +19,12 @@
             })
         }
 
+        CatalogService.list('repeat').$promise.then(function (response) {
+            if (response.status === "OK") {
+                $scope.repeats = response.data
+            }
+        })
+
         $scope.getListTasks = function () {
             TaskService.list($scope.user.id).$promise.then(function (response) {
                 if (response.status === "OK") {
@@ -44,22 +50,12 @@
         $scope.showAddTaskModal = function() {
             $scope.validateTaskError = false;
             $scope._task = {}
-            CatalogService.list('repeat').$promise.then(function (response) {
-                if (response.status === "OK") {
-                    $scope.repeats = response.data
-                }
-            })
             $scope.openModal($scope.addTaskModal)
         }
 
         $scope.showEditTaskModal = function (t) {
             $scope.validateTaskError = false;
             $scope._task = angular.copy(t)
-            CatalogService.list('repeat').$promise.then(function (response) {
-                if (response.status === "OK") {
-                    $scope.repeats = response.data
-                }
-            })
             if ($scope._task.timeIsSet) {
                 $scope._setTime = $scope._task.timeIsSet
                 if ($scope._task.executionDate) {
