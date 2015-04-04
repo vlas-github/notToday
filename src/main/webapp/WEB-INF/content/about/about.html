@@ -1,2 +1,19 @@
 <div class="header" ng-include src="'content/templates/top.html'"></div>
-<p>This is the about view.</p>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h3>О проекте</h3>
+        <div class="panel-group"><h4>Добро пожаловать на "Not Today" - веб-сервис позволяющий управлять списками дел</h4></div>
+        <div class="panel-group">Перед Вами мой тестовый проект, на котором я собираюсь испытывать новые, интересные мне технологии и оттачивать свой навых программирования</div>
+        <div class="panel-group">Первое время сервис будет работать в тестовом режиме (возможно это навсегда :), а значит возможны поломки и много-много багов :)</div>
+        <div class="panel-group">Я буду очень признателен Вам за любую критику, а так же за помощь в развитии проекта. Ваши предложения можно присылать на почту: <a href="mailto:vlasovi.ilya@gmail.com">vlasovi.ilya@gmail.com</a>, а сам можно скачать на <a href="https://github.com/vlas-github/notToday" target="_blank">github</a>.</div>
+        <div class="panel-group">
+            Архитектура сервиса устроенна следующим образом:
+            <ul>
+                <li>Клиент - это приложение на Angular, обзщающееся с сервером по протоколу REST</li>
+                <li>Сервер - это приложение на Java + Spring MVC</li>
+            </ul>
+        </div>
+        <div class="panel-group">Подробнее про api сервера можно узнать по ссылке: <a ng-href="#/about/api">API</a></div>
+        <div class="panel-group">Спасибо за внимание:)</div>
+    </div>
+</div>

@@ -1,2 +1,74 @@
 <div class="header" ng-include src="'content/templates/top.html'"></div>
-<p>This is the about view.</p>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h3>API</h3>
+        <ul>
+            <li>
+                <strong>Работа с пользователями</strong>
+                <ul>
+                    <li>
+                        <strong>/api/user/{id}.json (GET)</strong> - Получить пользователя по id
+                    </li>
+                    <li>
+                        <strong>/api/user/{id}.json (PUT)</strong> - Изменить пользователя с указанным id
+                    </li>
+                    <li>
+                        <strong>/api/user.json (POST)</strong> - Добавить пользователя с указанным id
+                    </li>
+                    <li>
+                        <strong>/api/user/{id}/password/{password}.json (POST)</strong> - Изменить пароль у пользователя с указанным id
+                    </li>
+                    <li>
+                        <strong>/api/admin/blocker/{id}.json (PUT)</strong> - Заблокировать пользователя с указанным id
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <strong>Работа с каталогами</strong>
+                <ul>
+                    <li>
+                        <strong>/api/catalog/{name}/list.json (GET)</strong> - Получить указанный каталог
+                    </li>
+                    <li>
+                        <strong>/api/catalog/{name}/{id}.json (GET)</strong> - Получить элемент с указанным id из каталога
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <strong>Работа с новостями</strong>
+                <ul>
+                    <li>
+                        <strong>/api/news/list.json (GET)</strong> - Получить список новостей
+                    </li>
+                    <li>
+                        <strong>/api/admin/news.json (POST)</strong> - Добавить новость
+                    </li>
+                    <li>
+                        <strong>/api/admin/news.json (PUT)</strong> - Изменить новость
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <strong>Работа с задачами</strong>
+                <ul>
+                    <li>
+                        <strong>/api/user/{user}/task/{id}.json (GET)</strong> - Получить задачу указанного пользователя по id
+                    </li>
+                    <li>
+                        <strong>/api/user/{user}/task/list.json (GET)</strong> - Получить список задач указанного пользователя
+                    </li>
+                    <li>
+                        <strong>/api/user/{user}/task.json (POST)</strong> - Добавить задачу пользователю
+                    </li>
+                    <li>
+                        <strong>/api/user/{user}/task/{id}.json (PUT)</strong> - Изменить задачу
+                    </li>
+                    <li>
+                        <strong>/api/user/{user}/task/{id}.json (DELETE)</strong> - Удалить задачу (Пометить как удаленную)
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        Более подробное описание скоро...
+    </div>
+</div>

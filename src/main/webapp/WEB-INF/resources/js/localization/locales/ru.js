@@ -4,6 +4,10 @@
     var localizedTextsRu = function (localizedTexts) {
         localizedTexts['ru'] = {
             'admin': 'Админка',
+            'about.api': '',
+            'about.end': '',
+            'about.info': '',
+            'about.title': '',
             'close': 'Отмена',
             'field.is.required': 'Это поле обязательно для заполнения',
             'field.is.not.valid': 'Это поле заполнено не правильно',
