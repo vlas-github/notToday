@@ -28,9 +28,22 @@
                     style="cursor: pointer">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.name}} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a ng-href="#/account">{{'profile' | i18n}}</a></li>
+                        <li>
+                            <a ng-href="#/account">
+                                <span class="gglyphicon glyphicon-user"></span>&nbsp;&nbsp;{{'profile' | i18n}}
+                            </a>
+                        </li>
+                        <li ng-if="hasRole('ROLE_ADMIN')">
+                            <a ng-href="#/admin">
+                                <span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;{{'admin' | i18n}}
+                            </a>
+                        </li>
                         <li class="divider"></li>
-                        <li><a href="#/logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;{{'logout' | i18n}}</a></li>
+                        <li>
+                            <a href="#/logout">
+                                <span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;{{'logout' | i18n}}
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li ng-if="!(user && user.id)"

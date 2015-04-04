@@ -98,14 +98,20 @@
         $rootScope.hasRole = function (role) {
 
             if ($rootScope.user === undefined) {
-                return false;
+                return false
             }
 
-            if ($rootScope.user.roles[role] === undefined) {
-                return false;
+            if (!$rootScope.user.authorities || $rootScope.user.authorities.length === 0) {
+                return false
             }
 
-            return $rootScope.user.roles[role];
+            for (var i = 0; i < $rootScope.user.authorities.length; i++) {
+                if ($rootScope.user.authorities[i].value === role) {
+                    return true
+                }
+            }
+
+            return false
         };
 
         $rootScope.logout = function () {

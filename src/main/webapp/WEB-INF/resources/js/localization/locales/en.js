@@ -3,6 +3,7 @@
 
     var localizedTextsEn = function (localizedTexts) {
         localizedTexts['en'] = {
+            'admin': 'Admin console',
             'close': 'Close',
             'field.is.required': 'This field is required',
             'field.is.not.valid': 'This field is not valid',
