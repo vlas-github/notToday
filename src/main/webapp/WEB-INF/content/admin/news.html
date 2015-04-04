@@ -4,7 +4,7 @@
         <h3>{{'news' | i18n}}</h3>
     </div>
     <div class="panel-body">
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-4 col-sm-6">
             <div class="panel panel-info">
                 <div class="panel-heading text-center">
                     <strong>{{'news.add.title' | i18n}}</strong>
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6" ng-repeat="new in news">
+        <div class="col-md-4 col-sm-6" ng-repeat="new in news">
             <div class="panel panel-{{new.type}}">
                 <div class="panel-heading text-center">
                     <strong>{{new.creationDate | date:'MMMM, dd yyyy'}}</strong>

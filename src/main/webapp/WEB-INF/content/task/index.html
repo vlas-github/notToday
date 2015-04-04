@@ -44,11 +44,17 @@
                 <div>
                     <div class="text-hide">{{t.uuid}}</div>
                     <strong>{{t.text}}</strong>
-                    <i class="glyphicon glyphicon-remove pull-right" style="cursor: pointer" ng-click="deleteTask(t, true);$event.stopPropagation()"></i>
-                    <span class="pull-right">&nbsp;&nbsp;</span>
                     <i class="glyphicon glyphicon-edit pull-right" style="cursor: pointer" ng-click="showEditTaskModal(t);$event.stopPropagation()"></i>
-                    <span class="pull-right">&nbsp;&nbsp;</span>
-                    <i class="glyphicon glyphicon-ok pull-right" style="cursor: pointer" ng-click="completeTask(t);$event.stopPropagation()"></i>
+                    <br/>
+                    <span ng-if="t.dateIsSet && !t.timeIsSet">
+                        {{'task.date' | i18n }}: {{t.executionDate | date:'MMMM, dd yyyy'}}&nbsp;
+                    </span>
+                    <span ng-if="t.timeIsSet">
+                        {{'task.date' | i18n }}: {{t.executionDate | date:'MMMM, dd yyyy HH:mm'}}&nbsp;
+                    </span>
+                    <span ng-if="t.repeat">
+                        ({{'task.repeat' | i18n}}: {{t.repeat | i18n}})
+                    </span>
                     <br/>
                     {{t.description}}
                 </div>
@@ -62,8 +68,16 @@
                     <div class="text-hide">{{t.uuid}}</div>
                     <strong>{{t.text}}</strong>
                     <i class="glyphicon glyphicon-edit pull-right" style="cursor: pointer" ng-click="showEditTaskModal(t);$event.stopPropagation()"></i>
-                    <span class="pull-right">&nbsp;&nbsp;</span>
-                    <i class="glyphicon glyphicon-ok pull-right" style="cursor: pointer" ng-click="deleteTask(t);$event.stopPropagation()"></i>
+                    <br/>
+                    <span ng-if="t.dateIsSet && !t.timeIsSet">
+                        {{'task.date' | i18n }}: {{t.executionDate | date:'MMMM, dd yyyy'}}&nbsp;
+                    </span>
+                    <span ng-if="t.timeIsSet">
+                        {{'task.date' | i18n }}: {{t.executionDate | date:'MMMM, dd yyyy HH:mm'}}&nbsp;
+                    </span>
+                    <span ng-if="t.repeat">
+                        ({{'task.repeat' | i18n}}: {{t.repeat | i18n}})
+                    </span>
                     <br/>
                     {{t.description}}
                 </div>
@@ -77,6 +91,16 @@
                     <div class="text-hide">{{t.uuid}}</div>
                     <strong>{{t.text}}</strong>
                     <i class="glyphicon glyphicon-edit pull-right" style="cursor: pointer" ng-click="showEditTaskModal(t);$event.stopPropagation()"></i>
+                    <br/>
+                    <span ng-if="t.dateIsSet && !t.timeIsSet">
+                        {{'task.date' | i18n }}: {{t.executionDate | date:'MMMM, dd yyyy'}}&nbsp;
+                    </span>
+                    <span ng-if="t.timeIsSet">
+                        {{'task.date' | i18n }}: {{t.executionDate | date:'MMMM, dd yyyy HH:mm'}}&nbsp;
+                    </span>
+                    <span ng-if="t.repeat">
+                        ({{'task.repeat' | i18n}}: {{t.repeat | i18n}})
+                    </span>
                     <br/>
                     {{t.description}}
                 </div>
@@ -319,7 +343,7 @@
                 </tr>
                 <tr>
                     <td>{{'task.date' | i18n}}</td>
-                    <td>{{_task.executionDate}}</td>
+                    <td>{{_task.executionDate | date:'MMMM, dd yyyy'}}</td>
                 </tr>
                 <tr>
                     <td>{{'task.repeat' | i18n}}</td>
