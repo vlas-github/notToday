@@ -6,8 +6,8 @@
         <br/>
         <br/>
         <h4 ng-if="adverts">{{'page.name.message.news' | i18n}}</h4>
-        <div ng-repeat="advert in adverts" class="alert alert-{{advert.type}}" role="alert">
-            {{advert.title}}
+        <div ng-repeat="new in news" class="alert alert-{{new.type}}" role="alert">
+            {{new.title}}
         </div>
     </div>
 </div>

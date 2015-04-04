@@ -19,11 +19,11 @@
 
         NewsService.list().$promise.then(function (response) {
             if (response.status === "OK") {
-                $scope.adverts = response.data
+                $scope.news = response.data
                 var locale = Locale.get()
-                if ($scope.adverts && $scope.adverts.length > 0) {
-                    $scope.adverts.forEach(function (advert) {
-                        advert.title = locale === "ru" ? advert.titleRu : advert.titleEn
+                if ($scope.news && $scope.news.length > 0) {
+                    $scope.news.forEach(function (news) {
+                        news.title = locale === "ru" ? news.russianText : news.englishText
                     })
                 }
             }
