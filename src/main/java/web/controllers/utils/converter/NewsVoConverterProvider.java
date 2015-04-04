@@ -20,6 +20,9 @@ public class NewsVoConverterProvider implements ConverterProvider<News, NewsVo> 
 
     @Override
     public NewsVo convertSourceToTarget(News from, NewsVo to) {
+        if (to == null) {
+            to = new NewsVo();
+        }
         to.setId(from.getId());
         to.setGuid(from.getGuid());
         to.setActive(from.isActive());
@@ -33,11 +36,15 @@ public class NewsVoConverterProvider implements ConverterProvider<News, NewsVo> 
         to.setType(from.getType());
         to.setLikes(from.getLikes());
         to.setDislikes(from.getDislikes());
+        to.setShow(from.getShow());
         return to;
     }
 
     @Override
     public News convertTargetToSource(NewsVo from, News to) {
+        if (to == null) {
+            to = new News();
+        }
         to.setId(from.getId());
         to.setGuid(from.getGuid());
         to.setActive(from.isActive());
@@ -51,6 +58,7 @@ public class NewsVoConverterProvider implements ConverterProvider<News, NewsVo> 
         to.setType(from.getType());
         to.setLikes(from.getLikes());
         to.setDislikes(from.getDislikes());
+        to.setShow(from.getShow());
         return to;
     }
 

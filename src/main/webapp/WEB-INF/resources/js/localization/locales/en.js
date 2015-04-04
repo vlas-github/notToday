@@ -20,6 +20,7 @@
             'logout.title': 'Logout',
             'logout.message': 'You are out of the system, which would come back, go to ',
             'logout.message.login': 'login',
+            'news': 'News',
             'page.about': 'About',
             'page.home': 'Home',
             'page.main.message': 'Welcome to the "Not Today" - a web service allows you to manage a list of tasks',
@@ -46,6 +47,7 @@
             'repeat.catalog.each.year': 'Each year',
             'save': 'Save',
             'save.and.continue': 'Save and continue',
+            'settings': 'System settings',
             'task.add': 'Add new task',
             'task.add.fast': 'Fast task:',
             'task.add.fast.button.text': 'add',
@@ -68,7 +70,8 @@
             'tasks.all': 'All tasks',
             'tasks.new': 'New tasks',
             'tasks.completed': 'Completed tasks',
-            'tasks.deleted': 'Deleted tasks'
+            'tasks.deleted': 'Deleted tasks',
+            'users': 'Users'
         }
     }
 

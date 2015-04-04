@@ -1,5 +1,7 @@
 package beans;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -37,6 +39,10 @@ public final class News extends BaseVersionedEntity {
     @Column(name="_dislikes")
     private Integer dislikes;
 
+    @Column(name="_show")
+    @Type(type="org.hibernate.type.NumericBooleanType")
+    private Boolean show;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,6 +57,7 @@ public final class News extends BaseVersionedEntity {
         if (englishText != null ? !englishText.equals(news.englishText) : news.englishText != null) return false;
         if (likes != null ? !likes.equals(news.likes) : news.likes != null) return false;
         if (russianText != null ? !russianText.equals(news.russianText) : news.russianText != null) return false;
+        if (show != null ? !show.equals(news.show) : news.show != null) return false;
         if (type != null ? !type.equals(news.type) : news.type != null) return false;
 
         return true;
@@ -66,6 +73,7 @@ public final class News extends BaseVersionedEntity {
         result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
         result = 31 * result + (likes != null ? likes.hashCode() : 0);
         result = 31 * result + (dislikes != null ? dislikes.hashCode() : 0);
+        result = 31 * result + (show != null ? show.hashCode() : 0);
         return result;
     }
 
@@ -123,5 +131,13 @@ public final class News extends BaseVersionedEntity {
 
     public void setDislikes(Integer dislikes) {
         this.dislikes = dislikes;
+    }
+
+    public Boolean getShow() {
+        return show;
+    }
+
+    public void setShow(Boolean show) {
+        this.show = show;
     }
 }

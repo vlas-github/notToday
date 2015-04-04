@@ -50,6 +50,11 @@
                 controller: 'LoginCtrl',
                 activePage: 'login'
             })
+            .when('/admin', {
+                templateUrl: 'content/admin/index.html',
+                controller: 'AdminCtrl',
+                activePage: 'admin'
+            })
             .otherwise({
                 redirectTo: '/'
             });

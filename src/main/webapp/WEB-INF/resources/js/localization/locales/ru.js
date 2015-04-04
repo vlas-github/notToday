@@ -20,6 +20,7 @@
             'logout.title': 'Выход',
             'logout.message': 'Вы вышли из системы, что бы вернуться, перейдите по ссылке ',
             'logout.message.login': 'войти',
+            'news': 'Новости',
             'page.about': 'О проекте',
             'page.home': 'Главная',
             'page.main.message': 'Добро пожаловать на "Not Today" - веб-сервис позволяющий управлять вашими списками дел',
@@ -46,6 +47,7 @@
             'repeat.catalog.each.year': 'Раз в год',
             'save': 'Сохранить',
             'save.and.continue': 'Сохранить и продолжить',
+            'settings': 'Настройки системы',
             'task.add': 'Добавить задачу',
             'task.add.fast': 'Новыя задача:',
             'task.add.fast.button.text': 'добавить',
@@ -68,7 +70,8 @@
             'tasks.all': 'Всего задач',
             'tasks.new': 'Новые задачи',
             'tasks.completed': 'Завершенные задачи',
-            'tasks.deleted': 'Удаленные задачи'
+            'tasks.deleted': 'Удаленные задачи',
+            'users': 'Пользователи'
         }
     }
 
