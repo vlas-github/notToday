@@ -1,3 +1,6 @@
-/**
- * Created by vlasov-id-131216 on 08.03.15.
- */
+'use strict';
+
+angular.module('todolistApp')
+    .controller('ApiCtrl', function ($scope) {
+        $scope.activePage = 'about'
+    });

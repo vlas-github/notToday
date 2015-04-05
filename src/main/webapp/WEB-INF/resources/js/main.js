@@ -22,7 +22,7 @@
             })
             .when('/about/api', {
                 templateUrl: 'content/about/api.html',
-                controller: 'AboutCtrl',
+                controller: 'ApiCtrl',
                 activePage: 'api'
             })
             .when('/tasks', {
